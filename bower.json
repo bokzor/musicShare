@@ -2,6 +2,7 @@
   "name": "MusicShare",
   "dependencies": {
     "jquery": "^2.1.4",
-    "toastr": "^2.1.1"
+    "toastr": "^2.1.1",
+    "materialize": "^0.97.1"
   }
 }

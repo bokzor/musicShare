@@ -12,6 +12,8 @@ var babelify = require('babelify');
 var browserify = require('browserify');
 var watchify = require('watchify');
 var uglify = require('gulp-uglify');
+var minifycss = require('gulp-minify-css');
+
 
 var production = process.env.NODE_ENV === 'production';
 
@@ -30,8 +32,7 @@ var dependencies = [
 gulp.task('vendor', function() {
     return gulp.src([
         'bower_components/jquery/dist/jquery.js',
-        'bower_components/bootstrap/dist/js/bootstrap.js',
-        'bower_components/magnific-popup/dist/jquery.magnific-popup.js',
+        'bower_components/materialize/dist/js/materialize.js',
         'bower_components/toastr/toastr.js'
     ]).pipe(concat('vendor.js'))
         .pipe(gulpif(production, uglify({ mangle: false })))
@@ -98,14 +99,17 @@ gulp.task('browserify-watch', ['browserify-vendor'], function() {
  | Compile SASS stylesheets.
  |--------------------------------------------------------------------------
  */
+
 gulp.task('styles', function() {
-    return gulp.src('app/stylesheets/main.scss')
-        .pipe(plumber())
-        .pipe(sass())
+    gulp.src('app/stylesheets/**/*.scss')
+        .pipe(sass().on('error', sass.logError))
         .pipe(autoprefixer())
         .pipe(gulpif(production, cssmin()))
-        .pipe(gulp.dest('public/css'));
+        .pipe(gulp.dest('public/css/'))
 });
+
+
+
 
 gulp.task('watch', function() {
     gulp.watch('app/stylesheets/**/*.scss', ['styles']);
