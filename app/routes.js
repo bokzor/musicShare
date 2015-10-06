@@ -6,5 +6,7 @@ import Home from './components/Home';
 export default (
 <Route handler={App}>
     <Route path='/' handler={Home} />
-    </Route>
+    <Route path='/' handler={Home2} />
+
+</Route>
 );
