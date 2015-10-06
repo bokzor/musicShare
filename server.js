@@ -35,19 +35,6 @@ process.on('SIGINT', function() {
     });
 });
 
-var music1 = new Music({
-    name: 'test1'
-});
-
-var user1 = new User({
-    nickname: 'Adri',
-    musics: [music1]
-});
-
-user1.save(function(err) {
-    console.log(err);
-});
-
 var app = express();
 
 app.set('port', process.env.PORT || 3000);
