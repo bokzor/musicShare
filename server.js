@@ -8,7 +8,45 @@ var React = require('react');
 var Router = require('react-router');
 var routes = require('./app/routes');
 
+var mongoose = require('mongoose');
+var User = require('./models/user');
+var Music = require('./models/music').model;
 
+var config = require('./config');
+
+mongoose.connect(config.database);
+
+mongoose.connection.on('connected', function () {
+    console.log('Mongoose default connection open to ' + config.database);
+});
+
+mongoose.connection.on('error',function (err) {
+    console.log('Mongoose default connection error: ' + err);
+});
+
+mongoose.connection.on('disconnected', function () {
+    console.log('Mongoose default connection disconnected');
+});
+
+process.on('SIGINT', function() {
+    mongoose.connection.close(function () {
+        console.log('Mongoose default connection disconnected through app termination');
+        process.exit(0);
+    });
+});
+
+var music1 = new Music({
+    name: 'test1'
+});
+
+var user1 = new User({
+    nickname: 'Adri',
+    musics: [music1]
+});
+
+user1.save(function(err) {
+    console.log(err);
+});
 
 var app = express();
 
