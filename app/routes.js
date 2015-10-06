@@ -7,6 +7,7 @@ export default (
 <Route handler={App}>
     <Route path='/' handler={Home} />
     <Route path='/' handler={Home2} />
+    <Route path='/' handler={Home3} />
 
 </Route>
 );
