@@ -29,7 +29,6 @@
     "swig": "^1.4.2",
     "underscore": "^1.8.3",
     "xml2js": "^0.4.9",
-    "material-ui": ">=0.8",
     "react": ">=0.13",
     "react-tap-event-plugin": "^0.1.3"
   },
