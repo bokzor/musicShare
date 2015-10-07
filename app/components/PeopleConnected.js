@@ -68,10 +68,12 @@ class PeopleConnected extends React.Component {
                         <form className="" role="search">
                             <div className="form-group clearfix m-b-none">
                                 <div className="input-group m-t m-b">
-                                    <span className="input-group-btn"><button className="btn btn-sm bg-empty text-muted btn-icon" type="submit"><span className="input-group-btn"><span class=
-                                    "input-group-btn"><span className="input-group-btn"><span className="input-group-btn"><span className="input-group-btn"><span className="input-group-btn"><span class=
-                                    "input-group-btn fa fa-search" ></span></span></span></span></span></span></span></button></span> <input className=
-                                    "form-control input-sm text-white bg-empty b-b b-dark no-border" placeholder="Search members" type="text"/>
+                                    <span className="input-group-btn">
+                                        <button className="btn btn-sm bg-empty text-muted btn-icon" type="submit">
+                                            <span className="input-group-btn fa fa-search"></span>
+                                        </button>
+                                    </span>
+                                    <input className="form-control input-sm text-white bg-empty b-b b-dark no-border" placeholder="Search members" type="text"/>
                                 </div>
                             </div>
                         </form>
