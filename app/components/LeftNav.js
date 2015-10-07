@@ -142,6 +142,7 @@ class LeftNav extends React.Component {
                     </footer>
                 </section>
             </aside>
+
         );
     }
 }

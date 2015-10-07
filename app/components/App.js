@@ -7,13 +7,15 @@ import LeftNav from './LeftNav.js';
 class App extends React.Component {
     render() {
         return (
-            <div>
+            <section class="vbox">
                 <Header/>
-                <section className="hbox stretch">
-                    <LeftNav/>
-                    <RouteHandler />
+                <section>
+                    <section className="hbox stretch">
+                        <LeftNav/>
+                        <RouteHandler />
+                    </section>
                 </section>
-            </div>
+            </section>
         );
     }
 }
