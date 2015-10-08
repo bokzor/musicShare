@@ -9,12 +9,10 @@ class App extends React.Component {
         return (
             <section class="vbox">
                 <Header/>
-                <section>
                     <section className="hbox stretch">
                         <LeftNav/>
                         <RouteHandler />
                     </section>
-                </section>
             </section>
         );
     }

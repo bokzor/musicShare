@@ -35,3 +35,33 @@
   height: 20px !important;
   width: 20px !important;
 }
+
+html,
+html body {
+  height: 100%;
+  overflow: hidden;
+}
+html .hbox.stretch {
+  height: 100%;
+}
+
+html .vbox.flex > section {
+  overflow: auto;
+}
+
+html .vbox > footer {
+  position: absolute;
+}
+
+body > div {
+  height: 100%;
+}
+
+body > div > section {
+  height: calc(~"100% - 60px");
+}
+
+.scrollable {
+  max-height: 100%;
+  height: 100%;
+}
