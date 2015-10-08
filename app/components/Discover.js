@@ -384,7 +384,7 @@ class Discover extends React.Component {
                                                     </div>
             
                                                     <div>
-                                                        <a className="icon-list" className="" data-target="#playlist" data-toggle="dropdown" ></a>
+                                                        <a className="icon-list" className="" data-target="#playlist" data-toggle="dropdown" ><i className="icon-list"></i></a>
                                                     </div>
             
                                                     <div className="jp-progress hidden-xs">

@@ -32,7 +32,12 @@ gulp.task('vendor', function() {
         'bower_components/jquery/dist/jquery.js',
         'bower_components/bootstrap/dist/js/bootstrap.js',
         'bower_components/magnific-popup/dist/jquery.magnific-popup.js',
-        'bower_components/toastr/toastr.js'
+        'bower_components/toastr/toastr.js',
+        'app/lib/jquery.jplayer.min.js',
+        'app/lib/jplayer.playlist.min.js',
+        'app/lib/demo.js',
+
+
     ]).pipe(concat('vendor.js'))
         .pipe(gulpif(production, uglify({ mangle: false })))
         .pipe(gulp.dest('public/js'));
