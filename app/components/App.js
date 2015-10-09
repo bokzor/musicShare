@@ -2,7 +2,8 @@ import React from 'react';
 import {RouteHandler} from 'react-router';
 
 import Header from './Header';
-import LeftNav from './LeftNav.js';
+import LeftNav from './LeftNav';
+import Player from './Player';
 
 class App extends React.Component {
     render() {
@@ -13,6 +14,7 @@ class App extends React.Component {
                         <LeftNav/>
                         <RouteHandler />
                     </section>
+                <Player/>
             </section>
         );
     }
