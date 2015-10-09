@@ -1,10 +1,8 @@
 import React from 'react';
-import ReactCSSTransitionGroup from 'react-addons-css-transition-group';
 
 class Genre extends React.Component {
     render () {
         return(
-            <ReactCSSTransitionGroup transitionName="exemple">
             <section id="content">
               <section className="vbox">
                 <section className="w-f-md" id="bjax-target">
@@ -464,8 +462,6 @@ class Genre extends React.Component {
               </section>
               <a href="#" className="hide nav-off-screen-block" data-toggle="class:nav-off-screen,open" data-target="#nav,html"></a>
             </section>
-
-                </ReactCSSTransitionGroup>
 
         );
     }

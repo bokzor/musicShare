@@ -1,4 +1,5 @@
 import React from 'react';
+import {Link} from 'react-router';
 
 class Header extends React.Component {
     render() {
@@ -6,10 +7,11 @@ class Header extends React.Component {
             <header className="bg-white-only header header-md navbar navbar-fixed-top-xs">
                 <div className="navbar-header aside bg-info nav-xs">
                     <a className="btn btn-link visible-xs icon-list" data-target="#nav,html" data-toggle="class:nav-off-screen,open" ></a>
-                    <a className="navbar-brand text-lt" href="index.html"><i className="icon-earphones"></i>
+                    <Link className="navbar-brand text-lt" to="/">
+                        <i className="icon-earphones"></i>
                         <img alt="." className="hide" src="images/logo.png"/>
                         <span className="hidden-nav-xs m-l-sm">Musik</span>
-                    </a>
+                    </Link>
                         <a className="btn btn-link visible-xs icon-settings" data-target=".user" data-toggle="dropdown" ></a>
                 </div>
             
