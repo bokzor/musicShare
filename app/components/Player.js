@@ -1,10 +1,6 @@
 import React from 'react';
 
 class Player extends React.Component {
-    shouldComponentUpdate() {
-        return false;
-    }
-
     render() {
         return (
             <footer className="footer bg-dark">
