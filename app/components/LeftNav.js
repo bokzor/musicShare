@@ -15,36 +15,40 @@ class LeftNav extends React.Component {
                   </li>
                   <li>
                     <a href="index.html">
-                    <i className="icon-disc icon text-success"></i>
-                    <span className="font-bold">What's new</span>
-                    </a>
-                  </li>
-                  <li>
-                    <a href="genres.html">
-                    <i className="icon-music-tone-alt icon text-info"></i>
-                    <span className="font-bold">Genres</span>
-                    </a>
-                  </li>
-                  <li>
-                    <a href="events.html">
-                    <i className="icon-drawer icon text-primary-lter"></i>
-                    <b className="badge bg-primary pull-right">6</b>
-                    <span className="font-bold">Events</span>
+                      <i className="icon-disc icon text-success"></i>
+                      <span className="font-bold">What's new</span>
                     </a>
                   </li>
                   <li>
                     <a href="listen.html">
-                    <i className="icon-list icon  text-info-dker"></i>
-                    <span className="font-bold">Listen</span>
+                      <i className="icon-music-tone-alt icon text-info"></i>
+                      <span className="font-bold">Top Songs</span>
                     </a>
                   </li>
                   <li>
-                    <a href="video.html" data-target="#content" data-el="#bjax-el" data-replace="true">
-                    <i className="icon-social-youtube icon  text-primary"></i>
-                    <span className="font-bold">Video</span>
+                    <a href="genres.html">
+                      <i className="icon-music-tone icon text-info"></i>
+                      <span className="font-bold">Genres</span>
                     </a>
                   </li>
                   <li className="m-b hidden-nav-xs"></li>
+                </ul>
+                <ul className="nav" data-ride="collapse">
+                  <li className="hidden-nav-xs padder m-t m-b-sm text-xs text-muted">
+                    My profile
+                  </li>
+                  <li >
+                    <a href="#">
+                      <i className="fa fa-user icon"></i>
+                      <span className="font-bold">My Profile</span>
+                    </a>
+                  </li>
+                  <li >
+                    <a href="#">
+                      <i className="fa fa-users icon"></i>
+                      <span className="font-bold">Followed</span>
+                    </a>
+                  </li>
                 </ul>
               </nav>
             </div>
