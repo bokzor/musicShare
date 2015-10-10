@@ -1,4 +1,7 @@
 import React from 'react';
+import {composeAnimation} from './composeAnimation';
+
+
 
 class Profile extends React.Component {
   componentDidMount() {
