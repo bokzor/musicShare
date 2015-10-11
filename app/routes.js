@@ -5,12 +5,19 @@ import App from './components/App';
 import Discover from './components/Discover';
 import Profile from './components/Profile';
 import Genres from './components/Genres';
+import Signin from './components/Signin';
+import Signup from './components/Signup';
 
 
 export default (
-  <Route handler={App}>
-    <Route path='/' handler={Discover}/>
-      <Route path='/genres' handler={Genres}/>
-      <Route path='/profile' handler={Profile} />
-  </Route>
+
+    <Route>
+        <Route handler={App}>
+            <Route path='/' handler={Discover}/>
+            <Route path='/genres' handler={Genres}/>
+            <Route path='/profile' handler={Profile} />
+        </Route>
+        <Route path='/signin' handler={Signin} />
+        <Route path='/signin' handler={Signup} />
+    </Route>
 );
