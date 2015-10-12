@@ -18,6 +18,6 @@ export default (
             <Route path='/profile' handler={Profile} />
         </Route>
         <Route path='/signin' handler={Signin} />
-        <Route path='/signin' handler={Signup} />
+        <Route path='/signup' handler={Signup} />
     </Route>
 );
