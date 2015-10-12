@@ -8,10 +8,10 @@ class Header extends React.Component {
           <a className="btn btn-link visible-xs" data-toggle="class:nav-off-screen,open" data-target="#nav,html">
             <i className="icon-list"></i>
           </a>
-          <a href="index.html" className="navbar-brand text-lt">
+          <a href="/" className="navbar-brand text-lt">
             <i className="icon-earphones"></i>
             <img src="images/logo.png" alt="." className="hide"/>
-            <span className="hidden-nav-xs m-l-sm">Musik</span>
+            <span className="hidden-nav-xs m-l-sm">Mwsikk</span>
           </a>
           <a className="btn btn-link visible-xs" data-toggle="dropdown" data-target=".user">
             <i className="icon-settings"></i>

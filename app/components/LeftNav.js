@@ -1,4 +1,5 @@
 import React from 'react';
+import {Link} from 'react-router';
 
 class LeftNav extends React.Component {
   render() {
@@ -14,10 +15,10 @@ class LeftNav extends React.Component {
                     Discover
                   </li>
                   <li>
-                    <a href="index.html">
+                    <Link to='/'>
                       <i className="icon-disc icon text-success"></i>
                       <span className="font-bold">What's new</span>
-                    </a>
+                    </Link>
                   </li>
                   <li>
                     <a href="listen.html">
@@ -38,10 +39,10 @@ class LeftNav extends React.Component {
                     My profile
                   </li>
                   <li >
-                    <a href="#">
+                    <Link to='/profile'>
                       <i className="fa fa-user icon"></i>
                       <span className="font-bold">My Profile</span>
-                    </a>
+                    </Link>
                   </li>
                   <li >
                     <a href="#">
