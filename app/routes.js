@@ -10,7 +10,7 @@ import Signup from './components/Signup';
 import AddMusic from './components/AddMusic';
 
 
-export default (
+const routes = (
 
     <Route>
         <Route handler={App}>
@@ -24,3 +24,5 @@ export default (
     </Route>
 
 );
+
+export default routes;

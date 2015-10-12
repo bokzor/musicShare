@@ -9,7 +9,7 @@
   "main": "server.js",
   "scripts": {
     "start": "babel-node server.js",
-    "watch": "nodemon --exec babel-node -- server.js"
+    "watch": "nodemon --exec babel-node --optional es7.decorators -- server.js"
   },
   "dependencies": {
     "alt": "^0.17.1",
@@ -22,6 +22,7 @@
     "mongoose": "^4.0.7",
     "morgan": "^1.6.1",
     "react": "^0.13.3",
+    "mixin-decorator": "^1.0.5",
     "react-router": "^0.13.3",
     "request": "^2.58.0",
     "serve-favicon": "^2.3.0",

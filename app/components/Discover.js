@@ -1,5 +1,8 @@
 import React from 'react';
+import mixin from 'mixin-decorator'
+import composeAnimation from '../decorators/composeAnimation'
 
+@mixin(composeAnimation)
 class Discover extends React.Component {
   componentDidMount() {
     // Get the components DOM node
@@ -645,4 +648,4 @@ class Discover extends React.Component {
   }
 }
 
-export default Discover;
+export default Discover

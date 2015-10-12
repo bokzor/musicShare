@@ -1,11 +1,40 @@
 import React from 'react';
+import mixin from 'mixin-decorator'
+import composeAnimation from '../decorators/composeAnimation'
+
+import GenreActions from '../actions/GenreActions'
+import GenreStore from '../stores/GenreStore'
 
 class Genre extends React.Component {
     constructor(props) {
+
         super(props);
-        this.state = {count: props.initialCount};
+        this.state = GenreStore.getState();
+        this.onChange = this.onChange.bind(this);
     }
+
+    componentDidMount () {
+        GenreStore.listen(this.onChange);
+        GenreActions.getGenres();
+    }
+
+    componentWillUnmount() {
+        GenreStore.unlisten(this.onChange);
+    }
+
+    onChange(state) {
+        this.setState(state);
+    }
+
     render () {
+        let genres = this.state.genres.map((genre) => {
+            return (
+                <a href="genres.html" className="list-group-item">
+                    {genre}
+                </a>
+            )
+        });
+
         return(
             <section id="content">
                 <section className="vbox">
@@ -15,75 +44,10 @@ class Genre extends React.Component {
                                 <section className="vbox animated fadeInUp">
                                     <section className="scrollable hover">
                                         <div className="list-group no-radius no-border no-bg m-t-n-xxs m-b-none auto">
-                                            <a href="genres.html" className="list-group-item">
+                                            <a href="genres.html" className="list-group-item active">
                                                 All
                                             </a>
-                                            <a href="genres.html" className="list-group-item active">
-                                                acoustic
-                                            </a>
-                                            <a href="genres.html" className="list-group-item">
-                                                ambient
-                                            </a>
-                                            <a href="genres.html" className="list-group-item">
-                                                blues
-                                            </a>
-                                            <a href="genres.html" className="list-group-item">
-                                                classical
-                                            </a>
-                                            <a href="genres.html" className="list-group-item">
-                                                country
-                                            </a>
-                                            <a href="genres.html" className="list-group-item">
-                                                electronic
-                                            </a>
-                                            <a href="genres.html" className="list-group-item">
-                                                emo
-                                            </a>
-                                            <a href="genres.html" className="list-group-item">
-                                                folk
-                                            </a>
-                                            <a href="genres.html" className="list-group-item">
-                                                hardcore
-                                            </a>
-                                            <a href="genres.html" className="list-group-item">
-                                                hip hop
-                                            </a>
-                                            <a href="genres.html" className="list-group-item">
-                                                indie
-                                            </a>
-                                            <a href="genres.html" className="list-group-item">
-                                                jazz
-                                            </a>
-                                            <a href="genres.html" className="list-group-item">
-                                                latin
-                                            </a>
-                                            <a href="genres.html" className="list-group-item">
-                                                metal
-                                            </a>
-                                            <a href="genres.html" className="list-group-item">
-                                                pop
-                                            </a>
-                                            <a href="genres.html" className="list-group-item">
-                                                pop punk
-                                            </a>
-                                            <a href="genres.html" className="list-group-item">
-                                                punk
-                                            </a>
-                                            <a href="genres.html" className="list-group-item">
-                                                reggae
-                                            </a>
-                                            <a href="genres.html" className="list-group-item">
-                                                rnb
-                                            </a>
-                                            <a href="genres.html" className="list-group-item">
-                                                rock
-                                            </a>
-                                            <a href="genres.html" className="list-group-item">
-                                                soul
-                                            </a>
-                                            <a href="genres.html" className="list-group-item">
-                                                world
-                                            </a>
+                                            {genres}
                                         </div>
                                     </section>
                                 </section>
