@@ -16,6 +16,7 @@ class LeftNav extends React.Component {
                   </li>
                   <li>
                     <Link to="/">
+
                       <i className="icon-disc icon text-success"></i>
                       <span className="font-bold">What's new</span>
                     </Link>
@@ -38,8 +39,9 @@ class LeftNav extends React.Component {
                   <li className="hidden-nav-xs padder m-t m-b-sm text-xs text-muted">
                     My profile
                   </li>
-                  <li >
+                  <li>
                     <Link to="/profile">
+
                       <i className="fa fa-user icon"></i>
                       <span className="font-bold">My Profile</span>
                     </Link>

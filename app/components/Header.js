@@ -14,6 +14,7 @@ class Header extends React.Component {
             <img src="images/logo.png" alt="." className="hide"/>
             <span className="hidden-nav-xs m-l-sm">Musik</span>
           </Link>
+
           <a className="btn btn-link visible-xs" data-toggle="dropdown" data-target=".user">
             <i className="icon-settings"></i>
           </a>

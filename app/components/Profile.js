@@ -22,7 +22,7 @@ class Profile extends React.Component {
       <section className="vbox">
         <section className="w-f-md">
           <section className="hbox stretch">
-            <aside className="col-sm-9 no-padder" id="sidebar">
+            <aside className="col-sm-9 no-padder">
               <section className="vbox animated fadeInUp">
                 <section className="scrollable">
                   <div className="m-t-n-xxs item pos-rlt">
