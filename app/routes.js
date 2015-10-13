@@ -8,6 +8,8 @@ import Genres from './components/Genres';
 import Signin from './components/Signin';
 import Signup from './components/Signup';
 import AddMusic from './components/AddMusic';
+import AddMusicAd from './components/AddMusicAd';
+
 
 
 const routes = (
@@ -19,6 +21,8 @@ const routes = (
             <Route path='/genres/:genreId' handler={Genres}/>
             <Route path='/profile' handler={Profile} />
             <Route path='/addMusic' handler={AddMusic} />
+            <Route path='/addMusicAd' handler={AddMusicAd} />
+
         </Route>
         <Route path='/signin' handler={Signin} />
         <Route path='/signup' handler={Signup} />

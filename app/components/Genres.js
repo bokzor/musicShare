@@ -48,6 +48,7 @@ class Genre extends React.Component {
                                     <section className="scrollable hover">
                                         <div className="list-group no-radius no-border no-bg m-t-n-xxs m-b-none auto">
                                             <Link to="/genres/all" className="list-group-item">
+
                                                 All
                                             </Link>
                                             {genres}
