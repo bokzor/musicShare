@@ -1,5 +1,4 @@
-var genres = ['Deep House', 'Drum & Bass', 'Dubstep', 'EDM', 'Electronic',  'Techno', 'Trance', 'Tech-house']
-
+var genres = [{id : 1, name: 'Deep House'}, {id:2, name : 'Drum & Bass'}, {id:3, name: 'Dubstep'}, {id: 4, name: 'EDM'}, {id:5, name: 'Electronic'},  {id: 6, name: 'Techno'}, {id:7, name : 'Trance'}, {id:8, name:'Tech-house'}]
 
 var GenreData = {
     fetch: function () {

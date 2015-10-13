@@ -1,5 +1,7 @@
 import React from 'react';
 import mixin from 'mixin-decorator'
+import {Link} from 'react-router'
+
 import composeAnimation from '../decorators/composeAnimation'
 
 import GenreActions from '../actions/GenreActions'
@@ -27,11 +29,12 @@ class Genre extends React.Component {
     }
 
     render () {
+
         let genres = this.state.genres.map((genre) => {
             return (
-                <a href="genres.html" className="list-group-item">
-                    {genre}
-                </a>
+                <Link key={genre.id} to={'/genres/' + genre.id} className="list-group-item">
+                    {genre.name}
+                </Link>
             )
         });
 
@@ -44,9 +47,9 @@ class Genre extends React.Component {
                                 <section className="vbox animated fadeInUp">
                                     <section className="scrollable hover">
                                         <div className="list-group no-radius no-border no-bg m-t-n-xxs m-b-none auto">
-                                            <a href="genres.html" className="list-group-item active">
+                                            <Link to="/genres/all" className="list-group-items">
                                                 All
-                                            </a>
+                                            </Link>
                                             {genres}
                                         </div>
                                     </section>

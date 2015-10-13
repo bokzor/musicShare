@@ -16,6 +16,7 @@ const routes = (
         <Route handler={App}>
             <Route path='/' handler={Discover}/>
             <Route path='/genres' handler={Genres}/>
+            <Route path='/genres/:genreId' handler={Genres}/>
             <Route path='/profile' handler={Profile} />
             <Route path='/addMusic' handler={AddMusic} />
         </Route>

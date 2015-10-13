@@ -9,10 +9,8 @@ class GenreActions {
     }
 
     getGenres() {
-        console.log(GenreData);
         GenreData.fetch()
             .then((genres) => {
-            console.log('getgenre')
             this.actions.getGenresSuccess(genres)
         })
     }
