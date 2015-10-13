@@ -2,13 +2,29 @@ import React from 'react';
 import mixin from 'mixin-decorator'
 import addChangeHandler from '../decorators/changeHandler'
 
+import AddMusicStore from '../stores/AddMusicStore'
+import AddMusicActions from '../actions/AddMusicActions'
+
 @mixin(addChangeHandler)
 class AddMusicAd extends React.Component {
     constructor(props) {
         super(props);
-        this.state = {
-            music : {}
-        }
+        this.state = AddMusicStore.getState();
+        this.onChange = this.onChange.bind(this);
+    }
+
+
+
+    componentDidMount() {
+        AddMusicStore.listen(this.onChange);
+    }
+
+    componentWillUnmount() {
+        AddMusicStore.unlisten(this.onChange);
+    }
+
+    onChange(state) {
+        this.setState(state);
     }
 
     render() {
@@ -31,16 +47,21 @@ class AddMusicAd extends React.Component {
                                                 type="text"
                                                 className="form-control"
                                                 id="input-id-name"
-                                                onChange={this.changeHandler.bind(this, 'music', 'url')} />
+                                                onChange={AddMusicActions.fetchUrl} />
                                         </div>
                                     </div>
                                     <div className="line line-dashed b-b line-lg pull-in"></div>
+
                                     <div className="form-group">
-                                        <div className="col-sm-6">
-                                            <div className="text-center wrapper">
+                                        {(this.state.music.image)
+                                            ?<div className="col-sm-6">
+                                                <div className="text-center wrapper">
+                                                    <img src={this.state.music.image} />
                                                 <i className="fa fa-spinner fa fa-spin fa fa-large"></i>
+                                                </div>
                                             </div>
-                                        </div>
+                                            :null
+                                        }
                                         <div className="col-sm-6">
 
                                         </div>

@@ -1,31 +1,26 @@
 import alt from '../alt';
+import _ from 'lodash';
+
+var urlSoundcloud = 'http://api.soundcloud.com/resolve?client_id=7220cd79b258ae2f8d427b34d761fb16'
 
 class AddMusicActions {
   constructor() {
     this.generateActions(
-      'addMusicSuccess',
-      'addMusicFail',
-      'updateTitle',
-      'updateIsMix',
-      'invalidTitle',
-      'invalidIsMix'
+        'getSoundcloudSuccess'
     );
   }
 
-  addMusic(title, isMix) {
-    console.log('AddMusic : ' + title + ' ' + isMix);
-    $.ajax({
-      type: 'POST',
-      url: '/api/music',
-      data: { title: title, isMix: isMix }
-    })
-      .done((data) => {
-        this.actions.addMusicSuccess(data.message);
-      })
-      .fail((jqXhr) => {
-        this.actions.addMusicFail(jqXhr.responseJSON.message);
-      });
+  fetchUrl(e){
+    let url = e.target.value
+    if(url.indexOf('soundcloud.com') > 0){
+      let request = `${urlSoundcloud}&url=${url}`;
+      $.getJSON(request)
+          .done((data) => {
+            this.actions.getSoundcloudSuccess(data);
+          })
+    }
   }
+
 }
 
 export default alt.createActions(AddMusicActions);
