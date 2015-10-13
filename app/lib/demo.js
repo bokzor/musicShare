@@ -5,21 +5,21 @@ $(document).ready(function(){
     cssSelectorAncestor: "#jp_container_N"
   }, [
     {
+      title:"Cloudless Days",
+      artist:"ADG3 Studios",
+      mp3:"http://flatfull.com/themes/assets/musics/adg3com_cloudlessdays.mp3",
+      poster: "images/m0.jpg"
+    },
+    {
       title:"Pass The Buck",
       artist:"Fritz",
-      mp3:"https://www.dropbox.com/s/eeptxu0ukv9viek/02%20Pass%20The%20Buck.mp3?dl=1",
+      //mp3:"https://www.dropbox.com/s/eeptxu0ukv9viek/02%20Pass%20The%20Buck.mp3?dl=1",
       poster: "images/m0.jpg"
     },
     {
       title:"Back Home",
       artist:"3studios",
-      mp3:"https://www.dropbox.com/s/zdxnk7xbm07itn9/03%20Back%20Home.mp3?dl=1",
-      poster: "images/m0.jpg"
-    },
-    {
-      title:"Cloudless Days",
-      artist:"ADG3 Studios",
-      mp3:"http://flatfull.com/themes/assets/musics/adg3com_cloudlessdays.mp3",
+      //mp3:"https://www.dropbox.com/s/zdxnk7xbm07itn9/03%20Back%20Home.mp3?dl=1",
       poster: "images/m0.jpg"
     },
     {

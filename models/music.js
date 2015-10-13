@@ -7,7 +7,7 @@ var musicSchema = new mongoose.Schema({
     isMix: { type: Boolean, default: false },
     duration: { type: Number, default: 0 },
     tag: [{ type: String }],
-    genre: { type: String, default: '' },
+    genres: [{ type: String, default: '' }],
     listeningCount: { type: Number, default: 0 },
     img: { type: String, default: '' },
     url: { type: String },
