@@ -47,7 +47,7 @@ class Genre extends React.Component {
                                 <section className="vbox animated fadeInUp">
                                     <section className="scrollable hover">
                                         <div className="list-group no-radius no-border no-bg m-t-n-xxs m-b-none auto">
-                                            <Link to="/genres/all" className="list-group-itemsgi">
+                                            <Link to="/genres/all" className="list-group-items">
                                                 All
                                             </Link>
                                             {genres}
