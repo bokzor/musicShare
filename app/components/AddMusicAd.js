@@ -1,9 +1,14 @@
 import React from 'react';
+import mixin from 'mixin-decorator'
+import addChangeHandler from '../decorators/changeHandler'
 
-
+@mixin(addChangeHandler)
 class AddMusicAd extends React.Component {
     constructor(props) {
         super(props);
+        this.state = {
+            music : {}
+        }
     }
 
     render() {
@@ -21,7 +26,12 @@ class AddMusicAd extends React.Component {
                                     <div className="form-group">
                                         <label className="col-sm-2 control-label" for="input-id-name">Url</label>
                                         <div className="col-sm-10">
-                                            <input placeholder="https://www.youtube.com/watch?v=XXXX | https://soundcloud.com/XXXX" type="text" className="form-control" id="input-id-name"/>
+                                            <input
+                                                placeholder="https://www.youtube.com/watch?v=XXXX | https://soundcloud.com/XXXX"
+                                                type="text"
+                                                className="form-control"
+                                                id="input-id-name"
+                                                onChange={this.changeHandler.bind(this, 'music', 'url')} />
                                         </div>
                                     </div>
                                     <div className="line line-dashed b-b line-lg pull-in"></div>
