@@ -5,10 +5,10 @@ class AddMusicStore {
     constructor() {
         this.bindActions(AddMusicActions);
         this.music = {};
+        this.isLoading = false
     }
     onGetSoundcloudSuccess(data) {
         this.music.image = data.artwork_url
-
     }
 }
 

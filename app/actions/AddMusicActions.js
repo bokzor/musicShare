@@ -1,7 +1,14 @@
 import alt from '../alt';
-import _ from 'lodash';
+import axios from 'axios';
 
-var urlSoundcloud = 'http://api.soundcloud.com/resolve?client_id=7220cd79b258ae2f8d427b34d761fb16'
+var client_youtube = 'AIzaSyCNgsM94-HneaMwxGz25LdzfKUxk_mBeAg'
+var client_soundcloud = '7220cd79b258ae2f8d427b34d761fb16'
+
+var urlSoundcloud = 'http://api.soundcloud.com/resolve'
+var urlYoutube = 'https://www.googleapis.com/youtube/v3/videos'
+
+var regexYoutube = /(youtu\.be\/|[?&]v=)([^&]+)/;
+
 
 class AddMusicActions {
   constructor() {
@@ -13,11 +20,35 @@ class AddMusicActions {
   fetchUrl(e){
     let url = e.target.value
     if(url.indexOf('soundcloud.com') > 0){
-      let request = `${urlSoundcloud}&url=${url}`;
-      $.getJSON(request)
-          .done((data) => {
-            this.actions.getSoundcloudSuccess(data);
+      axios.get(urlSoundcloud, {
+            params: {
+              url: url,
+                client_id: client_soundcloud
+            }
           })
+          .then((response) => {
+              console.log(response);
+            this.actions.getSoundcloudSuccess(response.data);
+          })
+          .catch(function (response) {
+            console.log(response);
+          });
+    } else {
+        var idVideo = url.match(regexYoutube)[2]
+
+        axios.get(urlYoutube, {
+                params: {
+                    id: idVideo,
+                    key: client_youtube
+                }
+            })
+            .then((response) => {
+                console.log(response);
+                this.actions.getSoundcloudSuccess(response.data);
+            })
+            .catch(function (response) {
+                console.log(response);
+            });
     }
   }
 

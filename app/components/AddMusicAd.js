@@ -13,8 +13,6 @@ class AddMusicAd extends React.Component {
         this.onChange = this.onChange.bind(this);
     }
 
-
-
     componentDidMount() {
         AddMusicStore.listen(this.onChange);
     }
