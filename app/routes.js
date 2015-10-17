@@ -10,10 +10,7 @@ import Signup from './components/Signup';
 import AddMusic from './components/AddMusic';
 import AddMusicAd from './components/AddMusicAd';
 
-
-
 const routes = (
-
     <Route>
         <Route handler={App}>
             <Route path='/' handler={Discover}/>
@@ -22,12 +19,10 @@ const routes = (
             <Route path='/profile' handler={Profile} />
             <Route path='/addMusic' handler={AddMusic} />
             <Route path='/addMusicAd' handler={AddMusicAd} />
-
         </Route>
         <Route path='/signin' handler={Signin} />
         <Route path='/signup' handler={Signup} />
     </Route>
-
 );
 
 export default routes;
