@@ -25,6 +25,31 @@ class AddMusicAd extends React.Component {
     this.setState(state);
   }
 
+  handleSubmit(event) {
+    event.preventDefault();
+
+    //var autoComplete = complete;
+    var complete = this.state.complete.trim();
+    alert(complete);
+
+    var url = this.state.url.trim();
+
+    if (!url) {
+      console.log('NO URL');
+      AddMusicActions.invalidUrl();
+      this.refs.urlTextField.getDOMNode().focus();
+    }
+
+    /*if (!name) {
+      AddCharacterActions.invalidName();
+      this.refs.nameTextField.getDOMNode().focus();
+    }
+
+    if (name && gender) {
+      AddCharacterActions.addCharacter(name, gender);
+    }*/
+  }
+
   render() {
     var hours, minutes, seconds, isMix;
     var duration = this.state.music.duration;
@@ -52,16 +77,19 @@ class AddMusicAd extends React.Component {
                 Add a music to my profile!
               </header>
               <div className="panel-body">
-                <form className="form-horizontal">
+                <form className="form-horizontal" onSubmit={this.handleSubmit.bind(this)}>
                   <div className="form-group">
                     <label className="col-sm-2 control-label" for="input-id-url">URL</label>
                     <div className="col-sm-10">
                       <input
-                        placeholder="https://soundcloud.com/XXXX || https://www.youtube.com/watch?v=XXXX"
+                        placeholder="https://soundcloud.com/XXXX / https://www.youtube.com/watch?v=XXXX"
                         type="text"
-                        className="form-control"
+                        className={'form-control ' + this.state.urlValidationState}
                         id="input-id-url"
-                        onChange={AddMusicActions.fetchUrl}/>
+                        data-required="true"
+                        ref="urlTextField"
+                        onChange={AddMusicActions.fetchUrl} autoFocus/>
+                      <span className="help-block">{this.state.urlHelpBlock}</span>
                     </div>
                   </div>
                   <div id="div-url-result">
@@ -73,7 +101,7 @@ class AddMusicAd extends React.Component {
                           ?
                           <input type="text" className="form-control" id="input-id-name" value={complete}/>
                           :
-                          <input type="text" className="form-control" id="input-id-name"/>
+                          <input type="text" className="form-control" id="input-id-name" value={this.state.complete}/>
                         }
                       </div>
                     </div>
@@ -95,6 +123,28 @@ class AddMusicAd extends React.Component {
                           :
                           <input type="text" className="form-control" id="input-id-title"/>
                         }
+                      </div>
+                    </div>
+                    <div className="form-group">
+                      <label className="col-sm-2 control-label">Genres</label>
+                      <div className="col-sm-4">
+                        <div className="btn-group m-r">
+                          <button data-toggle="dropdown" className="btn btn-sm btn-default dropdown-toggle">
+                            <span className="dropdown-label" data-placeholder="Please select">Please select</span>
+                            <span className="caret"></span>
+                          </button>
+                          <ul className="dropdown-menu dropdown-select">
+                            <li><input type="checkbox" name="d-s-c-1"/><a href="#">Acoustic</a></li>
+                            <li><input type="checkbox" name="d-s-c-2"/><a href="#">Ambient</a></li>
+                            <li><input type="checkbox" name="d-s-c-3"/><a href="#">Blues</a></li>
+                            <li><input type="checkbox" name="d-s-c-4"/><a href="#">Classical</a></li>
+                            <li><input type="checkbox" name="d-s-c-5"/><a href="#">Electronic</a></li>
+                          </ul>
+                        </div>
+                      </div>
+                      <label className="col-sm-2 control-label" for="input-id-tag">Tag(s)</label>
+                      <div className="col-sm-4">
+                        <input type="text" className="form-control" id="input-id-tag"/>
                       </div>
                     </div>
                     <div className="form-group">
@@ -142,28 +192,6 @@ class AddMusicAd extends React.Component {
                             }
                             <span className="input-group-addon">Second(s)</span>
                           </div>
-                        </div>
-                      </div>
-                    </div>
-                    <div className="form-group">
-                      <label className="col-sm-2 control-label" for="input-id-tag">Tag(s)</label>
-                      <div className="col-sm-4">
-                        <input type="text" className="form-control" id="input-id-tag"/>
-                      </div>
-                      <label className="col-sm-2 control-label">Genres</label>
-                      <div className="col-sm-4">
-                        <div className="btn-group m-r">
-                          <button data-toggle="dropdown" className="btn btn-sm btn-default dropdown-toggle">
-                            <span className="dropdown-label" data-placeholder="Please select">Please select</span>
-                            <span className="caret"></span>
-                          </button>
-                          <ul className="dropdown-menu dropdown-select">
-                            <li><input type="checkbox" name="d-s-c-1"/><a href="#">Acoustic</a></li>
-                            <li><input type="checkbox" name="d-s-c-2"/><a href="#">Ambient</a></li>
-                            <li><input type="checkbox" name="d-s-c-3"/><a href="#">Blues</a></li>
-                            <li><input type="checkbox" name="d-s-c-4"/><a href="#">Classical</a></li>
-                            <li><input type="checkbox" name="d-s-c-5"/><a href="#">Electronic</a></li>
-                          </ul>
                         </div>
                       </div>
                     </div>
