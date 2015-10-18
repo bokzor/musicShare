@@ -28,9 +28,13 @@ class AddMusicActions {
       })
       .then((response) => {
         console.log(response);
+        $('#div-url-result').slideDown();
+        $('#text-form-add-music').text('Check information!');
         this.actions.getSoundcloudSuccess(response.data);
       })
       .catch(function(response) {
+        $('#div-url-result').slideUp();
+        $('#text-form-add-music').text('Add a music to my profile!');
         console.log(response);
       });
     } else {
