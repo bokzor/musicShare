@@ -151,12 +151,7 @@ class AddMusicAd extends React.Component {
                     <div className="form-group">
                       <label className="col-sm-2 control-label" style={{ marginTop: '50px' }}>Image</label>
                         <div className="col-sm-5" >
-                          {(this.state.music.image)
-                            ?
-                            <img src={this.state.music.image} style={{ maxHeight: '100px' }}/>
-                            :
-                            <img src="http://placehold.it/100x100" style={{ maxHeight: '100px' }}/>
-                          }
+                          <img src={this.state.music.image} style={{ maxHeight: '100px' }}/>
                         </div>
                       </div>
                       <div className="form-group">
