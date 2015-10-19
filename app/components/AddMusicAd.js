@@ -28,17 +28,6 @@ class AddMusicAd extends React.Component {
   handleSubmit(event) {
     event.preventDefault();
 
-    //var autoComplete = complete;
-    var complete = this.state.complete.trim();
-    alert(complete);
-
-    var url = this.state.url.trim();
-
-    if (!url) {
-      console.log('NO URL');
-      AddMusicActions.invalidUrl();
-      this.refs.urlTextField.getDOMNode().focus();
-    }
 
     /*if (!name) {
       AddCharacterActions.invalidName();
@@ -63,10 +52,7 @@ class AddMusicAd extends React.Component {
       minutes = parseInt((duration / (1000 * 60)) % 60);
       hours = parseInt((duration / (1000 * 60 * 60)) % 24);
     }
-    var artist = this.state.music.artist, title = this.state.music.title, complete;
-    if (artist && title) {
-      complete = artist + ' - ' + title;
-    }
+
     return (
       <section>
         <section className="vbox">
@@ -88,7 +74,7 @@ class AddMusicAd extends React.Component {
                         id="input-id-url"
                         data-required="true"
                         ref="urlTextField"
-                        onChange={AddMusicActions.fetchUrl} autoFocus/>
+                        onChange={AddMusicActions.fetchUrl}s/>
                       <span className="help-block">{this.state.urlHelpBlock}</span>
                     </div>
                   </div>
@@ -97,32 +83,17 @@ class AddMusicAd extends React.Component {
                     <div className="form-group">
                       <label className="col-sm-2 control-label" for="input-id-name">Complete name</label>
                       <div className="col-sm-10">
-                        {(complete)
-                          ?
-                          <input type="text" className="form-control" id="input-id-name" value={complete}/>
-                          :
-                          <input type="text" className="form-control" id="input-id-name" value={this.state.complete}/>
-                        }
+                          <input type="text" className="form-control" id="input-id-name" value={this.state.music.completeName}/>
                       </div>
                     </div>
                     <div className="form-group">
                       <label className="col-sm-2 control-label" for="input-id-artist">Artist</label>
                       <div className="col-sm-4">
-                        {(artist)
-                          ?
-                          <input type="text" className="form-control" id="input-id-artist" value={artist}/>
-                          :
-                          <input type="text" className="form-control" id="input-id-artist"/>
-                        }
+                          <input type="text" className="form-control" id="input-id-artist" value={this.state.music.artist}/>
                       </div>
                       <label className="col-sm-2 control-label" for="input-id-title">Title</label>
                       <div className="col-sm-4">
-                        {(title)
-                          ?
-                          <input type="text" className="form-control" id="input-id-title" value={title}/>
-                          :
-                          <input type="text" className="form-control" id="input-id-title"/>
-                        }
+                          <input type="text" className="form-control" id="input-id-title" value={this.state.music.title}/>
                       </div>
                     </div>
                     <div className="form-group">
@@ -198,7 +169,6 @@ class AddMusicAd extends React.Component {
                     <div className="form-group">
                       <label className="col-sm-2 control-label" style={{ marginTop: '50px' }}>Image</label>
                       <div className="col-sm-5" style={{ marginTop: '50px' }}>
-                        <input type="file" className="filestyle" data-icon="false" data-classbutton="btn btn-default" data-classinput="form-control inline v-middle input-s" id="filestyle-0" style={{ position: 'fixed', left: '-500px' }}/><div className="bootstrap-filestyle" style={{ display: 'inline' }}><input type="text" className="form-control inline v-middle input-s" disabled=""/> <label for="filestyle-0" className="btn btn-default"><span>Choose file</span></label></div>
                         </div>
                         <div className="col-sm-5" style={{ textAlign: 'center' }}>
                           {(this.state.music.image)

@@ -11,11 +11,14 @@ class AddMusicStore {
   }
 
   onGetSoundcloudSuccess(data) {
-    this.music.artist = data.user.username,
-    this.music.title = data.title,
-    this.music.duration = data.duration,
-    this.music.genre = data.genre,
-    this.music.image = data.artwork_url
+    [this.music.title, this.music.artist] = data.title.split('-', 1)
+    this.music.artist = data.user.username;
+    this.music.title = data.title;
+    this.music.completeName = data.title;
+    this.music.duration = data.duration;
+    this.music.genre = data.genre;
+    this.music.image = data.artwork_url;
+    this.music.url = data.url;
   }
 
   onInvalidUrl() {

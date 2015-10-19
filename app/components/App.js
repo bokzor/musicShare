@@ -15,7 +15,7 @@ class App extends React.Component {
         <section>
           <section className="hbox stretch">
             <LeftNav/>
-            <section id="content" style={{ paddingBottom: '60px' }}>
+            <section id="content" style={{ paddingBottom: '100px' }}>
               <section className="hbox stretch">
                 <RouteHandler />
                 <RightNav/>
