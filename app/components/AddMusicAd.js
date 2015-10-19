@@ -83,17 +83,30 @@ class AddMusicAd extends React.Component {
                     <div className="form-group">
                       <label className="col-sm-2 control-label" for="input-id-name">Complete name</label>
                       <div className="col-sm-10">
-                          <input type="text" className="form-control" id="input-id-name" value={this.state.music.completeName}/>
+                          <input type="text"
+                                 className="form-control"
+                                 id="input-id-name"
+                                 value={this.state.music.completeName}
+                                 onChange={this.changeHandler.bind(this, 'music', 'completeName')} />
                       </div>
                     </div>
                     <div className="form-group">
                       <label className="col-sm-2 control-label" for="input-id-artist">Artist</label>
                       <div className="col-sm-4">
-                          <input type="text" className="form-control" id="input-id-artist" value={this.state.music.artist}/>
+                          <input type="text"
+                                 className="form-control"
+                                 id="input-id-artist"
+                                 value={this.state.music.artist}
+                                 onChange={this.changeHandler.bind(this, 'music', 'artist')} />
+
                       </div>
                       <label className="col-sm-2 control-label" for="input-id-title">Title</label>
                       <div className="col-sm-4">
-                          <input type="text" className="form-control" id="input-id-title" value={this.state.music.title}/>
+                          <input type="text"
+                                 className="form-control"
+                                 id="input-id-title"
+                                 value={this.state.music.title}
+                                 onChange={this.changeHandler.bind(this, 'music', 'title')} />
                       </div>
                     </div>
                     <div className="form-group">
@@ -134,37 +147,6 @@ class AddMusicAd extends React.Component {
                         </div>
                       </div>
                       <label className="col-sm-1 control-label" for="input-id-duration-hours">Duration</label>
-                      <div className="col-sm-8">
-                        <div className="row">
-                          <div className="col-md-3 input-group m-b" style={{ marginLeft: '15px', float: 'left', marginRight: '40px' }}>
-                            {(hours)
-                              ?
-                              <input type="text" className="form-control" id="input-id-duration-hours" value={hours}/>
-                              :
-                              <input type="text" className="form-control" id="input-id-duration-hours" value="0"/>
-                            }
-                            <span className="input-group-addon">Hour(s)</span>
-                          </div>
-                          <div className="col-md-3 input-group m-b" style={{ float: 'left', marginRight: '40px' }}>
-                            {(minutes)
-                              ?
-                              <input type="text" className="form-control" id="input-id-duration-minutes" value={minutes}/>
-                              :
-                              <input type="text" className="form-control" id="input-id-duration-minutes" value="0"/>
-                            }
-                            <span className="input-group-addon">Minute(s)</span>
-                          </div>
-                          <div className="col-md-3 input-group m-b">
-                            {(seconds)
-                              ?
-                              <input type="text" className="form-control" id="input-id-duration-secondes" value={seconds}/>
-                              :
-                              <input type="text" className="form-control" id="input-id-duration-secondes" value="0"/>
-                            }
-                            <span className="input-group-addon">Second(s)</span>
-                          </div>
-                        </div>
-                      </div>
                     </div>
                     <div className="form-group">
                       <label className="col-sm-2 control-label" style={{ marginTop: '50px' }}>Image</label>

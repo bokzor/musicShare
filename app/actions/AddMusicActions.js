@@ -61,7 +61,6 @@ s          });
           }
         })
           .then((response) => {
-            console.log(response);
             this.actions.getSoundcloudSuccess(response.data);
           })
           .catch(function (response) {
