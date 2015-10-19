@@ -78,7 +78,7 @@ class AddMusicAd extends React.Component {
                       <span className="help-block">{this.state.urlHelpBlock}</span>
                     </div>
                   </div>
-                  <div id="div-url-result">
+                  <div style={{display: 'none'}} id="div-url-result">
                     <div className="line line-dashed b-b line-lg pull-in"></div>
                     <div className="form-group">
                       <label className="col-sm-2 control-label" for="input-id-name">Complete name</label>
@@ -168,20 +168,21 @@ class AddMusicAd extends React.Component {
                     </div>
                     <div className="form-group">
                       <label className="col-sm-2 control-label" style={{ marginTop: '50px' }}>Image</label>
-                      <div className="col-sm-5" style={{ marginTop: '50px' }}>
-                        </div>
-                        <div className="col-sm-5" style={{ textAlign: 'center' }}>
+                        <div className="col-sm-5" >
                           {(this.state.music.image)
                             ?
-                            <img src={this.state.music.image} style={{ maxHeight: '150px' }}/>
+                            <img src={this.state.music.image} style={{ maxHeight: '100px' }}/>
                             :
-                            <img src="http://placehold.it/150x150" style={{ maxHeight: '150px' }}/>
+                            <img src="http://placehold.it/100x100" style={{ maxHeight: '100px' }}/>
                           }
                         </div>
                       </div>
                       <div className="form-group">
-                        <div className="col-sm-4 col-sm-offset-2">
-                          <button type="submit" className="btn btn-primary" id="btn-save-music">Save Music</button>
+                        <div style={{ marginTop: '20px'}} className="col-sm-4 col-sm-offset-2">
+                          <button type="submit"
+                                  className="btn btn-primary"
+                                  id="btn-save-music"
+                                  onClick={this.handleSubmit}>Save Music</button>
                         </div>
                       </div>
                   </div>
