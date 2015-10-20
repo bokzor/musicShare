@@ -1,12 +1,13 @@
-var genres = [
-  {id: 1, name: 'Deep House'},
-  {id: 2, name: 'Drum & Bass'},
-  {id: 3, name: 'Dubstep'},
-  {id: 4, name: 'EDM'},
-  {id: 5, name: 'Electronic'},
-  {id: 6, name: 'Techno'},
-  {id: 7, name: 'Trance'},
-  {id: 8, name: 'Tech-house'}]
+const genres = [
+  {value: 1, label: 'Deep House'},
+  {value: 2, label: 'Drum & Bass'},
+  {value: 3, label: 'Dubstep'},
+  {value: 4, label: 'EDM'},
+  {value: 5, label: 'Electronic'},
+  {value: 6, label: 'Techno'},
+  {value: 7, label: 'Trance'},
+  {value: 8, label: 'Tech-house'}
+]
 
 var GenreData = {
   fetch: function () {
@@ -22,4 +23,4 @@ var GenreData = {
   }
 };
 
-export default GenreData;
+export default genres;

@@ -1,5 +1,6 @@
 import alt from '../alt';
 import AddMusicActions from '../actions/AddMusicActions';
+import GenreData from '../data/GenreData'
 
 class AddMusicStore {
   constructor() {
@@ -8,6 +9,7 @@ class AddMusicStore {
     this.isLoading = false;
     this.urlValidationState = '';
     this.urlHelpBlock = '';
+    this.genres = GenreData;
   }
 
   onGetSoundcloudSuccess(data) {

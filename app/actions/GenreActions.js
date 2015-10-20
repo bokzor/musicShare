@@ -9,10 +9,12 @@ class GenreActions {
     }
 
     getGenres() {
-        GenreData.fetch()
-            .then((genres) => {
-            this.actions.getGenresSuccess(genres)
-        })
+        this.actions.getGenresSuccess(GenreData)
+     //   GenreData.fetch()
+     //       .then((genres) => {
+     //       this.actions.getGenresSuccess(genres)
+     //   })
+
     }
 }
 
