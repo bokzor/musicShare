@@ -142,6 +142,7 @@ class AddMusicAd extends React.Component {
                                                     multi={true}
                                                     allowCreate={true}
                                                     onChange={this.changeTag.bind(this)}
+                                                    searchPromptText="Tags"
                                                 />
                                             </div>
                                         </div>

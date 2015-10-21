@@ -12,6 +12,7 @@ var babelify = require('babelify');
 var browserify = require('browserify');
 var watchify = require('watchify');
 var uglify = require('gulp-uglify');
+var livereload = require('gulp-livereload');
 
 var production = process.env.NODE_ENV === 'production';
 
@@ -71,7 +72,8 @@ gulp.task('browserify', ['browserify-vendor'], function() {
         .bundle()
         .pipe(source('bundle.js'))
         .pipe(gulpif(production, streamify(uglify({ mangle: false }))))
-        .pipe(gulp.dest('public/js'));
+        .pipe(gulp.dest('public/js'))
+        .pipe(livereload());
 });
 
 /*
@@ -98,7 +100,8 @@ gulp.task('browserify-watch', ['browserify-vendor'], function() {
                 gutil.log(gutil.colors.green('Finished rebundling in', (Date.now() - start) + 'ms.'));
             })
             .pipe(source('bundle.js'))
-            .pipe(gulp.dest('public/js/'));
+            .pipe(gulp.dest('public/js/'))
+            .pipe(livereload());
     }
 });
 
@@ -113,10 +116,12 @@ gulp.task('styles', function() {
         .pipe(less())
         .pipe(autoprefixer())
         .pipe(gulpif(production, cssmin()))
-        .pipe(gulp.dest('public/css'));
+        .pipe(gulp.dest('public/css'))
+        .pipe(livereload())
 });
 
 gulp.task('watch', function() {
+    livereload.listen();
     gulp.watch('app/stylesheets/**/*.less', ['styles']);
 });
 
