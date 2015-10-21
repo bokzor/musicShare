@@ -3,7 +3,6 @@ import mixin from 'mixin-decorator'
 import addChangeHandler from '../decorators/changeHandler'
 import Select from 'react-select'
 
-import GenreData from '../data/GenreData'
 
 
 import AddMusicStore from '../stores/AddMusicStore'
@@ -16,7 +15,6 @@ class AddMusicAd extends React.Component {
         super(props);
         this.state = AddMusicStore.getState();
         this.onChange = this.onChange.bind(this);
-
     }
 
     componentDidMount() {
@@ -31,8 +29,12 @@ class AddMusicAd extends React.Component {
         this.setState(state);
     }
 
-    changeSelect(value) {
-        console.log(value)
+    changeGenre(value) {
+        this.state.music.genres = value;
+    }
+
+    changeTag(value){
+        this.state.music.tags = value;
     }
 
     handleSubmit(event) {
@@ -128,14 +130,19 @@ class AddMusicAd extends React.Component {
                                                         name="form-field-name"
                                                         value={this.state.music.genres}
                                                         options={this.state.genres}
-                                                        onChange={this.changeSelect}
+                                                        onChange={this.changeGenre.bind(this)}
                                                         multi={true}
                                                     />
                                                 </div>
                                             </div>
                                             <label className="col-sm-2 control-label" for="input-id-tag">Tag(s)</label>
                                             <div className="col-sm-4">
-                                                <input type="text" className="form-control" id="input-id-tag"/>
+                                                <Select
+                                                    name="form-field-name"
+                                                    multi={true}
+                                                    allowCreate={true}
+                                                    onChange={this.changeTag.bind(this)}
+                                                />
                                             </div>
                                         </div>
                                         <div className="form-group">

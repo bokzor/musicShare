@@ -9,18 +9,18 @@ const genres = [
   {value: 8, label: 'Tech-house'}
 ]
 
-var GenreData = {
-  fetch: function () {
+//var GenreData = {
+//  fetch: function () {
     // returning a Promise because that is what fetch does.
-    return new Promise(function (resolve, reject) {
+//    return new Promise(function (resolve, reject) {
       // simulate an asynchronous action where data is fetched on
       // a remote server somewhere.
-      setTimeout(function () {
+//      setTimeout(function () {
         // resolve with some mock data
-        resolve(genres);
-      }, 0);
-    });
-  }
-};
+//        resolve(genres);
+//      }, 0);
+//    });
+//  }
+//};
 
 export default genres;

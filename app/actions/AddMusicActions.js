@@ -22,6 +22,7 @@ class AddMusicActions {
     }
 
     addMusic(music) {
+        console.log(music)
         axios.post('/addMusic', {
                 complete: music
             })

@@ -13,7 +13,7 @@ class AddMusicStore {
   }
 
   onGetSoundcloudSuccess(data) {
-    [this.music.artist, this.music.title] = data.title.split('-', 2)
+    [this.music.artist, this.music.title] = data.title.split('-', 2);
     this.music.completeName = data.title;
     this.music.duration = data.duration;
     this.music.genre = data.genre;
