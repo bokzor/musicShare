@@ -39,33 +39,11 @@ class AddMusicAd extends React.Component {
 
     handleSubmit(event) {
         event.preventDefault();
-
         AddMusicActions.addMusic(this.state.music)
 
-        /*if (!name) {
-         AddCharacterActions.invalidName();
-         this.refs.nameTextField.getDOMNode().focus();
-         }
-
-         if (name && gender) {
-         AddCharacterActions.addCharacter(name, gender);
-         }*/
     }
 
     render() {
-        var hours, minutes, seconds, isMix;
-        var duration = this.state.music.duration;
-        if (duration) {
-            // if music is longer than 20 minutes => isMix true
-            isMix = duration > 1200000;
-            if (isMix) {
-                console.log('isMix' + isMix);
-            }
-            seconds = parseInt((duration / 1000) % 60);
-            minutes = parseInt((duration / (1000 * 60)) % 60);
-            hours = parseInt((duration / (1000 * 60 * 60)) % 24);
-        }
-
         return (
             <section>
                 <section className="vbox">
