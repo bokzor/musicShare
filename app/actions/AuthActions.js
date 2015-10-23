@@ -1,4 +1,5 @@
-import alt from '../alt';
+import alt from '../alt'
+import axios from 'axios'
 
 class AuthActions {
     constructor() {

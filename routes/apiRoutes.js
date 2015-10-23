@@ -40,7 +40,7 @@ apiRoutes.post('/auth', function(req, res){
         if (err) throw err;
 
         if (!user) {
-            res.json({ success: false, message: 'Authentication failed. User not found.' });
+            res.status(404).json({ success: false, message: 'Authentication failed. User not found.' });
 
         } else if (user) {
 
@@ -50,7 +50,7 @@ apiRoutes.post('/auth', function(req, res){
                 if (err) throw err;
                 if (!isMatch) {
 
-                    res.json({ success: false, message: 'Authentication failed. Wrong password.' });
+                    res.status(401).json({ success: false, message: 'Authentication failed. Wrong password.' });
 
                 } else {
 

@@ -3,6 +3,7 @@ import {Link} from 'react-router'
 import mixin from 'mixin-decorator'
 import addChangeHandler from '../decorators/changeHandler'
 import AuthActions from '../actions/AuthActions'
+import AuthStore from '../stores/AuthStore'
 
 @mixin(addChangeHandler)
 class Signin extends React.Component {
