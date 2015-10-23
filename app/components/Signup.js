@@ -27,7 +27,29 @@ class Signup extends React.Component {
 
   handleSubmit(event) {
     event.preventDefault();
-    AuthActions.signup(this.state);
+
+    var username = this.state.signup.username.trim();
+    var email = this.state.signup.email.trim();
+    var password = this.state.signup.password.trim();
+
+    if (!username) {
+      AuthActions.invalidUsername();
+      this.refs.usernameTextField.getDOMNode().focus();
+    }
+
+    if (!email) {
+      AuthActions.invalidEmail();
+      this.refs.emailTextField.getDOMNode().focus();
+    }
+
+    if (!password) {
+      AuthActions.invalidPassword();
+      this.refs.passwordTextField.getDOMNode().focus();
+    }
+
+    if (username && email && password) {
+      AuthActions.signup(this.state);
+    }
   }
 
   render() {
@@ -40,25 +62,31 @@ class Signup extends React.Component {
               <strong>Sign up to find interesting thing</strong>
             </header>
             <form onSubmit={this.handleSubmit.bind(this)}>
-              <div className="form-group">
+              <div className={'form-group ' + this.state.usernameValidationState}>
                 <input
                   placeholder="Username"
                   className="form-control rounded input-lg text-center no-border"
+                  ref='usernameTextField'
                   onChange={this.changeHandler.bind(this, 'signup', 'username')}/>
+                <span className='span-help-block'>{this.state.usernameHelpBlock}</span>
               </div>
-              <div className="form-group">
+              <div className={'form-group ' + this.state.emailValidationState}>
                 <input
                   type="email"
                   placeholder="Email"
                   className="form-control rounded input-lg text-center no-border"
+                  ref='emailTextField'
                   onChange={this.changeHandler.bind(this, 'signup', 'email')}/>
+                <span className='span-help-block'>{this.state.emailHelpBlock}</span>
               </div>
-              <div className="form-group">
+              <div className={'form-group ' + this.state.passwordValidationState}>
                 <input
                   type="password"
                   placeholder="Password"
                   className="form-control rounded input-lg text-center no-border"
+                  ref='passwordTextField'
                   onChange={this.changeHandler.bind(this, 'signup', 'password')}/>
+                <span className='span-help-block'>{this.state.passwordHelpBlock}</span>
               </div>
               <button
                 type="submit"

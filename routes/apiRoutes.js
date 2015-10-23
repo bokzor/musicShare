@@ -1,17 +1,15 @@
 var express = require('express');
-var User = require('../models/user');
 var jwt = require('jsonwebtoken');
+
+var User = require('../models/user');
 var config = require('../config');
 
 // get an instance of the router for api routes
 var apiRoutes = express.Router();
 
-
 //apiRoutes.post('/checkToken')
 
-
 apiRoutes.post('/signup', function(req, res, next) {
-
     var username = req.body.username;
     var email = req.body.email;
     var password =  req.body.password;
@@ -24,18 +22,14 @@ apiRoutes.post('/signup', function(req, res, next) {
 
     newUser.save(function(err) {
         if (err) return next(err);
-
         var token = jwt.sign({user: newUser.username}, config.secretToken, {
             expiresInMinutes: 1440 // expires in 24 hours
         });
-
         res.send({
             message: 'User has been added',
             token: token
         });
-
     })
-
 });
 
 

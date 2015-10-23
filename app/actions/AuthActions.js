@@ -7,7 +7,10 @@ class AuthActions {
             'loginSuccess',
             'loginFail',
             'signupSuccess',
-            'signupFail'
+            'signupFail',
+            'invalidUsername',
+            'invalidEmail',
+            'invalidPassword'
         );
     }
 

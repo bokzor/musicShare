@@ -5,8 +5,14 @@ class AuthStore {
   constructor() {
     this.bindActions(AuthActions);
     this.login = {};
-    this.signup = {};
+    this.signup = { username: '', email: '', password: '' };
     this.jwt = '';
+    this.usernameValidationState = '';
+    this.emailValidationState = '';
+    this.passwordValidationState = '';
+    this.usernameHelpBlock = '';
+    this.emailHelpBlock = '';
+    this.passwordHelpBlock = '';
   }
 
 
@@ -23,10 +29,27 @@ class AuthStore {
 
   onSignupSuccess() {
     console.log('success signup');
+    toastr.success('success signup');
   }
 
   onSignupFail() {
     console.log('fail signup');
+    toastr.error('fail signup');
+  }
+
+  onInvalidUsername() {
+    this.usernameValidationState = 'has-error';
+    this.usernameHelpBlock = 'Please enter a username';
+  }
+
+  onInvalidEmail() {
+    this.emailValidationState = 'has-error';
+    this.emailHelpBlock = 'Please enter an email';
+  }
+
+  onInvalidPassword() {
+    this.passwordValidationState = 'has-error';
+    this.passwordHelpBlock = 'Please enter a password';
   }
 }
 
