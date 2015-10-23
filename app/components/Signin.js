@@ -1,7 +1,34 @@
-import React from 'react';
+import React from 'react'
 import {Link} from 'react-router'
+import mixin from 'mixin-decorator'
+import addChangeHandler from '../decorators/changeHandler'
+import AuthActions from '../actions/AuthActions'
 
+@mixin(addChangeHandler)
 class Signin extends React.Component {
+  constructor(props) {
+    super(props);
+    this.state = AuthStore.getState();
+    this.onChange = this.onChange.bind(this);
+  }
+
+  componentDidMount() {
+    AuthStore.listen(this.onChange);
+  }
+
+  componentWillUnmount() {
+    AuthStore.unlisten(this.onChange);
+  }
+
+  onChange(state) {
+    this.setState(state);
+  }
+
+  handleSubmit(event) {
+    event.preventDefault();
+    AuthActions.login(this.state);
+  }
+
   render() {
     return (
       <section id="content" className="m-t-lg wrapper-md animated fadeInUp">
@@ -13,15 +40,26 @@ class Signin extends React.Component {
             </header>
             <form action="index.html">
               <div className="form-group">
-                <input type="email" placeholder="Email"
-                       className="form-control rounded input-lg text-center no-border"/>
+                <input
+                  type="email"
+                  placeholder="Email"
+                  className="form-control rounded input-lg text-center no-border"
+                  onChange={this.changeHandler.bind(this, 'login', 'username')}/>
               </div>
               <div className="form-group">
-                <input type="password" placeholder="Password"
-                       className="form-control rounded input-lg text-center no-border"/>
+                <input
+                  type="password"
+                  placeholder="Password"
+                  className="form-control rounded input-lg text-center no-border"
+                  onChange={this.changeHandler.bind(this, 'login', 'password')}/>
               </div>
-              <button type="submit" className="btn btn-lg btn-warning lt b-white b-2x btn-block btn-rounded"><i
-                className="icon-arrow-right pull-right"></i><span className="m-r-n-lg">Sign in</span></button>
+              <button
+                type="submit"
+                className="btn btn-lg btn-warning lt b-white b-2x btn-block btn-rounded"
+                onClick={this.handleSubmit.bind(this)}>
+                <i className="icon-arrow-right pull-right"></i>
+                <span className="m-r-n-lg">Sign in</span>
+              </button>
               <div className="text-center m-t m-b"><a href="#">
                 <small>Forgot password?</small>
               </a></div>

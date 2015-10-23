@@ -8,6 +8,15 @@ class AuthActions {
         );
     }
 
+    login(state) {
+        axios.post('/api/auth', {
+            username: state.login.username,
+            password: state.login.password
+        })
+        .then(response => {this.actions.loginSuccess(response)})
+        .catch(this.actions.loginFail);
+    }
+
     autoLoginUser(jwt) {
 
         let savedJwt = localStorage.getItem('jwt');
@@ -19,11 +28,10 @@ class AuthActions {
             axios.post('/api/checkToken', {
                 token: jwt
             })
-                .then(response => {this.actions.loginSuccess(response)})
-                .catch(this.actions.loginFail);
+            .then(response => {this.actions.loginSuccess(response)})
+            .catch(this.actions.loginFail);
         }
     }
-
 }
 
 export default alt.createActions(AuthActions);

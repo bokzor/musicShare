@@ -3,13 +3,15 @@ import AuthActions from '../actions/AuthActions'
 
 class AuthStore {
     constructor() {
-        this.bindActions(AuthActions)
+        this.bindActions(AuthActions);
+        this.login = {};
         this.jwt = '';
     }
 
     onLoginSuccess(response) {
         this.jwt = response.data.token;
         this.currentUser = response.data.user;
+        console.log('success login');
     }
 
     onLoginFail(){

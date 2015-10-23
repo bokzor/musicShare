@@ -30,9 +30,11 @@ apiRoutes.post('/signup', function(req, res, next) {
 
 apiRoutes.post('/auth', function(req, res){
 
+    let username = req.body.username;
+    let password = req.body.password;
     // find the user
     User.findOne({
-        username: req.body.username
+        username: username
     }, function(err, user) {
 
         if (err) throw err;
@@ -44,7 +46,7 @@ apiRoutes.post('/auth', function(req, res){
 
 
             // test a matching password
-            user.comparePassword(req.body.password, function(err, isMatch) {
+            user.comparePassword(password, function(err, isMatch) {
                 if (err) throw err;
                 if (!isMatch) {
 
