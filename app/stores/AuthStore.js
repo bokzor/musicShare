@@ -11,7 +11,6 @@ class AuthStore {
     onLoginSuccess(response) {
         this.jwt = response.data.token;
         this.currentUser = response.data.user;
-        console.log('success login');
     }
 
     onLoginFail(){

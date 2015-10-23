@@ -23,6 +23,7 @@ class Signin extends React.Component {
 
   onChange(state) {
     this.setState(state);
+    if (this.state.jwt) this.context.router.transitionTo('/');
   }
 
   handleSubmit(event) {
@@ -68,7 +69,7 @@ class Signin extends React.Component {
               <p className="text-muted text-center">
                 <small>Do not have an account?</small>
               </p>
-              <Link to="/genres" className="btn btn-lg btn-info btn-block rounded">Create an account</Link>
+              <Link to="/signup" className="btn btn-lg btn-info btn-block rounded">Create an account</Link>
             </form>
           </section>
         </div>
@@ -76,5 +77,9 @@ class Signin extends React.Component {
     );
   }
 }
+
+Signin.contextTypes = {
+  router: React.PropTypes.func
+};
 
 export default Signin;
