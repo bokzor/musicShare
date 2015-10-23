@@ -68,7 +68,7 @@ class Signin extends React.Component {
               <p className="text-muted text-center">
                 <small>Do not have an account?</small>
               </p>
-              <Link to="/genres" className="btn btn-lg btn-info btn-block rounded">Create an account</Link>
+              <Link to="/signup" className="btn btn-lg btn-info btn-block rounded">Create an account</Link>
             </form>
           </section>
         </div>

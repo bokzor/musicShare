@@ -8,6 +8,7 @@ var userSchema = new mongoose.Schema({
     username: { type: String, index: { unique: true }, required: true },
     name: String,
     password: { type: String, required: true },
+    email: { type: String, unique: true, required: true },
     followedBy: [{ type: mongoose.Schema.Types.ObjectId, ref: 'User'}],
     following: [{ type: mongoose.Schema.Types.ObjectId, ref: 'User'}],
     followedByCount: { type: Number, default: 0 },
