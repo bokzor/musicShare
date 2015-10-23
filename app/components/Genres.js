@@ -7,6 +7,7 @@ import composeAnimation from '../decorators/composeAnimation'
 import GenreActions from '../actions/GenreActions'
 import GenreStore from '../stores/GenreStore'
 
+@mixin(composeAnimation)
 class Genre extends React.Component {
 
     constructor(props) {

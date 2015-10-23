@@ -19,6 +19,7 @@ class AddMusicStore {
     this.music.genre = data.genre;
     this.music.image = data.artwork_url;
     this.music.url = data.url;
+    this.music.isMix = data.duration > 1200000;
   }
 
   onInvalidUrl() {

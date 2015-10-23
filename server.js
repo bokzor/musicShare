@@ -11,10 +11,10 @@ var Router = require('react-router');
 var routes = require('./app/routes');
 
 var mongoose = require('mongoose');
-var User = require('./models/user');
 var Music = require('./models/music').model;
 
 var config = require('./config');
+var apiRoutes = require('./routes/apiRoutes');
 
 mongoose.connect(config.database);
 
@@ -44,6 +44,53 @@ app.use(logger('dev'));
 app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({extended: false}));
 app.use(express.static(path.join(__dirname, 'public')));
+
+
+
+// route middleware to verify a token
+apiRoutes.use(function(req, res, next) {
+
+  // check header or url parameters or post parameters for token
+  var token = req.body.token || req.query.token || req.headers['x-access-token'];
+
+  // decode token
+  if (token) {
+
+    // verifies secret and checks exp
+    jwt.verify(token, config.secretToken, function(err, decoded) {
+      if (err) {
+        return res.json({ success: false, message: 'Failed to authenticate token.' });
+      } else {
+        // if everything is good, save to request for use in other routes
+        req.decoded = decoded;
+        next();
+      }
+    });
+  } else {
+    // if there is no token
+    // return an error
+    return res.status(403).send({
+      success: false,
+      message: 'No token provided.'
+    });
+  }
+});
+
+
+
+
+
+app.use('/api', apiRoutes);
+
+
+
+
+
+
+
+
+
+
 
 app.use(function (req, res) {
   Router.run(routes, req.path, function (Handler) {

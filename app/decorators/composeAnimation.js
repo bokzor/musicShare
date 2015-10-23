@@ -7,7 +7,7 @@ const composeAnimation = {
         elem.style.opacity = 0;
         window.requestAnimationFrame(function() {
             // Now set a transition on the opacity
-            elem.style.transition = "opacity 250ms";
+            elem.style.transition = "opacity 1250ms";
             // and set the opacity to 1
             elem.style.opacity = 1;
         });

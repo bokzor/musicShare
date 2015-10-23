@@ -129,7 +129,7 @@ class AddMusicAd extends React.Component {
                                             <div className="col-sm-1">
                                                 <div className="checkbox i-checks">
                                                     <label>
-                                                        {(isMix)
+                                                        {(this.state.music.isMix)
                                                             ?
                                                             <input type="checkbox" value="" id="input-id-ismix" checked/>
                                                             :
