@@ -13,16 +13,27 @@ var apiRoutes = express.Router();
 apiRoutes.post('/signup', function(req, res, next) {
 
     var username = req.body.username;
+    var email = req.body.email;
     var password =  req.body.password;
 
     var newUser = new User({
         username: username,
+        email: email,
         password: password
     });
 
     newUser.save(function(err) {
         if (err) return next(err);
-        res.send({ message: 'User has been added'});
+
+        var token = jwt.sign({user: newUser.username}, config.secretToken, {
+            expiresInMinutes: 1440 // expires in 24 hours
+        });
+
+        res.send({
+            message: 'User has been added',
+            token: token
+        });
+
     })
 
 });

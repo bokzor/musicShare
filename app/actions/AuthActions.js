@@ -5,7 +5,9 @@ class AuthActions {
     constructor() {
         this.generateActions(
             'loginSuccess',
-            'loginFail'
+            'loginFail',
+            'signupSuccess',
+            'signupFail'
         );
     }
 
@@ -16,6 +18,16 @@ class AuthActions {
         })
         .then(response => {this.actions.loginSuccess(response)})
         .catch(this.actions.loginFail);
+    }
+
+    signup(state) {
+        axios.post('/api/signup', {
+            username: state.signup.username,
+            email: state.signup.email,
+            password: state.signup.password
+        })
+          .then(response => {this.actions.signupSuccess(response)})
+          .catch(this.actions.signupFail);
     }
 
     autoLoginUser(jwt) {
