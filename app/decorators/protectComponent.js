@@ -1,15 +1,18 @@
 import React from 'react';
+import AuthStore from '../stores/AuthStore';
+import AuthActions from '../actions/AuthActions';
 
 export default (ComponentToBeRendered) => {
     class ProtectedComponent extends React.Component {
         constructor(props) {
             super(props);
             // we're keeping track of the current user instance
-            this.state = { currentUser: AuthStore.getCurrentUser() };
-            this._updateState = this._updateState.bind(this);
+            this.state = AuthStore.getState();
+            this.onChange = this.onChange.bind(this);
         }
+
         componentDidMount() {
-            this._unsubscribe = AuthStore.listen(this._updateState);
+            AuthStore.listen(this.onChange);
 
             // returns out of method is current user already exists
             if (this.state.currentUser) return;
@@ -21,15 +24,16 @@ export default (ComponentToBeRendered) => {
             if (jwt) AuthActions.autoLoginUser(jwt);
 
             // redirect to login page is theres no current user state or any JWT
-            if (unauthorized) this.context.router.transitionTo('/login');
+            if (unauthorized) this.context.router.transitionTo('/signin');
         }
         componentWillUnmount() {
-            this._unsubscribe();
+            AuthStore.unlisten(this.onChange);
         }
-        _updateState(state) {
-            // once AuthActions.autoLoginUser returns success and authenticates, the current user state is updated
-            this.setState({ currentUser: state.currentUser });
+
+        onChange(state) {
+            this.setState(state);
         }
+
         render() {
             let s = this.state;
 
@@ -38,7 +42,7 @@ export default (ComponentToBeRendered) => {
             if (s.currentUser) {
                 return <ComponentToBeRendered {...this.props} currentUser={s.currentUser} />;
             } else {
-                return <Spinner fullScreen={true} />;
+               return <div>degage</div>;
             }
         }
     }

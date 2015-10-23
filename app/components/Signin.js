@@ -1,4 +1,5 @@
 import React from 'react';
+import {Link} from 'react-router'
 
 class Signin extends React.Component {
   render() {
@@ -28,7 +29,7 @@ class Signin extends React.Component {
               <p className="text-muted text-center">
                 <small>Do not have an account?</small>
               </p>
-              <a href="signup.html" className="btn btn-lg btn-info btn-block rounded">Create an account</a>
+              <Link to="/genres" className="btn btn-lg btn-info btn-block rounded">Create an account</Link>
             </form>
           </section>
         </div>
