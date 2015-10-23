@@ -42,7 +42,7 @@ export default (ComponentToBeRendered) => {
             if (s.currentUser) {
                 return <ComponentToBeRendered {...this.props} currentUser={s.currentUser} />;
             } else {
-               return <div>degage</div>;
+               return <div></div>;
             }
         }
     }

@@ -14,6 +14,7 @@ class AuthActions {
         );
     }
 
+
     login(state) {
         axios.post('/api/auth', {
             username: state.login.username,
