@@ -4,7 +4,8 @@ var logger = require('morgan');
 var bodyParser = require('body-parser');
 var async = require('async');
 var request = require('request');
-
+var cookieParser = require('cookie-parser');
+var reactCookie = require('react-cookie');
 var swig = require('swig');
 var React = require('react');
 var Router = require('react-router');
@@ -38,6 +39,7 @@ process.on('SIGINT', function () {
 });
 
 var app = express();
+app.use(cookieParser())
 
 app.set('port', process.env.PORT || 3000);
 app.use(logger('dev'));
@@ -52,14 +54,9 @@ app.use('/api', apiRoutes);
 
 
 
-
-
-
-
-
-
 app.use(function (req, res) {
   Router.run(routes, req.path, function (Handler) {
+    reactCookie.plugToRequest(req, res);
     var html = React.renderToString(React.createElement(Handler));
     var page = swig.renderFile('views/index.html', {html: html});
     res.send(page);

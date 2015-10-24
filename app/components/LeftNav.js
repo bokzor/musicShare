@@ -8,7 +8,7 @@ class LeftNav extends React.Component {
         <section className="vbox">
           <section className="w-f-md scrollable">
             <div className="slim-scroll" data-height="auto" data-disable-fade-out="true" data-distance="0"
-              data-size="10px" data-railOpacity="0.2">
+                 data-size="10px" data-railOpacity="0.2">
               <nav className="nav-primary hidden-xs">
                 <ul className="nav bg clearfix">
                   <li className="hidden-nav-xs padder m-t m-b-sm text-xs text-muted">
@@ -22,7 +22,7 @@ class LeftNav extends React.Component {
                     </Link>
                   </li>
                   <li>
-                    <a href="listen.html">
+                    <a href="#">
                       <i className="icon-music-tone-alt icon text-info"></i>
                       <span className="font-bold">Top Songs</span>
                     </a>
@@ -72,22 +72,6 @@ class LeftNav extends React.Component {
                 <span className="text-muted text-xs block m-l">Art Director</span>
                 </span>
                 </a>
-                <ul className="dropdown-menu animated fadeInRight aside text-left">
-                  <li>
-                    <span className="arrow bottom hidden-nav-xs"></span>
-                    <a href="#">Settings</a>
-                  </li>
-                  <li>
-                    <a href="profile.html">Profile</a>
-                  </li>
-                  <li>
-                    <a href="docs.html">Help</a>
-                  </li>
-                  <li className="divider"></li>
-                  <li>
-                    <a href="modal.lockme.html" data-toggle="ajaxModal">Logout</a>
-                  </li>
-                </ul>
               </div>
             </div>
           </footer>

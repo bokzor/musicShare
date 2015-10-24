@@ -10,21 +10,19 @@ import Signup from './components/Signup';
 import AddMusicAd from './components/AddMusicAd';
 
 
-
-
-
 const routes = (
-    <Route>
-        <Route path='/signin' handler={Signin} />
-        <Route path='/signup' handler={Signup} />
-        <Route handler={App}>
-            <Route path='/' handler={Discover} />
-            <Route path='/genres' handler={Genres} />
-            <Route path='/genres/:genreId' handler={Genres} />
-            <Route path='/profile' handler={Profile} />
-            <Route path='/addMusicAd' handler={AddMusicAd} />
-        </Route>
+  <Route>
+    <Route path='/signin' handler={Signin}/>
+    <Route path='/logout' handler={Signin}/>
+    <Route path='/signup' handler={Signup}/>
+    <Route handler={App}>
+      <Route path='/' handler={Discover}/>
+      <Route path='/genres' handler={Genres}/>
+      <Route path='/genres/:genreId' handler={Genres}/>
+      <Route path='/profile' handler={Profile}/>
+      <Route path='/addMusicAd' handler={AddMusicAd}/>
     </Route>
+  </Route>
 );
 
 export default routes;

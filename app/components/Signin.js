@@ -4,6 +4,9 @@ import mixin from 'mixin-decorator'
 import addChangeHandler from '../decorators/changeHandler'
 import AuthActions from '../actions/AuthActions'
 import AuthStore from '../stores/AuthStore'
+import cookie from 'react-cookie';
+
+
 
 @mixin(addChangeHandler)
 class Signin extends React.Component {
@@ -11,6 +14,10 @@ class Signin extends React.Component {
     super(props);
     this.state = AuthStore.getState();
     this.onChange = this.onChange.bind(this);
+  }
+
+  componentWillMount(){
+    cookie.remove('jwt');
   }
 
   componentDidMount() {
@@ -40,10 +47,9 @@ class Signin extends React.Component {
             <header className="wrapper text-center">
               <strong>Sign in to get in touch</strong>
             </header>
-            <form action="index.html">
+            <form>
               <div className="form-group">
                 <input
-                  type="email"
                   placeholder="Email"
                   className="form-control rounded input-lg text-center no-border"
                   onChange={this.changeHandler.bind(this, 'login', 'username')}/>

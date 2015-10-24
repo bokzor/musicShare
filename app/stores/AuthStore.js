@@ -1,5 +1,6 @@
 import alt from '../alt'
 import AuthActions from '../actions/AuthActions'
+import cookie from 'react-cookie';
 
 class AuthStore {
   constructor() {
@@ -19,15 +20,16 @@ class AuthStore {
   onLoginSuccess(response) {
     this.jwt = response.data.token;
     this.currentUser = response.data.user;
-    console.log('success login');
+    cookie.save('jwt', this.jwt);
   }
 
 
-  onLoginFail() {
+  onLoginFail(response) {
+    console.log(response)
     console.log('fail login');
   }
 
-  onSignupSuccess() {
+  onSignupSuccess(response) {
     console.log('success signup');
     toastr.success('success signup');
   }

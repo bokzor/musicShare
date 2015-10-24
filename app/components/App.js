@@ -8,6 +8,9 @@ import RightNav from './RightNav';
 import Footer from './Footer';
 import ProtectComponent from '../decorators/protectComponent'
 
+import mixin from 'mixin-decorator'
+import composeAnimation from '../decorators/composeAnimation'
+@mixin(composeAnimation)
 class App extends React.Component {
     constructor(props) {
         super(props);
