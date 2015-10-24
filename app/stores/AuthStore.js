@@ -20,7 +20,7 @@ class AuthStore {
   onLoginSuccess(response) {
     this.jwt = response.data.token;
     this.currentUser = response.data.user;
-    cookie.save('jwt', this.jwt);
+    cookie.save('XSRF-TOKEN', this.jwt);
   }
 
 

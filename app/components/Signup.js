@@ -23,6 +23,7 @@ class Signup extends React.Component {
 
   onChange(state) {
     this.setState(state);
+    if (this.state.jwt) this.context.router.transitionTo('/');
   }
 
   handleSubmit(event) {

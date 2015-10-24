@@ -40,7 +40,6 @@ class AddMusicAd extends React.Component {
     handleSubmit(event) {
         event.preventDefault();
         AddMusicActions.addMusic(this.state.music)
-
     }
 
     render() {

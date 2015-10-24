@@ -11,70 +11,70 @@ var urlYoutube = 'https://www.googleapis.com/youtube/v3/videos';
 var regexYoutube = /(youtu\.be\/|[?&]v=)([^&]+)/;
 
 class AddMusicActions {
-    constructor() {
-        this.generateActions(
-            'getSoundcloudSuccess',
-            'addMusicSuccess',
-            'addMusicFail',
-            'invalidUrl',
-            'getGenresSuccess'
-        );
-    }
+  constructor() {
+    this.generateActions(
+      'getSoundcloudSuccess',
+      'addMusicSuccess',
+      'addMusicFail',
+      'invalidUrl',
+      'getGenresSuccess'
+    );
+  }
 
-    addMusic(music) {
-        axios.post('/addMusic', {
-                complete: music
-            })
-            .then(function (response) {
-                this.actions.addMusicSuccess(response.data);
-            })
-            .catch(function (response) {
-                this.actions.addMusicFail(response.data);
-            });
-    }
+  addMusic(music) {
+    axios.post('/api/addMusic', {
+        musics: music
+      })
+      .then((response) => {
+        this.actions.addMusicSuccess(response.data);
+      })
+      .catch((response) => {
+        this.actions.addMusicFail(response.data);
+      });
+  }
 
-    fetchUrl(e) {
-        let url = e.target.value;
+  fetchUrl(e) {
+    let url = e.target.value;
 
-        if (url) {
-            if (url.indexOf('soundcloud.com') > 0) {
-                axios.get(urlSoundcloud, {
-                        params: {
-                            url: url,
-                            client_id: client_soundcloud
-                        }
-                    })
-                    .then((response) => {
-                        $('#div-url-result').slideDown();
-                        $('#text-form-add-music').text('Check information and save it!');
-                        response.data.url = url;
-                        this.actions.getSoundcloudSuccess(response.data);
-                    })
-                    .catch(function (response) {
-                        $('#div-url-result').slideUp();
-                        $('#text-form-add-music').text('Url seems incorrect!');
-                        });
-            } else {
-                var idVideo = url.match(regexYoutube)[2];
-                axios.get(urlYoutube, {
-                        params: {
-                            id: idVideo,
-                            key: client_youtube
-                        }
-                    })
-                    .then((response) => {
-                        this.actions.getSoundcloudSuccess(response.data);
-                    })
-                    .catch(function (response) {
-                        console.log('error', response);
-                    });
+    if (url) {
+      if (url.indexOf('soundcloud.com') > 0) {
+        axios.get(urlSoundcloud, {
+            params: {
+              url: url,
+              client_id: client_soundcloud
             }
-        } else {
+          })
+          .then((response) => {
+            $('#div-url-result').slideDown();
+            $('#text-form-add-music').text('Check information and save it!');
+            response.data.url = url;
+            this.actions.getSoundcloudSuccess(response.data);
+          })
+          .catch(function (response) {
             $('#div-url-result').slideUp();
-            $('#text-form-add-music').text('Add a music to my profile!');
-            console.log('EMPTY URL');
-        }
+            $('#text-form-add-music').text('Url seems incorrect!');
+          });
+      } else {
+        var idVideo = url.match(regexYoutube)[2];
+        axios.get(urlYoutube, {
+            params: {
+              id: idVideo,
+              key: client_youtube
+            }
+          })
+          .then((response) => {
+            this.actions.getSoundcloudSuccess(response.data);
+          })
+          .catch(function (response) {
+            console.log('error', response);
+          });
+      }
+    } else {
+      $('#div-url-result').slideUp();
+      $('#text-form-add-music').text('Add a music to my profile!');
+      console.log('EMPTY URL');
     }
+  }
 }
 
 export default alt.createActions(AddMusicActions);

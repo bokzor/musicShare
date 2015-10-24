@@ -13,12 +13,12 @@ export default (ComponentToBeRendered) => {
     }
 
     componentWillMount() {
-      this.jwt = cookie.load('jwt');
+      this.jwt = cookie.load('XSRF-TOKEN');
     }
 
     componentDidMount() {
-      this.jwt = cookie.load('jwt');
-      // redirect to login page is theres no current user state or any JWT
+      this.jwt = cookie.load('XSRF-TOKEN');
+      // We should check the expiration of the token
       if (!this.jwt) this.context.router.transitionTo('/signin');
     }
 

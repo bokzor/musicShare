@@ -52,6 +52,12 @@ class LeftNav extends React.Component {
                       <span className="font-bold">Followed</span>
                     </a>
                   </li>
+                  <li >
+                    <Link to="/addMusicAd">
+                      <i className="fa icon-plus icon"></i>
+                      <span className="font-bold">Add a music</span>
+                    </Link>
+                  </li>
                 </ul>
               </nav>
             </div>
