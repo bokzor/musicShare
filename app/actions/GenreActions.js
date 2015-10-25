@@ -10,7 +10,6 @@ class GenreActions {
 
     getGenres() {
         this.actions.getGenresSuccess(GenreData);
-
     }
 }
 

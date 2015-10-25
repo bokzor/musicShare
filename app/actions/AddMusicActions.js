@@ -1,5 +1,6 @@
-import alt from '../alt';
-import axios from 'axios';
+import alt from '../alt'
+import axios from 'axios'
+import GenreData from '../data/GenreData'
 
 var client_youtube = 'AIzaSyCNgsM94-HneaMwxGz25LdzfKUxk_mBeAg';
 var client_soundcloud = '7220cd79b258ae2f8d427b34d761fb16';
@@ -22,7 +23,10 @@ class AddMusicActions {
   }
 
   async addMusic(music) {
+    music.genres = music.genres.split(',');
+    console.log(music)
     try {
+
       const response = await axios.post('/api/addMusic', {
         musics: music
       });
@@ -33,46 +37,45 @@ class AddMusicActions {
     }
   }
 
-  fetchUrl(e) {
+  async fetchUrl(e) {
     let url = e.target.value;
 
     if (url) {
       if (url.indexOf('soundcloud.com') > 0) {
-        axios.get(urlSoundcloud, {
+        try {
+          const response = await axios.get(urlSoundcloud, {
             params: {
               url: url,
               client_id: client_soundcloud
             }
-          })
-          .then((response) => {
-            $('#div-url-result').slideDown();
-            $('#text-form-add-music').text('Check information and save it!');
-            response.data.url = url;
-            this.actions.getSoundcloudSuccess(response.data);
-          })
-          .catch(function (response) {
-            $('#div-url-result').slideUp();
-            $('#text-form-add-music').text('Url seems incorrect!');
           });
+          $('#div-url-result').slideDown();
+          $('#text-form-add-music').text('Check information and save it!');
+          response.data.url = url;
+          this.actions.getSoundcloudSuccess(response.data);
+        }
+        catch (err) {
+          $('#div-url-result').slideUp();
+          $('#text-form-add-music').text('Url seems incorrect!');
+        }
       } else {
         var idVideo = url.match(regexYoutube)[2];
-        axios.get(urlYoutube, {
+        try {
+          const response = await axios.get(urlYoutube, {
             params: {
               id: idVideo,
               key: client_youtube
             }
-          })
-          .then((response) => {
-            this.actions.getSoundcloudSuccess(response.data);
-          })
-          .catch(function (response) {
-            console.log('error', response);
           });
+          this.actions.getSoundcloudSuccess(response.data);
+        }
+        catch (err) {
+          console.log('error', err);
+        }
       }
     } else {
       $('#div-url-result').slideUp();
       $('#text-form-add-music').text('Add a music to my profile!');
-      console.log('EMPTY URL');
     }
   }
 }

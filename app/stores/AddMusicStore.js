@@ -16,7 +16,6 @@ class AddMusicStore {
     [this.music.artist, this.music.title] = data.title.split('-', 2);
     this.music.completeName = data.title;
     this.music.duration = data.duration;
-    this.music.genre = data.genre;
     this.music.image = data.artwork_url;
     this.music.url = data.url;
     this.music.isMix = data.duration > 1200000;
