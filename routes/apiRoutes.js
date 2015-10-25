@@ -74,7 +74,7 @@ apiRoutes.post('/auth', function (req, res) {
           // return the information including token as JSON
           res.json({
             success: true,
-            message: 'Enjoy your token!',
+            message: 'Welcome ' + user.username,
             token: token,
             expires: decoded.exp
           });
