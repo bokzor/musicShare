@@ -14,17 +14,16 @@ class AuthActions {
     );
   }
 
-  login(state) {
-    axios.post('/api/auth', {
+  async login(state) {
+    try {
+      const response = await axios.post('/api/auth', {
         username: state.login.username,
         password: state.login.password
-      })
-      .then(response => {
-        this.actions.loginSuccess(response)
-      })
-      .catch(response => {
-        this.actions.loginFail(response)
       });
+      this.actions.loginSuccess(response)
+    } catch (err){
+      this.actions.loginFail(response)
+    }
   }
 
   signup(state) {

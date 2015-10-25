@@ -128,6 +128,7 @@ apiRoutes.post('addMusic', function (req, res) {
   music.img = req.body.music.image;
   music.isMix = req.body.music.isMix;
   music.duration = req.body.music.duration;
+  music.url = req.body.music.url;
 });
 
 

@@ -67,7 +67,7 @@ gulp.task('browserify', ['browserify-vendor'], function() {
     return browserify('app/main.js')
         .external(dependencies)
         .transform(babelify.configure({
-            optional: ["es7.decorators"]
+            optional: ["es7.decorators", "runtime"]
         }))
         .bundle()
         .pipe(source('bundle.js'))
@@ -85,7 +85,7 @@ gulp.task('browserify-watch', ['browserify-vendor'], function() {
     var bundler = watchify(browserify('app/main.js', watchify.args));
     bundler.external(dependencies);
     bundler.transform(babelify.configure({
-        optional: ["es7.decorators"]
+        optional: ["es7.decorators", "runtime"]
     }));
     bundler.on('update', rebundle);
     return rebundle();
