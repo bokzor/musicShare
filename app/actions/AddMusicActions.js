@@ -23,10 +23,14 @@ class AddMusicActions {
   }
 
   async addMusic(music) {
+
+    music.genres = GenreData.find(e => e.value == music.genresId).label;
+
     //convert array of id to array of value
-    music.genres = music.genres.split(',').map(n =>
-      GenreData.find(e => e.value == n).label
-    );
+    console.log(music.genres);
+    //music.genres = music.genres.split(',').map(n =>
+    //  GenreData.find(e => e.value == n).label
+    //);
     music.tags = music.tags.split(',');
 
     try {

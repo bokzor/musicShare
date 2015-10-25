@@ -29,7 +29,7 @@ class AddMusicAd extends React.Component {
   }
 
   changeGenre(value) {
-    this.state.music.genres = value;
+    this.state.music.genresId = value;
   }
 
   changeTag(value) {
@@ -108,7 +108,6 @@ class AddMusicAd extends React.Component {
                             value={this.state.music.genres}
                             options={this.state.genres}
                             onChange={this.changeGenre.bind(this)}
-                            multi={true}
                           />
                         </div>
                       </div>
