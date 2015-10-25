@@ -23,14 +23,19 @@ class AddMusicActions {
   }
 
   async addMusic(music) {
-    music.genres = music.genres.split(',');
-    console.log(music)
-    try {
+    //convert array of id to array of value
+    music.genres = music.genres.split(',').map(n =>
+      GenreData.find(e => e.value == n).label
+    );
+    music.tags = music.tags.split(',');
 
+    try {
       const response = await axios.post('/api/addMusic', {
-        musics: music
+        music: music
       });
       this.actions.addMusicSuccess(response.data);
+      toastr.success(response.data.message);
+
     }
     catch (err) {
       this.actions.addMusicFail(err);

@@ -62,6 +62,7 @@ class AddMusicAd extends React.Component {
                         className={'form-control ' + this.state.urlValidationState}
                         id="input-id-url"
                         data-required="true"
+                        value={this.state.music.url}
                         ref="urlTextField"
                         onChange={AddMusicActions.fetchUrl} s/>
                       <span className="help-block">{this.state.urlHelpBlock}</span>

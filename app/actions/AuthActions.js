@@ -22,7 +22,7 @@ class AuthActions {
       });
       this.actions.loginSuccess(response)
     } catch (err) {
-      this.actions.loginFail(response)
+      this.actions.loginFail(err)
     }
   }
 
@@ -33,7 +33,7 @@ class AuthActions {
         email: state.signup.email,
         password: state.signup.password
       });
-      this.actions.signupSuccess(response)
+      this.actions.signupSuccess(response);
     } catch (err) {
       this.actions.signupFail(err);
     }

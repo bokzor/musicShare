@@ -19,24 +19,25 @@ class AuthStore {
 
   onLoginSuccess(response) {
     this.jwt = response.data.token;
-    this.currentUser = response.data.user;
+    this.user = response.data.user;
+    toastr.success(response.data.message);
     cookie.save('XSRF-TOKEN', this.jwt);
   }
 
 
   onLoginFail(response) {
-    console.log(response)
-    console.log('fail login');
+    toastr.error(response.data.message);
   }
 
   onSignupSuccess(response) {
-    console.log('success signup');
-    toastr.success('success signup');
+    console.log(response);
+    this.jwt = response.data.token;
+    this.user = response.data.user;
+    toastr.success(response.data.message);
   }
 
-  onSignupFail() {
-    console.log('fail signup');
-    toastr.error('fail signup');
+  onSignupFail(response) {
+    toastr.error(response.data.message);
   }
 
   onInvalidUsername() {

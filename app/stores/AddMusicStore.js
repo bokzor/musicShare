@@ -10,6 +10,7 @@ class AddMusicStore {
     this.urlValidationState = '';
     this.urlHelpBlock = '';
     this.genres = GenreData;
+    this.music.tags = '';
   }
 
   onGetSoundcloudSuccess(data) {
@@ -20,6 +21,10 @@ class AddMusicStore {
     this.music.url = data.url;
     this.music.isMix = data.duration > 1200000;
     this.music.hostType = 'soundcloud';
+  }
+
+  onAddMusicSuccess(date){
+    alt.recycle(this);
   }
 
   onInvalidUrl() {

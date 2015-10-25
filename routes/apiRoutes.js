@@ -2,7 +2,7 @@ const express = require('express');
 const jwt = require('jsonwebtoken');
 
 const User = require('../models/user');
-const Music = require('../models/music');
+const Music = require('../models/music').model;
 
 const config = require('../config');
 
@@ -24,17 +24,16 @@ apiRoutes.post('/signup', function (req, res, next) {
 
   newUser.save(function (err) {
     if (err) return next(err);
-
     // we create a new token
-    const token = jwt.sign({user: newUser.username}, config.secretToken, {
+    const token = jwt.sign({user: { username : newUser.username }}, config.secretToken, {
       expiresInMinutes: 1440 // expires in 24 hours
     });
 
     // let's fetch it to get the expires param
     const decoded = jwt.decode(token);
 
-    res.send({
-      message: 'User has been added',
+    res.status(201).send({
+      message: 'Registration Successfull',
       token: token,
       user: {id: newUser.id, username: newUser.username},
       expires: decoded.exp
@@ -67,7 +66,7 @@ apiRoutes.post('/auth', function (req, res) {
         } else {
           // if user is found and password is right
           // create a token
-          const token = jwt.sign({user: user.username}, config.secretToken, {
+          const token = jwt.sign({user: { username: user.username}}, config.secretToken, {
             expiresIn: 86400 // expires in 24 hours
           });
           const decoded = jwt.decode(token);
@@ -77,7 +76,6 @@ apiRoutes.post('/auth', function (req, res) {
             success: true,
             message: 'Enjoy your token!',
             token: token,
-            user: {id: user.id, username: user.username},
             expires: decoded.exp
           });
         }
@@ -93,7 +91,6 @@ apiRoutes.post('/auth', function (req, res) {
 apiRoutes.use(function (req, res, next) {
 
   // check header or url parameters or post parameters for token
-  console.log(req.headers)
   var token = req.body.token || req.query.token || req.headers['x-xsrf-token'];
 
   // decode token
@@ -109,6 +106,7 @@ apiRoutes.use(function (req, res, next) {
         next();
       }
     });
+
   } else {
     // if there is no token
     // return an error
@@ -120,7 +118,7 @@ apiRoutes.use(function (req, res, next) {
 });
 
 
-apiRoutes.post('addMusic', function (req, res) {
+apiRoutes.post('/addMusic', function (req, res) {
   let music = new Music();
   music.name = req.body.music.completeName;
   music.title = req.body.music.title;
@@ -129,6 +127,33 @@ apiRoutes.post('addMusic', function (req, res) {
   music.isMix = req.body.music.isMix;
   music.duration = req.body.music.duration;
   music.url = req.body.music.url;
+  music.genres = req.body.music.genres;
+  music.hostType = req.body.music.hostType;
+  music.tags = req.body.music.tags;
+
+  User.findOne({
+    username: req.decoded.user.username
+  }, function (err, user) {
+    console.log(user);
+    user.musics.push(music);
+    user.save(err => {
+      if(err) {
+        res.status(400).json({
+          success: 'false',
+          error: err
+        });
+      } else {
+        res.status(201).json({
+          message: 'Music added',
+          success: 'true'
+        });
+      }
+
+    })
+  });
+
+
+
 });
 
 

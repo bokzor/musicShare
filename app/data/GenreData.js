@@ -7,7 +7,7 @@ const genres = [
   {value: 6, label: 'Techno'},
   {value: 7, label: 'Trance'},
   {value: 8, label: 'Tech-house'}
-]
+];
 
 //var GenreData = {
 //  fetch: function () {
