@@ -21,16 +21,16 @@ class AddMusicActions {
     );
   }
 
-  addMusic(music) {
-    axios.post('/api/addMusic', {
+  async addMusic(music) {
+    try {
+      const response = await axios.post('/api/addMusic', {
         musics: music
-      })
-      .then((response) => {
-        this.actions.addMusicSuccess(response.data);
-      })
-      .catch((response) => {
-        this.actions.addMusicFail(response.data);
       });
+      this.actions.addMusicSuccess(response.data);
+    }
+    catch (err) {
+      this.actions.addMusicFail(err);
+    }
   }
 
   fetchUrl(e) {

@@ -21,34 +21,34 @@ class AuthActions {
         password: state.login.password
       });
       this.actions.loginSuccess(response)
-    } catch (err){
+    } catch (err) {
       this.actions.loginFail(response)
     }
   }
 
-  signup(state) {
-    axios.post('/api/signup', {
+  async signup(state) {
+    try {
+      const response = await axios.post('/api/signup', {
         username: state.signup.username,
         email: state.signup.email,
         password: state.signup.password
-      })
-      .then(response => {
-        this.actions.signupSuccess(response)
-      })
-      .catch(this.actions.signupFail);
+      });
+      this.actions.signupSuccess(response)
+    } catch (err) {
+      this.actions.signupFail(err);
+    }
   }
 
-  autoLoginUser(jwt) {
-
-    axios.post('/api/checkToken', {
+  async autoLoginUser(jwt) {
+    try {
+      const response = await axios.post('/api/checkToken', {
         token: jwt
-      })
-      .then(response => {
-        this.actions.loginSuccess(response)
-      })
-      .catch(response => {
-        this.actions.loginFail(response)
       });
+      this.actions.loginSuccess(response)
+    }
+    catch (err) {
+      this.actions.loginFail(err)
+    }
 
   }
 }
