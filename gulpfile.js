@@ -12,6 +12,7 @@ var babelify = require('babelify');
 var browserify = require('browserify');
 var watchify = require('watchify');
 var uglify = require('gulp-uglify');
+var livereload = require('gulp-livereload');
 
 var production = process.env.NODE_ENV === 'production';
 
@@ -40,7 +41,7 @@ gulp.task('vendor', function() {
 
     ]).pipe(concat('vendor.js'))
         .pipe(gulpif(production, uglify({ mangle: false })))
-        .pipe(gulp.dest('public/js'));
+        .pipe(gulp.dest('public/js').pipe(livereload()));
 });
 
 /*
@@ -54,7 +55,7 @@ gulp.task('browserify-vendor', function() {
         .bundle()
         .pipe(source('vendor.bundle.js'))
         .pipe(gulpif(production, streamify(uglify({ mangle: false }))))
-        .pipe(gulp.dest('public/js'));
+        .pipe(gulp.dest('public/js').pipe(livereload()));
 });
 
 /*
@@ -66,12 +67,13 @@ gulp.task('browserify', ['browserify-vendor'], function() {
     return browserify('app/main.js')
         .external(dependencies)
         .transform(babelify.configure({
-            optional: ["es7.decorators"]
+            optional: ["es7.decorators", "runtime"]
         }))
         .bundle()
         .pipe(source('bundle.js'))
         .pipe(gulpif(production, streamify(uglify({ mangle: false }))))
-        .pipe(gulp.dest('public/js'));
+        .pipe(gulp.dest('public/js'))
+        .pipe(livereload());
 });
 
 /*
@@ -83,7 +85,7 @@ gulp.task('browserify-watch', ['browserify-vendor'], function() {
     var bundler = watchify(browserify('app/main.js', watchify.args));
     bundler.external(dependencies);
     bundler.transform(babelify.configure({
-        optional: ["es7.decorators"]
+        optional: ["es7.decorators", "runtime"]
     }));
     bundler.on('update', rebundle);
     return rebundle();
@@ -98,7 +100,8 @@ gulp.task('browserify-watch', ['browserify-vendor'], function() {
                 gutil.log(gutil.colors.green('Finished rebundling in', (Date.now() - start) + 'ms.'));
             })
             .pipe(source('bundle.js'))
-            .pipe(gulp.dest('public/js/'));
+            .pipe(gulp.dest('public/js/'))
+            .pipe(livereload());
     }
 });
 
@@ -113,10 +116,12 @@ gulp.task('styles', function() {
         .pipe(less())
         .pipe(autoprefixer())
         .pipe(gulpif(production, cssmin()))
-        .pipe(gulp.dest('public/css'));
+        .pipe(gulp.dest('public/css'))
+        .pipe(livereload())
 });
 
 gulp.task('watch', function() {
+    livereload.listen();
     gulp.watch('app/stylesheets/**/*.less', ['styles']);
 });
 

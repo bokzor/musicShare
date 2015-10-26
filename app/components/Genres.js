@@ -7,9 +7,10 @@ import composeAnimation from '../decorators/composeAnimation'
 import GenreActions from '../actions/GenreActions'
 import GenreStore from '../stores/GenreStore'
 
+@mixin(composeAnimation)
 class Genre extends React.Component {
-    constructor(props) {
 
+    constructor(props) {
         super(props);
         this.state = GenreStore.getState();
         this.onChange = this.onChange.bind(this);
@@ -32,8 +33,8 @@ class Genre extends React.Component {
 
         let genres = this.state.genres.map((genre) => {
             return (
-                <Link key={genre.id} to={'/genres/' + genre.id} className="list-group-item">
-                    {genre.name}
+                <Link key={genre.value} to={'/genres/' + genre.value} className="list-group-item">
+                    {genre.label}
                 </Link>
             )
         });

@@ -1,6 +1,43 @@
-import React from 'react';
+import React from 'react'
+import {Link} from 'react-router'
+import mixin from 'mixin-decorator'
+import addChangeHandler from '../decorators/changeHandler'
+import AuthActions from '../actions/AuthActions'
+import AuthStore from '../stores/AuthStore'
+import cookie from 'react-cookie';
 
+
+
+@mixin(addChangeHandler)
 class Signin extends React.Component {
+  constructor(props) {
+    super(props);
+    this.state = AuthStore.getState();
+    this.onChange = this.onChange.bind(this);
+  }
+
+  componentWillMount(){
+    cookie.remove('jwt');
+  }
+
+  componentDidMount() {
+    AuthStore.listen(this.onChange);
+  }
+
+  componentWillUnmount() {
+    AuthStore.unlisten(this.onChange);
+  }
+
+  onChange(state) {
+    this.setState(state);
+    if (this.state.jwt) this.context.router.transitionTo('/');
+  }
+
+  handleSubmit(event) {
+    event.preventDefault();
+    AuthActions.login(this.state);
+  }
+
   render() {
     return (
       <section id="content" className="m-t-lg wrapper-md animated fadeInUp">
@@ -10,17 +47,27 @@ class Signin extends React.Component {
             <header className="wrapper text-center">
               <strong>Sign in to get in touch</strong>
             </header>
-            <form action="index.html">
+            <form>
               <div className="form-group">
-                <input type="email" placeholder="Email"
-                       className="form-control rounded input-lg text-center no-border"/>
+                <input
+                  placeholder="Email"
+                  className="form-control rounded input-lg text-center no-border"
+                  onChange={this.changeHandler.bind(this, 'login', 'username')}/>
               </div>
               <div className="form-group">
-                <input type="password" placeholder="Password"
-                       className="form-control rounded input-lg text-center no-border"/>
+                <input
+                  type="password"
+                  placeholder="Password"
+                  className="form-control rounded input-lg text-center no-border"
+                  onChange={this.changeHandler.bind(this, 'login', 'password')}/>
               </div>
-              <button type="submit" className="btn btn-lg btn-warning lt b-white b-2x btn-block btn-rounded"><i
-                className="icon-arrow-right pull-right"></i><span className="m-r-n-lg">Sign in</span></button>
+              <button
+                type="submit"
+                className="btn btn-lg btn-warning lt b-white b-2x btn-block btn-rounded"
+                onClick={this.handleSubmit.bind(this)}>
+                <i className="icon-arrow-right pull-right"></i>
+                <span className="m-r-n-lg">Sign in</span>
+              </button>
               <div className="text-center m-t m-b"><a href="#">
                 <small>Forgot password?</small>
               </a></div>
@@ -28,7 +75,7 @@ class Signin extends React.Component {
               <p className="text-muted text-center">
                 <small>Do not have an account?</small>
               </p>
-              <a href="signup.html" className="btn btn-lg btn-info btn-block rounded">Create an account</a>
+              <Link to="/signup" className="btn btn-lg btn-info btn-block rounded">Create an account</Link>
             </form>
           </section>
         </div>
@@ -36,5 +83,9 @@ class Signin extends React.Component {
     );
   }
 }
+
+Signin.contextTypes = {
+  router: React.PropTypes.func
+};
 
 export default Signin;

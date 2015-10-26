@@ -7,7 +7,7 @@ $(document).ready(function(){
     {
       title:"Cloudless Days",
       artist:"ADG3 Studios",
-      mp3:"http://flatfull.com/themes/assets/musics/adg3com_cloudlessdays.mp3",
+      mp3:"http://api.soundcloud.com/tracks/6981096/stream?client_id=4346c8125f4f5c40ad666bacd8e96498",
       poster: "images/m0.jpg"
     },
     {
@@ -49,7 +49,7 @@ $(document).ready(function(){
   ], {
     playlistOptions: {
       enableRemoveControls: true,
-      autoPlay: true
+      autoPlay: false
     },
     swfPath: "js/jPlayer",
     supplied: "webmv, ogv, m4v, oga, mp3",
