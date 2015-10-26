@@ -1,8 +1,5 @@
 import React from 'react';
-import mixin from 'mixin-decorator'
-import composeAnimation from '../decorators/composeAnimation'
 
-@mixin(composeAnimation)
 class Discover extends React.Component {
   render() {
     return (

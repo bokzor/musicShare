@@ -61,7 +61,7 @@ class Header extends React.Component {
                 </li>
                 <li className="divider"></li>
                 <li>
-                  <a href="modal.lockme.html" data-toggle="ajaxModal">Logout</a>
+                  <Link to="/logout">Logout</Link>
                 </li>
               </ul>
             </li>

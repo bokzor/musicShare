@@ -1,44 +1,38 @@
 import alt from '../alt';
 import AddMusicActions from '../actions/AddMusicActions';
+import GenreData from '../data/GenreData'
 
 class AddMusicStore {
   constructor() {
     this.bindActions(AddMusicActions);
-    this.title = '';
-    this.isMix = '';
-    this.helpBlock = '';
-    this.titleValidationState = '';
-    this.isMixValidationState = '';
+    this.music = {};
+    this.isLoading = false;
+    this.urlValidationState = '';
+    this.urlHelpBlock = '';
+    this.genres = GenreData;
+    this.music.tags = '';
+    this.music.genres = '';
+    this.music.genresId = '';
+
   }
 
-  onAddMusicSuccess(successMessage) {
-    this.titleValidationState = 'has-success';
-    this.helpBlock = successMessage;
+  onGetSoundcloudSuccess(data) {
+    [this.music.artist, this.music.title] = data.title.split('-', 2);
+    this.music.completeName = data.title;
+    this.music.duration = data.duration;
+    this.music.image = data.artwork_url;
+    this.music.url = data.url;
+    this.music.isMix = data.duration > 1200000;
+    this.music.hostType = 'soundcloud';
   }
 
-  onAddMusicFail(errorMessage) {
-    this.titleValidationState = 'has-error';
-    this.helpBlock = errorMessage;
+  onAddMusicSuccess(date){
+    alt.recycle(this);
   }
 
-  onUpdateTitle(event) {
-    this.title = event.target.value;
-    this.titleValidationState = '';
-    this.helpBlock = '';
-  }
-
-  onUpdateIsMix(event) {
-    this.isMix = event.target.value;
-    this.isMixValidationState = '';
-  }
-
-  onInvalidTitle() {
-    this.titleValidationState = 'has-error';
-    this.helpBlock = 'Please enter a title.';
-  }
-
-  onInvalidIsMix() {
-    this.isMixValidationState = 'has-error';
+  onInvalidUrl() {
+    this.urlValidationState = 'parsley-validated parsley-error';
+    this.urlHelpBlock = 'Please enter a url.';
   }
 }
 

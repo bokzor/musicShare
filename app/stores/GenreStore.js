@@ -8,8 +8,7 @@ class GenreStore {
     }
 
     onGetGenresSuccess(data) {
-        console.log(data)
-        this.genres = data
+        this.genres = data;
     }
 }
 
