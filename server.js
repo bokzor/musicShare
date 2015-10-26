@@ -5,13 +5,10 @@ var bodyParser = require('body-parser');
 var async = require('async');
 var request = require('request');
 var cookieParser = require('cookie-parser');
-var reactCookie = require('react-cookie')
-
-var swig  = require('swig');
+var reactCookie = require('react-cookie');
+var swig = require('swig');
 var React = require('react');
-var ReactDOM = require('react-dom/server');
 var Router = require('react-router');
-var RoutingContext = Router.RoutingContext;
 var routes = require('./app/routes');
 
 var mongoose = require('mongoose');
@@ -54,27 +51,17 @@ app.use(express.static(path.join(__dirname, 'public')));
 app.use('/api', apiRoutes);
 
 
-app.use(function(req, res) {
-  reactCookie.plugToRequest(req, res);
 
-  Router.match({ routes: routes, location: req.url }, function(err, redirectLocation, renderProps) {
-    if (err) {
-      res.send(500, err.message)
-    } else if (redirectLocation) {
-      res.redirect(302, redirectLocation.pathname + redirectLocation.search)
-    } else if (renderProps) {
-      var html = ReactDOM.renderToString(<RoutingContext {...renderProps} />);
-      var page = swig.renderFile('views/index.html', { html: html });
-      res.send(200, page);
-    } else {
-      res.send(404, 'Page Not Found')
-    }
+
+
+app.use(function (req, res) {
+  Router.run(routes, req.path, function (Handler) {
+    reactCookie.plugToRequest(req, res);
+    var html = React.renderToString(React.createElement(Handler));
+    var page = swig.renderFile('views/index.html', {html: html});
+    res.send(page);
   });
 });
-
-
-
-
 
 
 app.listen(app.get('port'), function () {

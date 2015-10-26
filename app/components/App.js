@@ -1,5 +1,6 @@
 import React from 'react';
-
+import {RouteHandler} from 'react-router';
+import { History } from 'react-router'
 
 import Header from './Header';
 import LeftNav from './LeftNav';
@@ -24,7 +25,7 @@ class App extends React.Component {
                         <LeftNav/>
                         <section id="content" style={{ paddingBottom: '100px' }}>
                             <section className="hbox stretch">
-                              {this.props.children}
+                                <RouteHandler />
                                 <RightNav/>
                             </section>
                             <a href="#" className="hide nav-off-screen-block" data-toggle="class:nav-off-screen,open" data-target="#nav,html"></a>
