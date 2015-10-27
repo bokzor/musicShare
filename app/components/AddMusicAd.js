@@ -47,7 +47,7 @@ class AddMusicAd extends React.Component {
     this.state.music.title = data.title;
     this.state.music.genres = data.genres;
     this.state.music.tags = data.tags;
-    AddMusicActions.addMusic(data);
+    AddMusicActions.addMusic(this.state.music);
     this.refs.form.reset();
   }
 
@@ -58,15 +58,18 @@ class AddMusicAd extends React.Component {
           <section className="scrollable padder-lg w-f-md" id="bjax-target">
             <h2 className="font-thin m-b">Add a music</h2>
             <section className="panel panel-default" style={{ width: '80%', margin: '0 auto' }}>
+
               <header className="panel-heading font-bold" id="text-form-add-music">
                 Add a music to my profile!
               </header>
+
               <div className="panel-body">
-                <Formsy.Form className="form-horizontal"
-                             onValidSubmit={this.handleSubmit.bind(this)}
-                             onValid={this.enableButton.bind(this)}
-                             onInvalid={this.disableButton.bind(this)}
-                             ref="form">
+                <Formsy.Form
+                  className="form-horizontal"
+                  onValidSubmit={this.handleSubmit.bind(this)}
+                  onValid={this.enableButton.bind(this)}
+                  onInvalid={this.disableButton.bind(this)}
+                  ref="form">
 
                   <div className="form-group">
                     <label className="col-sm-2 control-label" for="input-id-url">URL</label>
@@ -83,9 +86,10 @@ class AddMusicAd extends React.Component {
                       <span className="help-block">{this.state.urlHelpBlock}</span>
                     </div>
                   </div>
-                  <div id="div-url-result">
-                    <div className="line line-dashed b-b line-lg pull-in"></div>
 
+                  {(this.state.urlIsValid)
+                    ? <div id="div-url-result">
+                    <div className="line line-dashed b-b line-lg pull-in"></div>
                     <TextInput
                       validationError="Please enter an Artist"
                       validations="maxLength:30,minLength:3"
@@ -94,7 +98,7 @@ class AddMusicAd extends React.Component {
                       placeholder="Artist"
                       title="Artist"
                       value={this.state.music.artist}
-                      classContainer="col-sm-4"
+                      classContainer="col-sm-6"
                       id="input-id-artist"
                     />
 
@@ -107,17 +111,18 @@ class AddMusicAd extends React.Component {
                       placeholder="Title"
                       title="Title"
                       value={this.state.music.title}
-                      classContainer="col-sm-4"
+                      classContainer="col-sm-6"
                       id="input-id-title"
                     />
 
                     <SelectInput
                       name="genres"
+                      required
                       options={this.state.genres}
                       title="Genres"
                       id="genres"
                       value={this.state.music.genres}
-                      classContainer="col-sm-4"
+                      classContainer="col-sm-6"
                       validationError="Please select a genre"
                       validations="isExisty"
                     />
@@ -131,26 +136,32 @@ class AddMusicAd extends React.Component {
                       noResultsText="Add a Tag"
                       title="Tags"
                       id="tags"
-                      classContainer="col-sm-4"
+                      classContainer="col-sm-6"
                     />
+
                     <div className="form-group">
                       <label className="col-sm-2 control-label" style={{ marginTop: '50px' }}>Image</label>
-                      <div className="col-sm-5">
+                      <div className="col-sm-6">
                         <img src={this.state.music.image} style={{ maxHeight: '100px' }}/>
                       </div>
                     </div>
+
+
                     <div className="form-group">
                       <div style={{ marginTop: '20px'}} className="col-sm-4 col-sm-offset-2">
-                        <button type="submit"
-                                className="btn btn-primary"
-                                id="btn-save-music"
-                                disabled={!this.state.canSubmit}
-                        >
+                        <button
+                          type="submit"
+                          className="btn btn-primary"
+                          id="btn-save-music"
+                          disabled={!this.state.canSubmit}>
                           Save Music
                         </button>
                       </div>
                     </div>
+
                   </div>
+                    : null
+                  }
                 </Formsy.Form>
               </div>
             </section>

@@ -12,9 +12,11 @@ class AddMusicStore {
     this.urlHelpBlock = '';
     this.genres = GenreData;
     this.canSubmit = false;
+    this.urlIsValid = false;
   }
 
   onGetSoundcloudSuccess(data) {
+    this.urlIsValid = true;
     [this.music.artist, this.music.title] = data.title.split('-', 2);
     this.music.completeName = data.title;
     this.music.duration = data.duration;
@@ -25,6 +27,7 @@ class AddMusicStore {
   }
 
   onGetYoutubeSuccess(data){
+    this.urlIsValid = true;
     [this.music.artist, this.music.title] = data.snippet.title.split('-', 2);
     this.music.completeName = data.snippet.title;
     this.music.image = data.snippet.thumbnails.default.url;
@@ -35,6 +38,10 @@ class AddMusicStore {
   }
 
   onGetSoundcloudFail(){
+    alt.recycle(this);
+  }
+
+  onGetYoutubeFail(){
     alt.recycle(this);
   }
 

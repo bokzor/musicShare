@@ -17,6 +17,7 @@ class AddMusicActions {
       'getSoundcloudSuccess',
       'getYoutubeSuccess',
       'getSoundcloudFail',
+      'getYoutubeFail',
       'addMusicSuccess',
       'addMusicFail',
       'invalidUrl',
@@ -60,9 +61,7 @@ class AddMusicActions {
         }
 
         catch (err) {
-          toastr.error('Url seems incorrect!');
           this.actions.getSoundcloudFail();
-
         }
 
       } else if (idVideo = url.match(regexYoutube)[2]) {
@@ -75,15 +74,14 @@ class AddMusicActions {
               part: 'snippet, contentDetails'
             }
           });
-          if (response.data.items.length == 0) throw 'No videos found';
 
+          if (response.data.items.length == 0) throw 'No videos found';
           this.actions.getYoutubeSuccess(response.data.items[0]);
         }
 
         catch (err) {
-          console.log('error', err);
+          this.actions.getYoutubeFail();
         }
-
       }
     }
   }

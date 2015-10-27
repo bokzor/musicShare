@@ -23,8 +23,9 @@ class SelectInput extends React.Component {
     this.props.setValue(value);
   }
 
+
   render() {
-    var className = this.props.showError() ? 'has-error' : '';
+    var className = this.props.showError() || this.props.showRequired() ? 'has-error' : '';
     var classContainer = this.props.classContainer ? this.props.classContainer : '';
 
     return (
@@ -42,6 +43,7 @@ class SelectInput extends React.Component {
             searchPromptText={this.props.searchPromptText}
             placeholder={this.props.placeholder}
             noResultsText={this.props.noResultsText}
+
           />
         </div>
         <span className='span-help-block'>{this.props.getErrorMessage()}</span>

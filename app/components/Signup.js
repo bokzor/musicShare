@@ -55,13 +55,14 @@ class Signup extends React.Component {
               <strong>Sign up to find interesting thing</strong>
             </header>
             <Formsy.Form onValidSubmit={this.handleSubmit.bind(this)} onValid={this.enableButton.bind(this)} onInvalid={this.disableButton.bind(this)}>
+
               <TextInput
                 validationError="Please enter a valid username"
                 validations="isAlphanumeric"
                 required name="username"
                 placeholder="Username"
                 classInput="rounded input-lg text-center no-border"
-                />
+              />
 
               <TextInput
                 validationError="Please enter a valid email"
@@ -69,7 +70,8 @@ class Signup extends React.Component {
                 required
                 name="email"
                 placeholder="Email"
-                classInput="rounded input-lg text-center no-border"/>
+                classInput="rounded input-lg text-center no-border"
+              />
 
               <TextInput
                 validationError="Please enter a valid password"
@@ -78,19 +80,23 @@ class Signup extends React.Component {
                 name="password"
                 placeholder="Password"
                 type="password"
-                classInput="rounded input-lg text-center no-border"/>
+                classInput="rounded input-lg text-center no-border"
+              />
               <button
                 type="submit"
                 className="btn btn-lg btn-warning lt b-white b-2x btn-block btn-rounded"
                 disabled={!this.state.canSubmit}>
-              <i className="icon-arrow-right pull-right"></i>
+                <i className="icon-arrow-right pull-right"></i>
                 <span className="m-r-n-lg">Sign up</span>
               </button>
+
               <div className="line line-dashed"></div>
               <p className="text-muted text-center">
                 <small>Already have an account?</small>
               </p>
+
               <Link to='/signin' className="btn btn-lg btn-info btn-block btn-rounded">Sign in</Link>
+
             </Formsy.Form>
           </section>
         </div>
