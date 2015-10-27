@@ -5,7 +5,7 @@ var bodyParser = require('body-parser');
 var async = require('async');
 var request = require('request');
 var cookieParser = require('cookie-parser');
-var reactCookie = require('react-cookie')
+var reactCookie = require('react-cookie');
 
 var swig  = require('swig');
 var React = require('react');
@@ -54,9 +54,10 @@ app.use(express.static(path.join(__dirname, 'public')));
 app.use('/api', apiRoutes);
 
 
+
+
 app.use(function(req, res) {
   reactCookie.plugToRequest(req, res);
-
   Router.match({ routes: routes, location: req.url }, function(err, redirectLocation, renderProps) {
     if (err) {
       res.send(500, err.message)
@@ -73,8 +74,14 @@ app.use(function(req, res) {
 });
 
 
-
-
+/*app.use(function (req, res) {
+  Router.run(routes, req.path, function (Handler) {
+    reactCookie.plugToRequest(req, res);
+    var html = React.renderToString(React.createElement(Handler));
+    var page = swig.renderFile('views/index.html', {html: html});
+    res.send(page);
+  });
+});*/
 
 
 app.listen(app.get('port'), function () {

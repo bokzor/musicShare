@@ -26,6 +26,7 @@ class AuthStore {
 
 
   onLoginFail(response) {
+    console.log(response)
     toastr.error(response.data.message);
   }
 

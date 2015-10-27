@@ -17,7 +17,8 @@ class Signin extends React.Component {
   }
 
   componentWillMount(){
-    cookie.remove('jwt');
+    cookie.remove('XSRF-TOKEN');
+
   }
 
   componentDidMount() {
@@ -30,7 +31,9 @@ class Signin extends React.Component {
 
   onChange(state) {
     this.setState(state);
-    if (this.state.jwt) this.context.router.transitionTo('/');
+    if (this.state.jwt) {
+      this.props.history.pushState(null, '/');
+    }
   }
 
   handleSubmit(event) {

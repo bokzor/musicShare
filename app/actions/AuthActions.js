@@ -22,6 +22,7 @@ class AuthActions {
       });
       this.actions.loginSuccess(response)
     } catch (err) {
+      console.log(err);
       this.actions.loginFail(err)
     }
   }
