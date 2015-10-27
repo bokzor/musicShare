@@ -4,6 +4,9 @@ import mixin from 'mixin-decorator'
 import addChangeHandler from '../decorators/changeHandler'
 import AuthActions from '../actions/AuthActions'
 import AuthStore from '../stores/AuthStore'
+import Formsy from 'formsy-react'
+import TextInput from './TextInput'
+
 
 @mixin(addChangeHandler)
 class Signup extends React.Component {
@@ -26,31 +29,20 @@ class Signup extends React.Component {
     if (this.state.jwt) this.context.router.transitionTo('/');
   }
 
-  handleSubmit(event) {
-    event.preventDefault();
+  enableButton() {
+    this.setState({
+      canSubmit: true
+    });
+  }
 
-    var username = this.state.signup.username.trim();
-    var email = this.state.signup.email.trim();
-    var password = this.state.signup.password.trim();
+  disableButton() {
+    this.setState({
+      canSubmit: false
+    });
+  }
 
-    if (!username) {
-      AuthActions.invalidUsername();
-      this.refs.usernameTextField.getDOMNode().focus();
-    }
-
-    if (!email) {
-      AuthActions.invalidEmail();
-      this.refs.emailTextField.getDOMNode().focus();
-    }
-
-    if (!password) {
-      AuthActions.invalidPassword();
-      this.refs.passwordTextField.getDOMNode().focus();
-    }
-
-    if (username && email && password) {
-      AuthActions.signup(this.state);
-    }
+  handleSubmit(data){
+    AuthActions.signup(data);
   }
 
   render() {
@@ -62,38 +54,16 @@ class Signup extends React.Component {
             <header className="wrapper text-center">
               <strong>Sign up to find interesting thing</strong>
             </header>
-            <form onSubmit={this.handleSubmit.bind(this)}>
-              <div className={'form-group ' + this.state.usernameValidationState}>
-                <input
-                  placeholder="Username"
-                  className="form-control rounded input-lg text-center no-border"
-                  ref='usernameTextField'
-                  onChange={this.changeHandler.bind(this, 'signup', 'username')}/>
-                <span className='span-help-block'>{this.state.usernameHelpBlock}</span>
-              </div>
-              <div className={'form-group ' + this.state.emailValidationState}>
-                <input
-                  type="email"
-                  placeholder="Email"
-                  className="form-control rounded input-lg text-center no-border"
-                  ref='emailTextField'
-                  onChange={this.changeHandler.bind(this, 'signup', 'email')}/>
-                <span className='span-help-block'>{this.state.emailHelpBlock}</span>
-              </div>
-              <div className={'form-group ' + this.state.passwordValidationState}>
-                <input
-                  type="password"
-                  placeholder="Password"
-                  className="form-control rounded input-lg text-center no-border"
-                  ref='passwordTextField'
-                  onChange={this.changeHandler.bind(this, 'signup', 'password')}/>
-                <span className='span-help-block'>{this.state.passwordHelpBlock}</span>
-              </div>
+            <Formsy.Form onValidSubmit={this.handleSubmit.bind(this)} onValid={this.enableButton.bind(this)} onInvalid={this.disableButton.bind(this)}>
+              <TextInput validationError="Please enter a valid username" validations="isAlphanumeric" required name="username" placeholder="Username"/>
+              <TextInput validationError="Please enter a valid email" validations="isEmail" required name="email" placeholder="Email"/>
+              <TextInput validationError="Please enter a valid password" validations="isLength:8" required name="password" placeholder="Password" type="password"/>
               <button
                 type="submit"
                 className="btn btn-lg btn-warning lt b-white b-2x btn-block btn-rounded"
-                onClick={this.handleSubmit.bind(this)}>
-                <i className="icon-arrow-right pull-right"></i>
+                disabled={!this.state.canSubmit}
+              >
+              <i className="icon-arrow-right pull-right"></i>
                 <span className="m-r-n-lg">Sign up</span>
               </button>
               <div className="line line-dashed"></div>
@@ -101,7 +71,7 @@ class Signup extends React.Component {
                 <small>Already have an account?</small>
               </p>
               <Link to='/signin' className="btn btn-lg btn-info btn-block btn-rounded">Sign in</Link>
-            </form>
+            </Formsy.Form>
           </section>
         </div>
       </section>

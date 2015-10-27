@@ -9,9 +9,8 @@ const config = require('../config');
 // get an instance of the router for api routes
 const apiRoutes = express.Router();
 
-
 // route to create a new user
-apiRoutes.post('/signup', function (req, res, next) {
+apiRoutes.post('/signup', function (req, res) {
   const username = req.body.username;
   const email = req.body.email;
   const password = req.body.password;
@@ -23,9 +22,14 @@ apiRoutes.post('/signup', function (req, res, next) {
   });
 
   newUser.save(function (err) {
-    if (err) return next(err);
+    if (err) {
+      res.status(400).json({
+        success: 'false',
+        error: err
+      });
+    }
     // we create a new token
-    const token = jwt.sign({user: { username : newUser.username }}, config.secretToken, {
+    const token = jwt.sign({user: {username: newUser.username}}, config.secretToken, {
       expiresInMinutes: 1440 // expires in 24 hours
     });
 
@@ -50,7 +54,7 @@ apiRoutes.post('/auth', function (req, res) {
 
   // find the user
   User.findOne({
-    username: username
+    $or: [{username: username}, {email: username}]
   }, function (err, user) {
     if (err) throw err;
 
@@ -66,7 +70,7 @@ apiRoutes.post('/auth', function (req, res) {
         } else {
           // if user is found and password is right
           // create a token
-          const token = jwt.sign({user: { username: user.username}}, config.secretToken, {
+          const token = jwt.sign({user: {username: user.username}}, config.secretToken, {
             expiresIn: 86400 // expires in 24 hours
           });
           const decoded = jwt.decode(token);
@@ -137,7 +141,7 @@ apiRoutes.post('/addMusic', function (req, res) {
     console.log(user);
     user.musics.push(music);
     user.save(err => {
-      if(err) {
+      if (err) {
         res.status(400).json({
           success: 'false',
           error: err
@@ -154,10 +158,10 @@ apiRoutes.post('/addMusic', function (req, res) {
 
   app.get('/profile', function (req, res) {
     //User.findOne({ username: req.decoded.user.username }, function (err, user) {
-    User.findOne({ username: 'aa' }, function (err, user) {
+    User.findOne({username: 'aa'}, function (err, user) {
       if (err) return next(err);
       if (!user) {
-        return res.status(404).send({ message: 'User not found.' });
+        return res.status(404).send({message: 'User not found.'});
       }
       res.send(user);
     });
