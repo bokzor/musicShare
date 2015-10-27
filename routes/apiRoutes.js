@@ -152,7 +152,16 @@ apiRoutes.post('/addMusic', function (req, res) {
     })
   });
 
-
+  app.get('/profile', function (req, res) {
+    //User.findOne({ username: req.decoded.user.username }, function (err, user) {
+    User.findOne({ username: 'aa' }, function (err, user) {
+      if (err) return next(err);
+      if (!user) {
+        return res.status(404).send({ message: 'User not found.' });
+      }
+      res.send(user);
+    });
+  });
 
 });
 
