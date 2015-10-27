@@ -1,18 +1,9 @@
 import React from 'react';
 import Router from 'react-router';
+import ReactDOM from 'react-dom';
+import createBrowserHistory from 'history/lib/createBrowserHistory';
 import routes from './routes';
-import injectTapEventPlugin from 'react-tap-event-plugin'
 
+let history = createBrowserHistory();
 
-//Needed for React Developer Tools
-window.React = React;
-
-//Needed for onTouchTap
-//https://github.com/zilverline/react-tap-event-plugin
-injectTapEventPlugin();
-
-Router.run(routes, Router.HistoryLocation, function(Handler) {
-    React.render(<Handler />, document.getElementById('app'));
-});
-
-
+ReactDOM.render(<Router history={history}>{routes}</Router>, document.getElementById('app'));

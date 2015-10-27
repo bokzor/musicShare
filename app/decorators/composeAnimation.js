@@ -1,8 +1,8 @@
-
+import ReactDOM from 'react-dom'
 const composeAnimation = {
     componentDidMount(){
         // Get the components DOM node
-        var elem = React.findDOMNode(this);
+        var elem = ReactDOM.findDOMNode(this);
         // Set the opacity of the element to 0
         elem.style.opacity = 0;
         window.requestAnimationFrame(function() {

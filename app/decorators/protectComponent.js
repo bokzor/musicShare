@@ -19,10 +19,11 @@ export default (ComponentToBeRendered) => {
     componentDidMount() {
       this.jwt = cookie.load('XSRF-TOKEN');
       // We should check the expiration of the token
-      if (!this.jwt) this.context.router.transitionTo('/signin');
+      if (!this.jwt)  this.props.history.pushState(null, '/signin');
     }
 
     render() {
+
       if (this.jwt) {
         return <ComponentToBeRendered {...this.props} />;
       } else {
@@ -30,10 +31,6 @@ export default (ComponentToBeRendered) => {
       }
     }
   }
-
-  ProtectedComponent.contextTypes = {
-    router: React.PropTypes.func
-  };
 
   return ProtectedComponent;
 }

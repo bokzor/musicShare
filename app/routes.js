@@ -12,15 +12,15 @@ import AddMusicAd from './components/AddMusicAd';
 
 const routes = (
   <Route>
-    <Route path='/signin' handler={Signin}/>
-    <Route path='/logout' handler={Signin}/>
-    <Route path='/signup' handler={Signup}/>
-    <Route handler={App}>
-      <Route path='/' handler={Discover}/>
-      <Route path='/genres' handler={Genres}/>
-      <Route path='/genres/:genreId' handler={Genres}/>
-      <Route path='/profile' handler={Profile}/>
-      <Route path='/addMusicAd' handler={AddMusicAd}/>
+    <Route path='/signin' component={Signin}/>
+    <Route path='/logout' component={Signin}/>
+    <Route path='/signup' component={Signup}/>
+    <Route component={App}>
+      <Route path='/' component={Discover}/>
+      <Route path='/genres' component={Genres}/>
+      <Route path='/genres/:genreId' component={Genres}/>
+      <Route path='/profile' component={Profile}/>
+      <Route path='/addMusicAd' component={AddMusicAd}/>
     </Route>
   </Route>
 );
