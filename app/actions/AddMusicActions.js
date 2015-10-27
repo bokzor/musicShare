@@ -24,7 +24,7 @@ class AddMusicActions {
 
   async addMusic(music) {
 
-    music.genres = GenreData.find(e => e.value == music.genresId).label;
+    music.genres = GenreData.find(e => e.value == music.genres).label;
 
     //convert array of id to array of value
 

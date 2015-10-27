@@ -59,8 +59,20 @@ class Signin extends React.Component {
               <strong>Sign in to get in touch</strong>
             </header>
             <Formsy.Form onValidSubmit={this.handleSubmit.bind(this)} onValid={this.enableButton.bind(this)} onInvalid={this.disableButton.bind(this)}>
-              <TextInput validationError="Please enter a valid email" validations="isEmail" required name="email" placeholder="Email"/>
-              <TextInput type="password" validationError="Please enter a password" validations="isLength:8" required name="password" placeholder="Password"/>
+              <TextInput classContainer="rounded input-lg text-center no-border"
+                         validationError="Please enter a valid email"
+                         validations="isEmail"
+                         required
+                         name="email"
+                         placeholder="Email"/>
+
+              <TextInput type="password"
+                         classContainer="rounded input-lg text-center no-border"
+                         validationError="Please enter a password"
+                         validations="isLength:8"
+                         required
+                         name="password"
+                         placeholder="Password"/>
               <button
                 disabled={!this.state.canSubmit}
                 type="submit"

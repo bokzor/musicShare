@@ -30,17 +30,25 @@ class AddMusicAd extends React.Component {
     this.setState(state);
   }
 
-  changeGenre(value) {
-    this.state.music.genresId = value;
+  enableButton() {
+    this.setState({
+      canSubmit: true
+    });
   }
 
-  changeTag(value) {
-    this.state.music.tags = value;
+  disableButton() {
+    this.setState({
+      canSubmit: false
+    });
   }
 
-  handleSubmit(event) {
-    event.preventDefault();
-    AddMusicActions.addMusic(this.state.music)
+  handleSubmit(data) {
+    this.state.music.artist = data.artist;
+    this.state.music.title = data.title;
+    this.state.music.genres = data.genres;
+    this.state.music.tags = data.tags;
+    AddMusicActions.addMusic(data);
+    this.refs.form.reset();
   }
 
   render() {
@@ -54,7 +62,12 @@ class AddMusicAd extends React.Component {
                 Add a music to my profile!
               </header>
               <div className="panel-body">
-                <form className="form-horizontal" onSubmit={this.handleSubmit.bind(this)}>
+                <Formsy.Form className="form-horizontal"
+                             onValidSubmit={this.handleSubmit.bind(this)}
+                             onValid={this.enableButton.bind(this)}
+                             onInvalid={this.disableButton.bind(this)}
+                             ref="form"
+                >
                   <div className="form-group">
                     <label className="col-sm-2 control-label" for="input-id-url">URL</label>
                     <div className="col-sm-10">
@@ -72,66 +85,54 @@ class AddMusicAd extends React.Component {
                   </div>
                   <div style={{display: 'none'}} id="div-url-result">
                     <div className="line line-dashed b-b line-lg pull-in"></div>
-                    <div className="form-group">
-                      <label className="col-sm-2 control-label" for="input-id-artist">Artist</label>
-                      <div className="col-sm-4">
-                        <input type="text"
-                               className="form-control"
-                               id="input-id-artist"
-                               value={this.state.music.artist}
-                               onChange={this.changeHandler.bind(this, 'music', 'artist')}/>
 
-                      </div>
-                      <label className="col-sm-2 control-label" for="input-id-title">Title</label>
-                      <div className="col-sm-4">
-                        <input type="text"
-                               className="form-control"
-                               id="input-id-title"
-                               value={this.state.music.title}
-                               onChange={this.changeHandler.bind(this, 'music', 'title')}/>
-                      </div>
-                    </div>
-                    <div className="form-group">
-                      <label className="col-sm-2 control-label">Genres</label>
-                      <div className="col-sm-4">
-                        <div className="btn-group m-r">
-                          <Select
-                            name="form-field-name"
-                            value={this.state.music.genres}
-                            options={this.state.genres}
-                            onChange={this.changeGenre.bind(this)}
-                          />
-                        </div>
-                      </div>
-                      <label className="col-sm-2 control-label" for="input-id-tag">Tag(s)</label>
-                      <div className="col-sm-4">
-                        <Select
-                          name="form-field-name"
-                          multi={true}
-                          allowCreate={true}
-                          onChange={this.changeTag.bind(this)}
-                          searchPromptText="Tags"
-                          placeholder="Tags"
-                          noResultsText="Add a Tag"
-                        />
-                      </div>
-                    </div>
-                    <div className="form-group">
-                      <label className="col-sm-2 control-label" for="input-id-ismix">Is Mix ?</label>
-                      <div className="col-sm-1">
-                        <div className="checkbox i-checks">
-                          <label>
-                            {(this.state.music.isMix)
-                              ?
-                              <input type="checkbox" value="" id="input-id-ismix" checked/>
-                              :
-                              <input type="checkbox" value="" id="input-id-ismix"/>
-                            }
-                            <i></i>
-                          </label>
-                        </div>
-                      </div>
-                    </div>
+                    <TextInput
+                      validationError="Please enter an Artist"
+                      validations="maxLength:30,minLength:3"
+                      required
+                      name="artist"
+                      placeholder="Artist"
+                      title="Artist"
+                      value={this.state.music.artist}
+                      classContainer="col-sm-4"
+                      id="input-id-artist"
+                    />
+
+                    <TextInput
+                      type="text"
+                      validationError="Please enter a Title"
+                      validations="maxLength:50,minLength:3"
+                      required
+                      name="title"
+                      placeholder="Title"
+                      title="Title"
+                      value={this.state.music.title}
+                      classContainer="col-sm-4"
+                      id="input-id-title"
+                    />
+
+                    <SelectInput
+                      name="genres"
+                      options={this.state.genres}
+                      title="Genres"
+                      id="genres"
+                      value={this.state.music.genres}
+                      classContainer="col-sm-4"
+                      validationError="Please select a genre"
+                      validations="isExisty"
+                    />
+
+                    <SelectInput
+                      name="tags"
+                      multi={true}
+                      allowCreate={true}
+                      searchPromptText="Tags"
+                      placeholder="Tags"
+                      noResultsText="Add a Tag"
+                      title="Tags"
+                      id="tags"
+                      classContainer="col-sm-4"
+                    />
                     <div className="form-group">
                       <label className="col-sm-2 control-label" style={{ marginTop: '50px' }}>Image</label>
                       <div className="col-sm-5">
@@ -143,12 +144,14 @@ class AddMusicAd extends React.Component {
                         <button type="submit"
                                 className="btn btn-primary"
                                 id="btn-save-music"
-                                onClick={this.handleSubmit.bind(this)}>Save Music
+                                disabled={!this.state.canSubmit}
+                        >
+                          Save Music
                         </button>
                       </div>
                     </div>
                   </div>
-                </form>
+                </Formsy.Form>
               </div>
             </section>
           </section>

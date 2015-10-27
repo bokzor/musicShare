@@ -10,9 +10,7 @@ class AddMusicStore {
     this.urlValidationState = '';
     this.urlHelpBlock = '';
     this.genres = GenreData;
-    this.music.tags = '';
-    this.music.genres = '';
-    this.music.genresId = '';
+    this.canSubmit = false;
   }
 
   onGetSoundcloudSuccess(data) {
@@ -25,7 +23,7 @@ class AddMusicStore {
     this.music.hostType = 'soundcloud';
   }
 
-  onAddMusicSuccess(date){
+  onAddMusicSuccess(){
     alt.recycle(this);
   }
 
