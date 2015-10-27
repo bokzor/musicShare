@@ -12,8 +12,7 @@
     "watch": "nodemon --exec babel-node --optional es7.decorators,runtime -- server.js"
   },
   "dependencies": {
-    "alt": "^0.17.1",
-    "async": "^1.4.0",
+    "alt": "^0.17.4",
     "axios": "^0.7.0",
     "babel": "^5.6.23",
     "bcrypt": "^0.8.5",
