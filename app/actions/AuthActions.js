@@ -14,12 +14,11 @@ class AuthActions {
   async login(data) {
     try {
       const response = await axios.post('/api/auth', {
-        username: data.username,
+        email: data.email,
         password: data.password
       });
       this.actions.loginSuccess(response)
     } catch (err) {
-      console.log(err);
       this.actions.loginFail(err)
     }
   }

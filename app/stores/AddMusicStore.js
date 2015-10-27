@@ -13,7 +13,6 @@ class AddMusicStore {
     this.music.tags = '';
     this.music.genres = '';
     this.music.genresId = '';
-
   }
 
   onGetSoundcloudSuccess(data) {

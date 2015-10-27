@@ -28,8 +28,6 @@ class Signin extends React.Component {
     });
   }
 
-
-
   componentWillMount() {
     Cookie.remove('XSRF-TOKEN');
   }

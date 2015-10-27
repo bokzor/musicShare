@@ -31,7 +31,7 @@ class AddMusicActions {
     //music.genres = music.genres.split(',').map(n =>
     //  GenreData.find(e => e.value == n).label
     //);
-    music.tags = music.tags.split(',');
+    //music.tags = music.tags.split(',');
 
     try {
       const response = await axios.post('/api/addMusic', {

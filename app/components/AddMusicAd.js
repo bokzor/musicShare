@@ -2,7 +2,9 @@ import React from 'react';
 import mixin from 'mixin-decorator'
 import addChangeHandler from '../decorators/changeHandler'
 import Select from 'react-select'
-
+import Formsy from 'formsy-react'
+import TextInput from './TextInput'
+import SelectInput from './SelectInput'
 
 import AddMusicStore from '../stores/AddMusicStore'
 import AddMusicActions from '../actions/AddMusicActions'
@@ -70,16 +72,6 @@ class AddMusicAd extends React.Component {
                   </div>
                   <div style={{display: 'none'}} id="div-url-result">
                     <div className="line line-dashed b-b line-lg pull-in"></div>
-                    <div className="form-group">
-                      <label className="col-sm-2 control-label" for="input-id-name">Complete name</label>
-                      <div className="col-sm-10">
-                        <input type="text"
-                               className="form-control"
-                               id="input-id-name"
-                               value={this.state.music.completeName}
-                               onChange={this.changeHandler.bind(this, 'music', 'completeName')}/>
-                      </div>
-                    </div>
                     <div className="form-group">
                       <label className="col-sm-2 control-label" for="input-id-artist">Artist</label>
                       <div className="col-sm-4">
