@@ -24,10 +24,11 @@ class AuthStore {
   }
 
   onSignupSuccess(response) {
-    console.log(response);
     this.jwt = response.data.token;
     this.user = response.data.user;
     toastr.success(response.data.message);
+    cookie.save('XSRF-TOKEN', this.jwt);
+
   }
 
   onSignupFail(response) {

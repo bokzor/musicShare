@@ -26,7 +26,7 @@ class Signup extends React.Component {
 
   onChange(state) {
     this.setState(state);
-    if (this.state.jwt) this.context.router.transitionTo('/');
+    if (this.state.jwt) this.props.history.pushState(null, '/');
   }
 
   enableButton() {
@@ -49,7 +49,7 @@ class Signup extends React.Component {
     return (
       <section id="content" className="m-t-lg wrapper-md animated fadeInDown">
         <div className="container aside-xl">
-          <a className="navbar-brand block"><span className="h1 font-bold">Musik</span></a>
+          <a className="navbar-brand block"><span className="h1 font-bold">Mwsik</span></a>
           <section className="m-b-lg">
             <header className="wrapper text-center">
               <strong>Sign up to find interesting thing</strong>

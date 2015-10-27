@@ -23,10 +23,7 @@ apiRoutes.post('/signup', function (req, res) {
 
   newUser.save(function (err) {
     if (err) {
-      res.status(400).json({
-        success: 'false',
-        error: err
-      });
+
     }
     // we create a new token
     const token = jwt.sign({user: {username: newUser.username}}, config.secretToken, {

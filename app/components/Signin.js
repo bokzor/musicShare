@@ -55,7 +55,7 @@ class Signin extends React.Component {
     return (
       <section id="content" className="m-t-lg wrapper-md animated fadeInUp">
         <div className="container aside-xl">
-          <a className="navbar-brand block" href="index.html"><span className="h1 font-bold">Musik</span></a>
+          <a className="navbar-brand block" href="index.html"><span className="h1 font-bold">Mwsik</span></a>
           <section className="m-b-lg">
             <header className="wrapper text-center">
               <strong>Sign in to get in touch</strong>
