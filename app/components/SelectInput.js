@@ -20,11 +20,7 @@ class SelectInput extends React.Component {
     };
 
   changeValue(value) {
-    if (this.props.multiple && !this.allowCreate) {
-      //this.props.setValue(selectedOptions.map(option => option.value));
-    } else {
-      this.props.setValue(value);
-    }
+    this.props.setValue(value);
   }
 
   render() {
@@ -39,8 +35,8 @@ class SelectInput extends React.Component {
             id={this.props.id}
             name={this.props.name}
             multi={this.props.multi}
-            value={this.props.getValue()}
             onChange={this.changeValue.bind(this)}
+            value={this.props.getValue()}
             options={this.props.options}
             allowCreate={this.props.allowCreate}
             searchPromptText={this.props.searchPromptText}

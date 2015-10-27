@@ -9,12 +9,14 @@ var client_soundcloud = '7220cd79b258ae2f8d427b34d761fb16';
 var urlSoundcloud = 'http://api.soundcloud.com/resolve';
 var urlYoutube = 'https://www.googleapis.com/youtube/v3/videos';
 
-var regexYoutube = /(youtu\.be\/|[?&]v=)([^&]+)/;
+var regexYoutube = /(youtu(?:\.be|be\.com)\/(?:.*v(?:\/|=)|(?:.*\/)?)([\w'-]+))/i;
 
 class AddMusicActions {
   constructor() {
     this.generateActions(
       'getSoundcloudSuccess',
+      'getYoutubeSuccess',
+      'getSoundcloudFail',
       'addMusicSuccess',
       'addMusicFail',
       'invalidUrl',
@@ -26,20 +28,12 @@ class AddMusicActions {
 
     music.genres = GenreData.find(e => e.value == music.genres).label;
 
-    //convert array of id to array of value
-
-    //music.genres = music.genres.split(',').map(n =>
-    //  GenreData.find(e => e.value == n).label
-    //);
-    //music.tags = music.tags.split(',');
-
     try {
       const response = await axios.post('/api/addMusic', {
         music: music
       });
       this.actions.addMusicSuccess(response.data);
       toastr.success(response.data.message);
-
     }
     catch (err) {
       this.actions.addMusicFail(err);
@@ -48,9 +42,11 @@ class AddMusicActions {
 
   async fetchUrl(e) {
     let url = e.target.value;
+    var idVideo = '';
 
     if (url) {
       if (url.indexOf('soundcloud.com') > 0) {
+
         try {
           const response = await axios.get(urlSoundcloud, {
             params: {
@@ -58,33 +54,37 @@ class AddMusicActions {
               client_id: client_soundcloud
             }
           });
-          $('#div-url-result').slideDown();
-          $('#text-form-add-music').text('Check information and save it!');
+
           response.data.url = url;
           this.actions.getSoundcloudSuccess(response.data);
         }
+
         catch (err) {
-          $('#div-url-result').slideUp();
-          $('#text-form-add-music').text('Url seems incorrect!');
+          toastr.error('Url seems incorrect!');
+          this.actions.getSoundcloudFail();
+
         }
-      } else {
-        var idVideo = url.match(regexYoutube)[2];
+
+      } else if (idVideo = url.match(regexYoutube)[2]) {
+
         try {
           const response = await axios.get(urlYoutube, {
             params: {
               id: idVideo,
-              key: client_youtube
+              key: client_youtube,
+              part: 'snippet, contentDetails'
             }
           });
-          this.actions.getSoundcloudSuccess(response.data);
+          if (response.data.items.length == 0) throw 'No videos found';
+
+          this.actions.getYoutubeSuccess(response.data.items[0]);
         }
+
         catch (err) {
           console.log('error', err);
         }
+
       }
-    } else {
-      $('#div-url-result').slideUp();
-      $('#text-form-add-music').text('Add a music to my profile!');
     }
   }
 }

@@ -1,6 +1,7 @@
-import alt from '../alt';
-import AddMusicActions from '../actions/AddMusicActions';
+import alt from '../alt'
+import AddMusicActions from '../actions/AddMusicActions'
 import GenreData from '../data/GenreData'
+import moment from 'moment'
 
 class AddMusicStore {
   constructor() {
@@ -21,6 +22,20 @@ class AddMusicStore {
     this.music.url = data.url;
     this.music.isMix = data.duration > 1200000;
     this.music.hostType = 'soundcloud';
+  }
+
+  onGetYoutubeSuccess(data){
+    [this.music.artist, this.music.title] = data.snippet.title.split('-', 2);
+    this.music.completeName = data.snippet.title;
+    this.music.image = data.snippet.thumbnails.default.url;
+    this.music.duration = moment.duration(data.contentDetails.duration).asMilliseconds();
+    this.music.url = 'https://youtu.be/v/' + data.id;
+    this.music.isMix = data.duration > 1200000;
+    this.music.hostType = 'youtube';
+  }
+
+  onGetSoundcloudFail(){
+    alt.recycle(this);
   }
 
   onAddMusicSuccess(){

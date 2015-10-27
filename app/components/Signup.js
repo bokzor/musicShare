@@ -60,15 +60,29 @@ class Signup extends React.Component {
                 validations="isAlphanumeric"
                 required name="username"
                 placeholder="Username"
-                classContainer="rounded input-lg text-center no-border"
+                classInput="rounded input-lg text-center no-border"
                 />
-              <TextInput validationError="Please enter a valid email" validations="isEmail" required name="email" placeholder="Email" classContainer="rounded input-lg text-center no-border"/>
-              <TextInput validationError="Please enter a valid password" validations="isLength:8" required name="password" placeholder="Password" type="password" classContainer="rounded input-lg text-center no-border"/>
+
+              <TextInput
+                validationError="Please enter a valid email"
+                validations="isEmail"
+                required
+                name="email"
+                placeholder="Email"
+                classInput="rounded input-lg text-center no-border"/>
+
+              <TextInput
+                validationError="Please enter a valid password"
+                validations="isLength:8"
+                required
+                name="password"
+                placeholder="Password"
+                type="password"
+                classInput="rounded input-lg text-center no-border"/>
               <button
                 type="submit"
                 className="btn btn-lg btn-warning lt b-white b-2x btn-block btn-rounded"
-                disabled={!this.state.canSubmit}
-              >
+                disabled={!this.state.canSubmit}>
               <i className="icon-arrow-right pull-right"></i>
                 <span className="m-r-n-lg">Sign up</span>
               </button>

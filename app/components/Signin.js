@@ -59,7 +59,7 @@ class Signin extends React.Component {
               <strong>Sign in to get in touch</strong>
             </header>
             <Formsy.Form onValidSubmit={this.handleSubmit.bind(this)} onValid={this.enableButton.bind(this)} onInvalid={this.disableButton.bind(this)}>
-              <TextInput classContainer="rounded input-lg text-center no-border"
+              <TextInput classInput="rounded input-lg text-center no-border"
                          validationError="Please enter a valid email"
                          validations="isEmail"
                          required
@@ -67,7 +67,7 @@ class Signin extends React.Component {
                          placeholder="Email"/>
 
               <TextInput type="password"
-                         classContainer="rounded input-lg text-center no-border"
+                         classInput="rounded input-lg text-center no-border"
                          validationError="Please enter a password"
                          validations="isLength:8"
                          required

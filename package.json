@@ -25,6 +25,7 @@
     "history": "^1.12.6",
     "jsonwebtoken": "^5.4.0",
     "mixin-decorator": "^1.0.5",
+    "moment": "^2.10.6",
     "mongoose": "^4.0.7",
     "morgan": "^1.6.1",
     "react": "^0.14.0",

@@ -66,8 +66,8 @@ class AddMusicAd extends React.Component {
                              onValidSubmit={this.handleSubmit.bind(this)}
                              onValid={this.enableButton.bind(this)}
                              onInvalid={this.disableButton.bind(this)}
-                             ref="form"
-                >
+                             ref="form">
+
                   <div className="form-group">
                     <label className="col-sm-2 control-label" for="input-id-url">URL</label>
                     <div className="col-sm-10">
@@ -83,7 +83,7 @@ class AddMusicAd extends React.Component {
                       <span className="help-block">{this.state.urlHelpBlock}</span>
                     </div>
                   </div>
-                  <div style={{display: 'none'}} id="div-url-result">
+                  <div id="div-url-result">
                     <div className="line line-dashed b-b line-lg pull-in"></div>
 
                     <TextInput
