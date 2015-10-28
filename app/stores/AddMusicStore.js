@@ -30,7 +30,7 @@ class AddMusicStore {
     this.urlIsValid = true;
     [this.music.artist, this.music.title] = data.snippet.title.split('-', 2);
     this.music.completeName = data.snippet.title;
-    this.music.image = data.snippet.thumbnails.default.url;
+    this.music.image = data.snippet.thumbnails.standard.url;
     this.music.duration = moment.duration(data.contentDetails.duration).asMilliseconds();
     this.music.url = 'https://youtu.be/v/' + data.id;
     this.music.isMix = data.duration > 1200000;
