@@ -74,7 +74,7 @@ class AddMusicActions {
     }
   }
 
-  async getYoutubeData(idVideo){
+  async getYoutubeData(idVideo) {
     try {
       const response = await axios.get(urlYoutube, {
         params: {

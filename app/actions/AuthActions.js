@@ -17,6 +17,7 @@ class AuthActions {
         email: data.email,
         password: data.password
       });
+
       this.actions.loginSuccess(response)
     } catch (err) {
       this.actions.loginFail(err)
@@ -30,6 +31,7 @@ class AuthActions {
         email: data.email,
         password: data.password
       });
+
       this.actions.signupSuccess(response);
     } catch (err) {
       this.actions.signupFail(err);
@@ -41,6 +43,7 @@ class AuthActions {
       const response = await axios.post('/api/checkToken', {
         token: jwt
       });
+
       this.actions.loginSuccess(response)
     }
     catch (err) {
