@@ -4,7 +4,8 @@ import ProfileActions from '../actions/ProfileActions';
 class ProfileStore {
   constructor() {
     this.bindActions(ProfileActions);
-    this.user = { };
+    this.user = {};
+    this.user.musics = [];
   }
 
   onGetUserSuccess(data) {

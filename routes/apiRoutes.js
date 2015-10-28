@@ -148,7 +148,6 @@ apiRoutes.post('/addMusic', function (req, res) {
 });
 
 apiRoutes.get('/profile', function (req, res) {
-  console.log('req.decoded.user.username : ' + req.decoded.user.username);
   User.findOne({ username: req.decoded.user.username }, function (err, user) {
     if (err) {
       return res.status(400).send({ message: err });

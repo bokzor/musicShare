@@ -34,47 +34,70 @@ class Profile extends React.Component {
   }
 
   render() {
-    var musics = false;
-    if (this.state.user.musics !== undefined) {
-      musics = this.state.user.musics.map((music) => {
-        return(
-          <div key={music._id} className="col-xs-6 col-sm-4 col-md-3 col-lg-2">
-            <div className="item">
-              <div className="pos-rlt">
-                <div className="bottom">
-                  <span className="badge bg-info m-l-sm m-b-sm">{music.duration}</span>
-                </div>
-                <div className="item-overlay opacity r r-2x bg-black">
-                  <div className="text-info padder m-t-sm text-sm">
-                    <i className="fa fa-star"></i>
-                    <i className="fa fa-star"></i>
-                    <i className="fa fa-star"></i>
-                    <i className="fa fa-star"></i>
-                    <i className="fa fa-star-o text-muted"></i>
-                  </div>
-                  <div className="center text-center m-t-n">
-                    <a href="#"><i className="icon-control-play i-2x"></i></a>
-                  </div>
-                  <div className="bottom padder m-b-sm">
-                    <a href="#" className="pull-right">
-                      <i className="fa fa-heart-o"></i>
-                    </a>
-                    <a href="#">
-                      <i className="fa fa-plus-circle"></i>
-                    </a>
-                  </div>
-                </div>
-                <a href="#"><img src={music.img} alt="" className="r r-2x img-full"/></a>
+    let user = this.state.user;
+
+    let musicTop = this.state.user.musics.reverse().slice(0, 6).map((music) => {
+      return (
+        <div key={music._id} className="col-xs-6 col-sm-4">
+          <div className="item">
+            <div className="pos-rlt">
+              <div className="bottom">
+                <span className="badge bg-info m-l-sm m-b-sm">{music.duration}</span>
               </div>
-              <div className="padder-v">
-                <a href="#" className="text-ellipsis">{music.title}</a>
-                <a href="#" className="text-ellipsis text-xs text-muted">{music.artist}</a>
+              <div className="item-overlay opacity r r-2x bg-black">
+                <div className="center text-center m-t-n">
+                  <a href="#"><i className="fa fa-play-circle i-2x"></i></a>
+                </div>
               </div>
+              <a href="#"><img src={music.img} alt="" className="r r-2x img-full"/></a>
+            </div>
+            <div className="padder-v">
+              <a href="#" className="text-ellipsis">{music.title}</a>
+              <a href="#" className="text-ellipsis text-xs text-muted">{music.artist}</a>
             </div>
           </div>
-        )
-      });
-    }
+        </div>
+      );
+    });
+
+    let musicsBottom = this.state.user.musics.slice(6).map((music) => {
+      return (
+        <div key={music._id} className="col-xs-6 col-sm-4 col-md-3 col-lg-2">
+          <div className="item">
+            <div className="pos-rlt">
+              <div className="bottom">
+                <span className="badge bg-info m-l-sm m-b-sm">{music.duration}</span>
+              </div>
+              <div className="item-overlay opacity r r-2x bg-black">
+                <div className="text-info padder m-t-sm text-sm">
+                  <i className="fa fa-star"></i>
+                  <i className="fa fa-star"></i>
+                  <i className="fa fa-star"></i>
+                  <i className="fa fa-star"></i>
+                  <i className="fa fa-star-o text-muted"></i>
+                </div>
+                <div className="center text-center m-t-n">
+                  <a href="#"><i className="icon-control-play i-2x"></i></a>
+                </div>
+                <div className="bottom padder m-b-sm">
+                  <a href="#" className="pull-right">
+                    <i className="fa fa-heart-o"></i>
+                  </a>
+                  <a href="#">
+                    <i className="fa fa-plus-circle"></i>
+                  </a>
+                </div>
+              </div>
+              <a href="#"><img src={music.img} alt="" className="r r-2x img-full"/></a>
+            </div>
+            <div className="padder-v">
+              <a href="#" className="text-ellipsis">{music.title}</a>
+              <a href="#" className="text-ellipsis text-xs text-muted">{music.artist}</a>
+            </div>
+          </div>
+        </div>
+      )
+    });
 
     return (
       <section className="vbox">
@@ -94,12 +117,12 @@ class Profile extends React.Component {
                       </span>
                     </div>
                     <div className="bottom gd bg-info wrapper-lg img-container-bottom">
-                      <span className="pull-right text-sm">96,377 <br/>Followers</span>
+                      <span className="pull-right text-sm">{user.followedByCount} <br/>Followers</span>
                       <a
                         className="pull-right btn btn-default btn-following"
-                        onClick={ this.handleFollowButton.bind(this) }>Follow Bokzor
+                        onClick={ this.handleFollowButton.bind(this) }>Follow {user.username}
                       </a>
-                      <span className="h2 font-thin">Bokzor | <small>Adrien Bokor</small></span>
+                      <span className="h2 font-thin">{user.username} | <small>Adrien Bokor</small></span>
                     </div>
                     <div className="img-container">
                       <div className="img-container-center">
@@ -113,102 +136,9 @@ class Profile extends React.Component {
                       <div className="col-md-7">
                         <h3 className="font-thin">New Songs</h3>
                         <div className="row row-sm">
-                          <div className="col-xs-6 col-sm-4">
-                            <div className="item">
-                              <div className="pos-rlt">
-                                <div className="item-overlay opacity r r-2x bg-black">
-                                  <div className="center text-center m-t-n">
-                                    <a href="#"><i className="fa fa-play-circle i-2x"></i></a>
-                                  </div>
-                                </div>
-                                <a href="#"><img src="images/a2.png" alt="" className="r r-2x img-full"/></a>
-                              </div>
-                              <div className="padder-v">
-                                <a href="#" className="text-ellipsis">Spring rain</a>
-                                <a href="#" className="text-ellipsis text-xs text-muted">Miaow</a>
-                              </div>
-                            </div>
-                          </div>
-                          <div className="col-xs-6 col-sm-4">
-                            <div className="item">
-                              <div className="pos-rlt">
-                                <div className="item-overlay opacity r r-2x bg-black">
-                                  <div className="center text-center m-t-n">
-                                    <a href="#"><i className="fa fa-play-circle i-2x"></i></a>
-                                  </div>
-                                </div>
-                                <a href="#"><img src="images/a3.png" alt="" className="r r-2x img-full"/></a>
-                              </div>
-                              <div className="padder-v">
-                                <a href="#" className="text-ellipsis">Hope</a>
-                                <a href="#" className="text-ellipsis text-xs text-muted">Miya</a>
-                              </div>
-                            </div>
-                          </div>
-                          <div className="col-xs-6 col-sm-4">
-                            <div className="item">
-                              <div className="pos-rlt">
-                                <div className="item-overlay opacity r r-2x bg-black">
-                                  <div className="center text-center m-t-n">
-                                    <a href="#"><i className="fa fa-play-circle i-2x"></i></a>
-                                  </div>
-                                </div>
-                                <a href="#"><img src="images/a8.png" alt="" className="r r-2x img-full"/></a>
-                              </div>
-                              <div className="padder-v">
-                                <a href="#" className="text-ellipsis">Listen wind</a>
-                                <a href="#" className="text-ellipsis text-xs text-muted">Soyia Jess</a>
-                              </div>
-                            </div>
-                          </div>
-                          <div className="col-xs-6 col-sm-4">
-                            <div className="item">
-                              <div className="pos-rlt">
-                                <div className="item-overlay opacity r r-2x bg-black">
-                                  <div className="center text-center m-t-n">
-                                    <a href="#"><i className="fa fa-play-circle i-2x"></i></a>
-                                  </div>
-                                </div>
-                                <a href="#"><img src="images/a9.png" alt="" className="r r-2x img-full"/></a>
-                              </div>
-                              <div className="padder-v">
-                                <a href="#" className="text-ellipsis">Breaking me</a>
-                                <a href="#" className="text-ellipsis text-xs text-muted">Pett JA</a>
-                              </div>
-                            </div>
-                          </div>
-                          <div className="col-xs-6 col-sm-4">
-                            <div className="item">
-                              <div className="pos-rlt">
-                                <div className="item-overlay opacity r r-2x bg-black">
-                                  <div className="center text-center m-t-n">
-                                    <a href="#"><i className="fa fa-play-circle i-2x"></i></a>
-                                  </div>
-                                </div>
-                                <a href="#"><img src="images/a1.png" alt="" className="r r-2x img-full"/></a>
-                              </div>
-                              <div className="padder-v">
-                                <a href="#" className="text-ellipsis">Nothing</a>
-                                <a href="#" className="text-ellipsis text-xs text-muted">Willion</a>
-                              </div>
-                            </div>
-                          </div>
-                          <div className="col-xs-6 col-sm-4">
-                            <div className="item">
-                              <div className="pos-rlt">
-                                <div className="item-overlay opacity r r-2x bg-black">
-                                  <div className="center text-center m-t-n">
-                                    <a href="#"><i className="fa fa-play-circle i-2x"></i></a>
-                                  </div>
-                                </div>
-                                <a href="#"><img src="images/a6.png" alt="" className="r r-2x img-full"/></a>
-                              </div>
-                              <div className="padder-v">
-                                <a href="#" className="text-ellipsis">Panda Style</a>
-                                <a href="#" className="text-ellipsis text-xs text-muted">Lionie</a>
-                              </div>
-                            </div>
-                          </div>
+
+                          {musicTop}
+
                         </div>
                       </div>
                       <div className="col-md-5">
@@ -277,7 +207,7 @@ class Profile extends React.Component {
                     </span></h2>
                     <div className="row row-sm">
 
-                      {musics}
+                      {musicsBottom}
 
                     </div>
                     <FooterInContent/>
