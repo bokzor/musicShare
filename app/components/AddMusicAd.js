@@ -69,7 +69,8 @@ class AddMusicAd extends React.Component {
                   onValidSubmit={this.handleSubmit.bind(this)}
                   onValid={this.enableButton.bind(this)}
                   onInvalid={this.disableButton.bind(this)}
-                  ref="form">
+                  ref="form"
+                >
 
                   <div className="form-group">
                     <label className="col-sm-2 control-label" for="input-id-url">URL</label>
@@ -82,7 +83,8 @@ class AddMusicAd extends React.Component {
                         data-required="true"
                         value={this.state.music.url}
                         ref="urlTextField"
-                        onChange={AddMusicActions.fetchUrl} s/>
+                        onChange={AddMusicActions.fetchUrl}
+                      />
                       <span className="help-block">{this.state.urlHelpBlock}</span>
                     </div>
                   </div>

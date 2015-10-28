@@ -11,6 +11,7 @@ import TextInput from './TextInput'
 @mixin(addChangeHandler)
 class Signup extends React.Component {
   constructor(props) {
+
     super(props);
     this.state = AuthStore.getState();
     this.onChange = this.onChange.bind(this);
@@ -22,11 +23,6 @@ class Signup extends React.Component {
 
   componentWillUnmount() {
     AuthStore.unlisten(this.onChange);
-  }
-
-  onChange(state) {
-    this.setState(state);
-    if (this.state.jwt) this.props.history.pushState(null, '/');
   }
 
   enableButton() {
@@ -45,6 +41,11 @@ class Signup extends React.Component {
     AuthActions.signup(data);
   }
 
+  onChange(state) {
+    this.setState(state);
+    if (this.state.jwt) this.props.history.pushState(null, '/');
+  }
+
   render() {
     return (
       <section id="content" className="m-t-lg wrapper-md animated fadeInDown">
@@ -54,7 +55,11 @@ class Signup extends React.Component {
             <header className="wrapper text-center">
               <strong>Sign up to find interesting thing</strong>
             </header>
-            <Formsy.Form onValidSubmit={this.handleSubmit.bind(this)} onValid={this.enableButton.bind(this)} onInvalid={this.disableButton.bind(this)}>
+            <Formsy.Form
+              onValidSubmit={this.handleSubmit.bind(this)}
+              onValid={this.enableButton.bind(this)}
+              onInvalid={this.disableButton.bind(this)}
+            >
 
               <TextInput
                 validationError="Please enter a valid username"
@@ -82,6 +87,7 @@ class Signup extends React.Component {
                 type="password"
                 classInput="rounded input-lg text-center no-border"
               />
+
               <button
                 type="submit"
                 className="btn btn-lg btn-warning lt b-white b-2x btn-block btn-rounded"

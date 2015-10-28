@@ -10,10 +10,19 @@ import TextInput from './TextInput'
 
 @mixin(addChangeHandler)
 class Signin extends React.Component {
+
   constructor(props) {
     super(props);
     this.state = AuthStore.getState();
     this.onChange = this.onChange.bind(this);
+  }
+
+  componentWillMount() {
+    Cookie.remove('XSRF-TOKEN');
+  }
+
+  componentDidMount() {
+    AuthStore.listen(this.onChange);
   }
 
   enableButton() {
@@ -28,13 +37,7 @@ class Signin extends React.Component {
     });
   }
 
-  componentWillMount() {
-    Cookie.remove('XSRF-TOKEN');
-  }
 
-  componentDidMount() {
-    AuthStore.listen(this.onChange);
-  }
 
   componentWillUnmount() {
     AuthStore.unlisten(this.onChange);
@@ -55,16 +58,22 @@ class Signin extends React.Component {
         <div className="container aside-xl">
           <a className="navbar-brand block" href="index.html"><span className="h1 font-bold">Mwsik</span></a>
           <section className="m-b-lg">
+
             <header className="wrapper text-center">
               <strong>Sign in to get in touch</strong>
             </header>
-            <Formsy.Form onValidSubmit={this.handleSubmit.bind(this)} onValid={this.enableButton.bind(this)} onInvalid={this.disableButton.bind(this)}>
+            <Formsy.Form
+              onValidSubmit={this.handleSubmit.bind(this)}
+              onValid={this.enableButton.bind(this)}
+              onInvalid={this.disableButton.bind(this)}
+            >
               <TextInput classInput="rounded input-lg text-center no-border"
                          validationError="Please enter a valid email"
                          validations="isEmail"
                          required
                          name="email"
-                         placeholder="Email"/>
+                         placeholder="Email"
+              />
 
               <TextInput type="password"
                          classInput="rounded input-lg text-center no-border"
@@ -72,7 +81,9 @@ class Signin extends React.Component {
                          validations="isLength:8"
                          required
                          name="password"
-                         placeholder="Password"/>
+                         placeholder="Password"
+              />
+
               <button
                 disabled={!this.state.canSubmit}
                 type="submit"
@@ -80,6 +91,7 @@ class Signin extends React.Component {
                 <i className="icon-arrow-right pull-right"></i>
                 <span className="m-r-n-lg">Sign in</span>
               </button>
+
               <div className="text-center m-t m-b"><a href="#">
                 <small>Forgot password?</small>
               </a></div>

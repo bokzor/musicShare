@@ -15,7 +15,7 @@ class AddMusicStore {
     this.urlIsValid = false;
   }
 
-  onGetSoundcloudSuccess(data) {
+  onGetSoundCloudSuccess(data) {
     this.urlIsValid = true;
     [this.music.artist, this.music.title] = data.title.split('-', 2);
     this.music.completeName = data.title;
@@ -37,7 +37,7 @@ class AddMusicStore {
     this.music.hostType = 'youtube';
   }
 
-  onGetSoundcloudFail(){
+  onGetSoundCloudFail(){
     alt.recycle(this);
   }
 

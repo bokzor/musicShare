@@ -14,9 +14,9 @@ var regexYoutube = /(youtu(?:\.be|be\.com)\/(?:.*v(?:\/|=)|(?:.*\/)?)([\w'-]+))/
 class AddMusicActions {
   constructor() {
     this.generateActions(
-      'getSoundcloudSuccess',
+      'getSoundCloudSuccess',
       'getYoutubeSuccess',
-      'getSoundcloudFail',
+      'getSoundCloudFail',
       'getYoutubeFail',
       'addMusicSuccess',
       'addMusicFail',
@@ -41,50 +41,58 @@ class AddMusicActions {
     }
   }
 
-  async fetchUrl(e) {
+  fetchUrl(e) {
     let url = e.target.value;
     var idVideo = '';
 
     if (url) {
       if (url.indexOf('soundcloud.com') > 0) {
-
-        try {
-          const response = await axios.get(urlSoundcloud, {
-            params: {
-              url: url,
-              client_id: client_soundcloud
-            }
-          });
-
-          response.data.url = url;
-          this.actions.getSoundcloudSuccess(response.data);
-        }
-
-        catch (err) {
-          this.actions.getSoundcloudFail();
-        }
+        this.actions.getSoundCloudData(url);
 
       } else if (idVideo = url.match(regexYoutube)[2]) {
-
-        try {
-          const response = await axios.get(urlYoutube, {
-            params: {
-              id: idVideo,
-              key: client_youtube,
-              part: 'snippet, contentDetails'
-            }
-          });
-
-          if (response.data.items.length == 0) throw 'No videos found';
-          this.actions.getYoutubeSuccess(response.data.items[0]);
-        }
-
-        catch (err) {
-          this.actions.getYoutubeFail();
-        }
+        this.actions.getYoutubeData(idVideo);
       }
     }
   }
+
+  async getSoundCloudData(url) {
+    console.log(this);
+    try {
+      const response = await axios.get(urlSoundcloud, {
+        params: {
+          url: url,
+          client_id: client_soundcloud
+        }
+      });
+
+      response.data.url = url;
+      this.actions.getSoundCloudSuccess(response.data);
+    }
+
+    catch (err) {
+      this.actions.getSoundCloudFail();
+    }
+  }
+
+  async getYoutubeData(idVideo){
+    try {
+      const response = await axios.get(urlYoutube, {
+        params: {
+          id: idVideo,
+          key: client_youtube,
+          part: 'snippet, contentDetails'
+        }
+      });
+
+      if (response.data.items.length == 0) throw 'No videos found';
+      this.actions.getYoutubeSuccess(response.data.items[0]);
+    }
+
+    catch (err) {
+      this.actions.getYoutubeFail();
+    }
+  }
+
 }
 
 export default alt.createActions(AddMusicActions);
