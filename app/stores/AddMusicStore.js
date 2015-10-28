@@ -1,6 +1,7 @@
-import alt from '../alt';
-import AddMusicActions from '../actions/AddMusicActions';
+import alt from '../alt'
+import AddMusicActions from '../actions/AddMusicActions'
 import GenreData from '../data/GenreData'
+import moment from 'moment'
 
 class AddMusicStore {
   constructor() {
@@ -10,13 +11,12 @@ class AddMusicStore {
     this.urlValidationState = '';
     this.urlHelpBlock = '';
     this.genres = GenreData;
-    this.music.tags = '';
-    this.music.genres = '';
-    this.music.genresId = '';
-
+    this.canSubmit = false;
+    this.urlIsValid = false;
   }
 
-  onGetSoundcloudSuccess(data) {
+  onGetSoundCloudSuccess(data) {
+    this.urlIsValid = true;
     [this.music.artist, this.music.title] = data.title.split('-', 2);
     this.music.completeName = data.title;
     this.music.duration = data.duration;
@@ -26,7 +26,26 @@ class AddMusicStore {
     this.music.hostType = 'soundcloud';
   }
 
-  onAddMusicSuccess(date){
+  onGetYoutubeSuccess(data){
+    this.urlIsValid = true;
+    [this.music.artist, this.music.title] = data.snippet.title.split('-', 2);
+    this.music.completeName = data.snippet.title;
+    this.music.image = data.snippet.thumbnails.standard.url;
+    this.music.duration = moment.duration(data.contentDetails.duration).asMilliseconds();
+    this.music.url = 'https://youtu.be/v/' + data.id;
+    this.music.isMix = data.duration > 1200000;
+    this.music.hostType = 'youtube';
+  }
+
+  onGetSoundCloudFail(){
+    alt.recycle(this);
+  }
+
+  onGetYoutubeFail(){
+    alt.recycle(this);
+  }
+
+  onAddMusicSuccess(){
     alt.recycle(this);
   }
 

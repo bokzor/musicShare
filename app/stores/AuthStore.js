@@ -6,14 +6,8 @@ class AuthStore {
   constructor() {
     this.bindActions(AuthActions);
     this.login = {};
-    this.signup = { username: '', email: '', password: '' };
     this.jwt = '';
-    this.usernameValidationState = '';
-    this.emailValidationState = '';
-    this.passwordValidationState = '';
-    this.usernameHelpBlock = '';
-    this.emailHelpBlock = '';
-    this.passwordHelpBlock = '';
+    this.canSubmit = false;
   }
 
 
@@ -24,36 +18,21 @@ class AuthStore {
     cookie.save('XSRF-TOKEN', this.jwt);
   }
 
-
   onLoginFail(response) {
     console.log(response)
     toastr.error(response.data.message);
   }
 
   onSignupSuccess(response) {
-    console.log(response);
     this.jwt = response.data.token;
     this.user = response.data.user;
     toastr.success(response.data.message);
+    cookie.save('XSRF-TOKEN', this.jwt);
+
   }
 
   onSignupFail(response) {
     toastr.error(response.data.message);
-  }
-
-  onInvalidUsername() {
-    this.usernameValidationState = 'has-error';
-    this.usernameHelpBlock = 'Please enter a username';
-  }
-
-  onInvalidEmail() {
-    this.emailValidationState = 'has-error';
-    this.emailHelpBlock = 'Please enter an email';
-  }
-
-  onInvalidPassword() {
-    this.passwordValidationState = 'has-error';
-    this.passwordHelpBlock = 'Please enter a password';
   }
 }
 
