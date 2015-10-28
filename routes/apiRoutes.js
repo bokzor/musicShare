@@ -9,7 +9,6 @@ const config = require('../config');
 // get an instance of the router for api routes
 const apiRoutes = express.Router();
 
-
 // route to create a new user
 apiRoutes.post('/signup', function (req, res, next) {
   const username = req.body.username;
@@ -86,7 +85,6 @@ apiRoutes.post('/auth', function (req, res) {
 
 });
 
-
 // route middleware to verify a token
 apiRoutes.use(function (req, res, next) {
 
@@ -117,7 +115,6 @@ apiRoutes.use(function (req, res, next) {
   }
 });
 
-
 apiRoutes.post('/addMusic', function (req, res) {
   let music = new Music();
   music.name = req.body.music.completeName;
@@ -131,9 +128,7 @@ apiRoutes.post('/addMusic', function (req, res) {
   music.hostType = req.body.music.hostType;
   music.tags = req.body.music.tags;
 
-  User.findOne({
-    username: req.decoded.user.username
-  }, function (err, user) {
+  User.findOne({ username: req.decoded.user.username }, function (err, user) {
     console.log(user);
     user.musics.push(music);
     user.save(err => {
@@ -148,22 +143,21 @@ apiRoutes.post('/addMusic', function (req, res) {
           success: 'true'
         });
       }
-
     })
   });
-
-  app.get('/profile', function (req, res) {
-    //User.findOne({ username: req.decoded.user.username }, function (err, user) {
-    User.findOne({ username: 'aa' }, function (err, user) {
-      if (err) return next(err);
-      if (!user) {
-        return res.status(404).send({ message: 'User not found.' });
-      }
-      res.send(user);
-    });
-  });
-
 });
 
+apiRoutes.get('/profile', function (req, res) {
+  console.log('req.decoded.user.username : ' + req.decoded.user.username);
+  User.findOne({ username: req.decoded.user.username }, function (err, user) {
+    if (err) {
+      return res.status(400).send({ message: err });
+    }
+    if (!user) {
+      return res.status(404).send({ message: 'User not found.' });
+    }
+    res.send(user);
+  });
+});
 
 export default apiRoutes;

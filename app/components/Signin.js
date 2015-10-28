@@ -6,8 +6,6 @@ import AuthActions from '../actions/AuthActions'
 import AuthStore from '../stores/AuthStore'
 import cookie from 'react-cookie';
 
-
-
 @mixin(addChangeHandler)
 class Signin extends React.Component {
   constructor(props) {
@@ -16,9 +14,8 @@ class Signin extends React.Component {
     this.onChange = this.onChange.bind(this);
   }
 
-  componentWillMount(){
+  componentWillMount() {
     cookie.remove('XSRF-TOKEN');
-
   }
 
   componentDidMount() {

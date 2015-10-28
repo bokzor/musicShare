@@ -4,9 +4,78 @@ import composeAnimation from '../decorators/composeAnimation'
 
 import FooterInContent from './FooterInContent';
 
+import ProfileActions from '../actions/ProfileActions'
+import ProfileStore from '../stores/ProfileStore'
+
 @mixin(composeAnimation)
 class Profile extends React.Component {
+  constructor(props) {
+    super(props);
+    this.state = ProfileStore.getState();
+    this.onChange = this.onChange.bind(this);
+  }
+
+  componentDidMount() {
+    ProfileStore.listen(this.onChange);
+    ProfileActions.getUser();
+  }
+
+  componentWillUnmount() {
+    ProfileStore.unlisten(this.onChange);
+  }
+
+  onChange(state) {
+    this.setState(state);
+  }
+
+  handleFollowButton(event) {
+    event.preventDefault();
+    alert('Follow xxx');
+  }
+
   render() {
+    var musics = false;
+    if (this.state.user.musics !== undefined) {
+      musics = this.state.user.musics.map((music) => {
+        return(
+          <div key={music._id} className="col-xs-6 col-sm-4 col-md-3 col-lg-2">
+            <div className="item">
+              <div className="pos-rlt">
+                <div className="bottom">
+                  <span className="badge bg-info m-l-sm m-b-sm">{music.duration}</span>
+                </div>
+                <div className="item-overlay opacity r r-2x bg-black">
+                  <div className="text-info padder m-t-sm text-sm">
+                    <i className="fa fa-star"></i>
+                    <i className="fa fa-star"></i>
+                    <i className="fa fa-star"></i>
+                    <i className="fa fa-star"></i>
+                    <i className="fa fa-star-o text-muted"></i>
+                  </div>
+                  <div className="center text-center m-t-n">
+                    <a href="#"><i className="icon-control-play i-2x"></i></a>
+                  </div>
+                  <div className="bottom padder m-b-sm">
+                    <a href="#" className="pull-right">
+                      <i className="fa fa-heart-o"></i>
+                    </a>
+                    <a href="#">
+                      <i className="fa fa-plus-circle"></i>
+                    </a>
+                  </div>
+                </div>
+                <a href="#"><img src={music.img} alt="" className="r r-2x img-full"/></a>
+              </div>
+              <div className="padder-v">
+                <a href="#" className="text-ellipsis">{music.title}</a>
+                <a href="#" className="text-ellipsis text-xs text-muted">{music.artist}</a>
+              </div>
+            </div>
+          </div>
+        )
+      });
+    }
+
     return (
       <section className="vbox">
         <section className="w-f-md">
@@ -26,7 +95,10 @@ class Profile extends React.Component {
                     </div>
                     <div className="bottom gd bg-info wrapper-lg img-container-bottom">
                       <span className="pull-right text-sm">96,377 <br/>Followers</span>
-                      <a href="#" className="pull-right btn btn-default btn-following">Follow Bokzor</a>
+                      <a
+                        className="pull-right btn btn-default btn-following"
+                        onClick={ this.handleFollowButton.bind(this) }>Follow Bokzor
+                      </a>
                       <span className="h2 font-thin">Bokzor | <small>Adrien Bokor</small></span>
                     </div>
                     <div className="img-container">
@@ -205,40 +277,7 @@ class Profile extends React.Component {
                     </span></h2>
                     <div className="row row-sm">
 
-                      <div className="col-xs-6 col-sm-4 col-md-3 col-lg-2">
-                        <div className="item">
-                          <div className="pos-rlt">
-                            <div className="bottom">
-                              <span className="badge bg-info m-l-sm m-b-sm">03:20</span>
-                            </div>
-                            <div className="item-overlay opacity r r-2x bg-black">
-                              <div className="text-info padder m-t-sm text-sm">
-                                <i className="fa fa-star"></i>
-                                <i className="fa fa-star"></i>
-                                <i className="fa fa-star"></i>
-                                <i className="fa fa-star"></i>
-                                <i className="fa fa-star-o text-muted"></i>
-                              </div>
-                              <div className="center text-center m-t-n">
-                                <a href="#"><i className="icon-control-play i-2x"></i></a>
-                              </div>
-                              <div className="bottom padder m-b-sm">
-                                <a href="#" className="pull-right">
-                                  <i className="fa fa-heart-o"></i>
-                                </a>
-                                <a href="#">
-                                  <i className="fa fa-plus-circle"></i>
-                                </a>
-                              </div>
-                            </div>
-                            <a href="#"><img src="images/p1.jpg" alt="" className="r r-2x img-full"/></a>
-                          </div>
-                          <div className="padder-v">
-                            <a href="#" className="text-ellipsis">Song 1</a>
-                            <a href="#" className="text-ellipsis text-xs text-muted">Artist 1</a>
-                          </div>
-                        </div>
-                      </div>
+                      {musics}
 
                     </div>
                     <FooterInContent/>
