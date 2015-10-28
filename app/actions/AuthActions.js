@@ -7,32 +7,28 @@ class AuthActions {
       'loginSuccess',
       'loginFail',
       'signupSuccess',
-      'signupFail',
-      'invalidUsername',
-      'invalidEmail',
-      'invalidPassword'
+      'signupFail'
     );
   }
 
-  async login(state) {
+  async login(data) {
     try {
       const response = await axios.post('/api/auth', {
-        username: state.login.username,
-        password: state.login.password
+        email: data.email,
+        password: data.password
       });
       this.actions.loginSuccess(response)
     } catch (err) {
-      console.log(err);
       this.actions.loginFail(err)
     }
   }
 
-  async signup(state) {
+  async signup(data) {
     try {
       const response = await axios.post('/api/signup', {
-        username: state.signup.username,
-        email: state.signup.email,
-        password: state.signup.password
+        username: data.username,
+        email: data.email,
+        password: data.password
       });
       this.actions.signupSuccess(response);
     } catch (err) {

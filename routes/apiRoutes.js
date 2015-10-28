@@ -26,7 +26,7 @@ apiRoutes.post('/signup', function (req, res, next) {
     if (err) return next(err);
     // we create a new token
     const token = jwt.sign({user: { username : newUser.username }}, config.secretToken, {
-      expiresInMinutes: 1440 // expires in 24 hours
+      expiresIn: 1440 * 60 // expires in 24 hours
     });
 
     // let's fetch it to get the expires param
@@ -45,12 +45,12 @@ apiRoutes.post('/signup', function (req, res, next) {
 // route to authenticate an user. Return a token
 apiRoutes.post('/auth', function (req, res) {
 
-  const username = req.body.username;
+  const email = req.body.email;
   const password = req.body.password;
 
   // find the user
   User.findOne({
-    username: username
+    email: email
   }, function (err, user) {
     if (err) throw err;
 
@@ -134,7 +134,6 @@ apiRoutes.post('/addMusic', function (req, res) {
   User.findOne({
     username: req.decoded.user.username
   }, function (err, user) {
-    console.log(user);
     user.musics.push(music);
     user.save(err => {
       if(err) {
@@ -150,17 +149,6 @@ apiRoutes.post('/addMusic', function (req, res) {
       }
 
     })
-  });
-
-  app.get('/profile', function (req, res) {
-    //User.findOne({ username: req.decoded.user.username }, function (err, user) {
-    User.findOne({ username: 'aa' }, function (err, user) {
-      if (err) return next(err);
-      if (!user) {
-        return res.status(404).send({ message: 'User not found.' });
-      }
-      res.send(user);
-    });
   });
 
 });
