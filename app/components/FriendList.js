@@ -1,0 +1,90 @@
+import React from 'react';
+import {debounce} from 'lodash'
+import FriendActions from '../actions/FriendActions'
+import FriendStore from '../stores/FriendStore'
+
+class RightNav extends React.Component {
+  constructor(props) {
+    super(props);
+    this.state = FriendStore.getState();
+    this.onChange = this.onChange.bind(this);
+    this.searchByUsername = this.searchByUsername.bind(this);
+    
+    // limit this function every 200 ms
+    this.onSearch = debounce(this.onSearch, 200);
+  }
+
+  componentDidMount () {
+    FriendStore.listen(this.onChange);
+    FriendActions.getFriendsList();
+  }
+
+  componentWillUnmount() {
+    FriendStore.unlisten(this.onChange);
+  }
+
+  onChange(state) {
+    this.setState(state);
+  }
+
+  onSearch(event){
+    this.setState({search: event.target.value});
+  }
+
+  searchByUsername(friend) {
+    if (this.state.search === '') return true;
+    return friend.username.indexOf(this.state.search) > -1;
+  }
+
+
+  render() {
+    let friends = this.state.friends.filter(this.searchByUsername).map((friend) => {
+      return (
+      <li key={friend.id} className="list-group-item">
+          <span className="pull-left thumb-xs m-t-xs avatar m-l-xs m-r-sm">
+          <img src={'http://api.adorable.io/avatars/40/' + friend.username + "@adorable.png"} alt="..."
+               className="img-circle"/>
+          <i className="on b-light right sm"></i>
+          </span>
+        <div className="clear">
+          <div><a href="#">{friend.username}</a></div>
+          <small className="text-muted">New York</small>
+        </div>
+      </li>
+      )
+    });
+
+    return (
+      <aside className="aside-md bg-light dk" id="sidebar" style={{ width: '20%' }}>
+        <section className="vbox animated fadeInRight">
+          <section className="w-f-md scrollable hover">
+            <header className="header header-md bg-black header-search-my-users">
+              <form className="" role="search">
+                <div className="form-group clearfix m-b-none">
+                  <div className="input-group m-t m-b">
+                    <span className="input-group-btn">
+                        <button type="submit" className="btn btn-sm bg-empty text-muted btn-icon">
+                          <i className="fa fa-search"></i>
+                        </button>
+                     </span>
+                    <input
+                      type="text"
+                      className="form-control input-sm text-white bg-empty b-b b-dark no-border"
+                      placeholder="Search members"
+                      onChange={this.onSearch.bind(this)}
+                    />
+                  </div>
+                </div>
+              </form>
+            </header>
+            <ul className="list-group no-bg no-borders auto m-t-n-xxs list-my-users">
+              {friends}
+            </ul>
+          </section>
+        </section>
+      </aside>
+    );
+  }
+}
+
+export default RightNav;
