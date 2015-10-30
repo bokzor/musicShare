@@ -2,14 +2,15 @@ import React from 'react';
 import {debounce} from 'lodash'
 import FriendActions from '../actions/FriendActions'
 import FriendStore from '../stores/FriendStore'
+import FriendListItem from './FriendListItem'
 
-class RightNav extends React.Component {
+class FriendList extends React.Component {
   constructor(props) {
     super(props);
     this.state = FriendStore.getState();
     this.onChange = this.onChange.bind(this);
-    this.searchByUsername = this.searchByUsername.bind(this);
-    
+    this.filterByUsername = this.filterByUsername.bind(this);
+
     // limit this function every 200 ms
     this.onSearch = debounce(this.onSearch, 200);
   }
@@ -28,29 +29,26 @@ class RightNav extends React.Component {
   }
 
   onSearch(event){
-    this.setState({search: event.target.value});
+      FriendActions.updateSearchQuery(event.target.value);
+      FriendActions.getSearchList(this.state.searchQuery);
   }
 
-  searchByUsername(friend) {
-    if (this.state.search === '') return true;
-    return friend.username.indexOf(this.state.search) > -1;
+  filterByUsername(friend) {
+    if (this.state.searchQuery === '') return true;
+    return friend.username.indexOf(this.state.searchQuery) > -1;
   }
 
 
   render() {
-    let friends = this.state.friends.filter(this.searchByUsername).map((friend) => {
+    let friends = this.state.friends.filter(this.filterByUsername).map((friend) => {
       return (
-      <li key={friend.id} className="list-group-item">
-          <span className="pull-left thumb-xs m-t-xs avatar m-l-xs m-r-sm">
-          <img src={'http://api.adorable.io/avatars/40/' + friend.username + "@adorable.png"} alt="..."
-               className="img-circle"/>
-          <i className="on b-light right sm"></i>
-          </span>
-        <div className="clear">
-          <div><a href="#">{friend.username}</a></div>
-          <small className="text-muted">New York</small>
-        </div>
-      </li>
+        <FriendListItem id={friend.id} username={friend.username} />
+      )
+    });
+
+    let search = this.state.searchList.map((user) => {
+      return (
+        <FriendListItem id={user.id} username={user.username} />
       )
     });
 
@@ -79,6 +77,7 @@ class RightNav extends React.Component {
             </header>
             <ul className="list-group no-bg no-borders auto m-t-n-xxs list-my-users">
               {friends}
+              {(this.state.searchQuery != '') ? search : null}
             </ul>
           </section>
         </section>
@@ -87,4 +86,4 @@ class RightNav extends React.Component {
   }
 }
 
-export default RightNav;
+export default FriendList;

@@ -24,7 +24,7 @@ apiRoutes.post('/signup', function (req, res, next) {
   newUser.save(function (err) {
     if (err) return next(err);
     // we create a new token
-    const token = jwt.sign({user: { username : newUser.username }}, config.secretToken, {
+    const token = jwt.sign({user: {username: newUser.username}}, config.secretToken, {
       expiresIn: 1440 * 60 // expires in 24 hours
     });
 
@@ -65,7 +65,7 @@ apiRoutes.post('/auth', function (req, res) {
         } else {
           // if user is found and password is right
           // create a token
-          const token = jwt.sign({user: { username: user.username}}, config.secretToken, {
+          const token = jwt.sign({user: {username: user.username, id: user.id}}, config.secretToken, {
             expiresIn: 86400 // expires in 24 hours
           });
           const decoded = jwt.decode(token);
@@ -79,7 +79,6 @@ apiRoutes.post('/auth', function (req, res) {
           });
         }
       });
-
     }
   });
 
@@ -129,11 +128,10 @@ apiRoutes.post('/addMusic', function (req, res) {
   music.tags = req.body.music.tags;
 
 
-  User.findOne({ username: req.decoded.user.username }, function (err, user) {
-    console.log(user);
+  User.findById(req.decoded.user.id, function (err, user) {
     user.musics.push(music);
     user.save(err => {
-      if(err) {
+      if (err) {
         res.status(400).json({
           success: 'false',
           error: err
@@ -149,15 +147,52 @@ apiRoutes.post('/addMusic', function (req, res) {
 });
 
 apiRoutes.get('/profile', function (req, res) {
-  User.findOne({ username: req.decoded.user.username }, function (err, user) {
+  User.findOne({id: req.decoded.user.id}, function (err, user) {
     if (err) {
-      return res.status(400).send({ message: err });
+      return res.status(400).send({message: err});
     }
     if (!user) {
-      return res.status(404).send({ message: 'User not found.' });
+      return res.status(404).send({message: 'User not found.'});
     }
     res.send(user);
   });
+});
+
+
+apiRoutes.get('/test', function (req, res) {
+
+  User.findOne({username: 'bokzor'}, 'following username')
+    .then(userAdri => {
+
+      User.findOne({username: 'max'}, 'following username')
+        .then(user => {
+          userAdri.following.push(user);
+        });
+
+      User.findOne({username: 'maxime'}, 'following username')
+        .then(user => {
+          userAdri.following.push(user);
+          userAdri.save();
+        });
+    });
+});
+
+
+apiRoutes.get('/friends', function (req, res) {
+  User
+    .findById(req.decoded.user.id, 'following username')
+    .populate('following', 'username')
+    .exec(function (err, user) {
+      res.send(user);
+    });
+});
+
+apiRoutes.get('/userSearch', function (req, res) {
+  User
+    .find({username: new RegExp(req.query.search, "i")}, 'username').limit(5)
+    .exec((err, users) => {
+      res.send(users);
+    });
 });
 
 export default apiRoutes;

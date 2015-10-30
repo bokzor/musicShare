@@ -14,7 +14,6 @@ export default (ComponentToBeRendered) => {
 
     componentWillMount() {
       this.jwt = cookie.load('XSRF-TOKEN');
-      console.log(this.jwt);
     }
 
     componentDidMount() {
@@ -24,7 +23,6 @@ export default (ComponentToBeRendered) => {
     }
 
     render() {
-
       if (this.jwt) {
         return <ComponentToBeRendered {...this.props} />;
       } else {

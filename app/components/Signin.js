@@ -1,4 +1,6 @@
 import React from 'react'
+import alt from '../alt'
+
 import {Link} from 'react-router'
 import mixin from 'mixin-decorator'
 import addChangeHandler from '../decorators/changeHandler'
@@ -20,6 +22,7 @@ class Signin extends React.Component {
 
   componentWillMount() {
     Cookie.remove('XSRF-TOKEN');
+    alt.recycle();
   }
 
   componentDidMount() {
@@ -66,21 +69,23 @@ class Signin extends React.Component {
               onValid={this.enableButton.bind(this)}
               onInvalid={this.disableButton.bind(this)}
             >
-              <TextInput classInput="rounded input-lg text-center no-border"
-                         validationError="Please enter a valid email"
-                         validations="isEmail"
-                         required
-                         name="email"
-                         placeholder="Email"
+              <TextInput
+                classInput="rounded input-lg text-center no-border"
+                validationError="Please enter a valid email"
+                validations="isEmail"
+                required
+                name="email"
+                placeholder="Email"
               />
 
-              <TextInput type="password"
-                         classInput="rounded input-lg text-center no-border"
-                         validationError="Please enter a password"
-                         validations="isLength:8"
-                         required
-                         name="password"
-                         placeholder="Password"
+              <TextInput
+                type="password"
+                classInput="rounded input-lg text-center no-border"
+                validationError="Please enter a password"
+                validations="isLength:8"
+                required
+                name="password"
+                placeholder="Password"
               />
 
               <button
