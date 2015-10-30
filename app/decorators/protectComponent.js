@@ -9,24 +9,29 @@ export default (ComponentToBeRendered) => {
 
     constructor(props) {
       super(props);
-      // we're keeping track of the current user instance
+      this.state = AuthStore.getState();
+      this.onChange = this.onChange.bind(this);
     }
 
     componentWillMount() {
       this.jwt = cookie.load('XSRF-TOKEN');
-      console.log(this.jwt);
+      this.user = cookie.load('user');
+      this.setState({ username: this.user.username });
     }
 
     componentDidMount() {
-      this.jwt = cookie.load('XSRF-TOKEN');
       // We should check the expiration of the token
       if (!this.jwt)  this.props.history.pushState(null, '/signin');
     }
 
-    render() {
+    onChange(state) {
+      this.setState(state);
+    }
 
+    render() {
+      let username = this.user.username;
       if (this.jwt) {
-        return <ComponentToBeRendered {...this.props} />;
+        return <ComponentToBeRendered {...this.props} username={this.state.username} />;
       } else {
         return <Signin></Signin>;
       }

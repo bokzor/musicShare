@@ -40,7 +40,7 @@ class LeftNav extends React.Component {
                     My profile
                   </li>
                   <li>
-                    <Link to="/profile">
+                    <Link to={"/profile"}>
 
                       <i className="fa fa-user icon"></i>
                       <span className="font-bold">My Profile</span>

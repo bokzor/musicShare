@@ -43,7 +43,6 @@ apiRoutes.post('/signup', function (req, res, next) {
 
 // route to authenticate an user. Return a token
 apiRoutes.post('/auth', function (req, res) {
-
   const email = req.body.email;
   const password = req.body.password;
 
@@ -74,6 +73,7 @@ apiRoutes.post('/auth', function (req, res) {
           res.json({
             success: true,
             message: 'Welcome ' + user.username,
+            user: {id: user.id, username: user.username},
             token: token,
             expires: decoded.exp
           });
@@ -130,7 +130,6 @@ apiRoutes.post('/addMusic', function (req, res) {
 
 
   User.findOne({ username: req.decoded.user.username }, function (err, user) {
-    console.log(user);
     user.musics.push(music);
     user.save(err => {
       if(err) {
@@ -148,8 +147,9 @@ apiRoutes.post('/addMusic', function (req, res) {
   });
 });
 
-apiRoutes.get('/profile', function (req, res) {
-  User.findOne({ username: req.decoded.user.username }, function (err, user) {
+// use in Profile component
+apiRoutes.get('/profile/:username', function (req, res) {
+  User.findOne({ username: req.params.username }, function (err, user) {
     if (err) {
       return res.status(400).send({ message: err });
     }
@@ -159,5 +159,18 @@ apiRoutes.get('/profile', function (req, res) {
     res.send(user);
   });
 });
+
+// use in App component
+/*apiRoutes.get('/user', function (req, res) {
+  User.findOne({ username: req.decoded.user.username }, { 'password': 0, 'musics': 0 }, function (err, user) {
+    if (err) {
+      return res.status(400).send({ message: err });
+    }
+    if (!user) {
+      return res.status(404).send({ message: 'User not found.' });
+    }
+    res.send(user);
+  });
+});*/
 
 export default apiRoutes;

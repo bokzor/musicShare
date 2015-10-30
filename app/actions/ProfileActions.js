@@ -5,13 +5,14 @@ class ProfileActions {
   constructor() {
     this.generateActions(
       'getUserSuccess',
-      'getUserFail'
+      'getUserFail',
+      'getUsernameConnected'
     );
   }
 
-  async getUser() {
+  async getUser(username) {
     try {
-      const response = await axios.get('/api/profile');
+      const response = await axios.get('/api/profile/' + username);
       this.actions.getUserSuccess(response.data);
     }
     catch(err) {

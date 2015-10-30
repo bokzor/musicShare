@@ -20,6 +20,7 @@ const routes = (
       <Route path='/genres' component={Genres}/>
       <Route path='/genres/:genreId' component={Genres}/>
       <Route path='/profile' component={Profile}/>
+      <Route path='/profile/:username' component={Profile}/>
       <Route path='/addMusicAd' component={AddMusicAd}/>
     </Route>
   </Route>

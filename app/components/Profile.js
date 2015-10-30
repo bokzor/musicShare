@@ -17,11 +17,22 @@ class Profile extends React.Component {
 
   componentDidMount() {
     ProfileStore.listen(this.onChange);
-    ProfileActions.getUser();
+    if (this.props.params.username) {
+      ProfileActions.getUser(this.props.params.username);
+    } else {
+      ProfileActions.getUser(this.props.usernameConnectedCookie);
+    }
   }
 
   componentWillUnmount() {
     ProfileStore.unlisten(this.onChange);
+  }
+
+  componentDidUpdate(prevProps) {
+    // Fetch new charachter data when URL path changes
+    if (prevProps.params.username !== this.props.params.username) {
+      ProfileActions.getUser(this.props.params.username);
+    }
   }
 
   onChange(state) {
@@ -118,10 +129,17 @@ class Profile extends React.Component {
                     </div>
                     <div className="bottom gd bg-info wrapper-lg img-container-bottom">
                       <span className="pull-right text-sm">{user.followedByCount} <br/>Followers</span>
-                      <a
-                        className="pull-right btn btn-default btn-following"
-                        onClick={ this.handleFollowButton.bind(this) }>Follow {user.username}
-                      </a>
+
+                      {this.props.usernameConnectedCookie !== this.state.user.username
+                        ?
+                          <a
+                            className="pull-right btn btn-default btn-following"
+                            onClick={ this.handleFollowButton.bind(this) }>Follow {user.username}
+                          </a>
+                        :
+                          <span></span>
+                      }
+
                       <span className="h2 font-thin">{user.username} | <small>Adrien Bokor</small></span>
                     </div>
                     <div className="img-container">
