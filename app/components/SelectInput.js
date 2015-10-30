@@ -43,7 +43,6 @@ class SelectInput extends React.Component {
             searchPromptText={this.props.searchPromptText}
             placeholder={this.props.placeholder}
             noResultsText={this.props.noResultsText}
-
           />
         </div>
         <span className='span-help-block'>{this.props.getErrorMessage()}</span>
