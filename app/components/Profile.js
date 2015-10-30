@@ -47,7 +47,7 @@ class Profile extends React.Component {
   render() {
     let user = this.state.user;
 
-    let musicTop = this.state.user.musics.reverse().slice(0, 6).map((music) => {
+    let musicTop = this.state.user.musics.slice(0, 6).map((music) => {
       return (
         <div key={music._id} className="col-xs-6 col-sm-4">
           <div className="item">

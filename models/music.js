@@ -12,7 +12,8 @@ var musicSchema = new mongoose.Schema({
     img: { type: String, default: '' },
     url: { type: String },
     hostType: { type: String },
-    takenCount: { type: Number, default: 0 }
+    takenCount: { type: Number, default: 0 },
+    createdAt: { type: Date, default: Date.now }
 });
 
 module.exports = {

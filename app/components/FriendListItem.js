@@ -1,5 +1,5 @@
 import React from 'react';
-
+import {Link} from 'react-router';
 
 class FriendList extends React.Component {
   constructor(props) {
@@ -16,7 +16,7 @@ class FriendList extends React.Component {
             <i className="on b-light right sm"></i>
             </span>
         <div className="clear">
-          <div><a href="#">{this.props.username}</a></div>
+          <div><Link to={'/profile/' + this.props.username}>{this.props.username}</Link></div>
           <small className="text-muted">New York</small>
         </div>
       </li>

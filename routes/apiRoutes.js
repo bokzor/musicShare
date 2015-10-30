@@ -147,8 +147,10 @@ apiRoutes.post('/addMusic', function (req, res) {
 
 
 // use in Profile component
-apiRoutes.get('/profile/:username', function (req, res) {
-  User.findOne({ username: req.params.username }, function (err, user) {
+apiRoutes.get('/profile/:username',function (req, res) {
+  User.findOne({ username: req.params.username },'username musics')
+    .sort( { 'musics.createdAt': -1 } )
+    .exec((err, user) => {
     if (err) {
       return res.status(400).send({message: err});
     }
