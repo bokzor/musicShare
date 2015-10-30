@@ -18,10 +18,8 @@ class Profile extends React.Component {
   componentDidMount() {
     ProfileStore.listen(this.onChange);
     if (this.props.params.username) {
-      console.log('YES, this.props.params.username EXISTS - this.props.params.username :: ' + this.props.params.username);
       ProfileActions.getUser(this.props.params.username);
     } else {
-      console.log('NO, this.props.params.username DOESN\'T EXIST - this.props.usernameConnectedCookie :: ' + this.props.usernameConnectedCookie);
       ProfileActions.getUser(this.props.usernameConnectedCookie);
     }
   }
@@ -47,13 +45,6 @@ class Profile extends React.Component {
   }
 
   render() {
-    //{this.props.usernameConnected === username ? console.log('YES, SAME (this.props.usernameConnected : ' + this.props.usernameConnected + ' | username : ' + username + ')') : console.log('NO, NOT SAME (this.props.usernameConnected : ' + this.props.usernameConnected + ' | username : ' + username + ')') }
-    /*let { username } = this.props.params;
-    console.log('usernameUrl : ' + username);
-    let usernameConnected = this.props.usernameConnected;
-    console.log('usernameConnected : ' + usernameConnected);*/
-    //console.log('usernameConnected : ' + this.props.usernameConnected);
-
     let user = this.state.user;
 
     let musicTop = this.state.user.musics.reverse().slice(0, 6).map((music) => {
@@ -139,10 +130,15 @@ class Profile extends React.Component {
                     <div className="bottom gd bg-info wrapper-lg img-container-bottom">
                       <span className="pull-right text-sm">{user.followedByCount} <br/>Followers</span>
 
-                      <a
-                        className="pull-right btn btn-default btn-following"
-                        onClick={ this.handleFollowButton.bind(this) }>Follow {user.username}
-                      </a>
+                      {this.props.usernameConnectedCookie !== this.state.user.username
+                        ?
+                          <a
+                            className="pull-right btn btn-default btn-following"
+                            onClick={ this.handleFollowButton.bind(this) }>Follow {user.username}
+                          </a>
+                        :
+                          <span></span>
+                      }
 
                       <span className="h2 font-thin">{user.username} | <small>Adrien Bokor</small></span>
                     </div>

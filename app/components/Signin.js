@@ -44,7 +44,7 @@ class Signin extends React.Component {
 
   onChange(state) {
     this.setState(state);
-    if (this.state.jwt) this.props.history.pushState(null, '/');
+    if (this.state.jwt) this.props.history.pushState(null, '/', { username: this.state.username });
   }
 
   handleSubmit(data) {

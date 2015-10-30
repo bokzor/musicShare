@@ -17,14 +17,9 @@ export default (ComponentToBeRendered) => {
       this.jwt = cookie.load('XSRF-TOKEN');
       this.user = cookie.load('user');
       this.setState({ username: this.user.username });
-      console.log('ProtectedComponent (WillMount) :: this.state.username : ' + this.state.username);
     }
 
     componentDidMount() {
-      this.jwt = cookie.load('XSRF-TOKEN');
-      this.user = cookie.load('user');
-      this.setState({ username: this.user.username });
-      console.log('ProtectedComponent (DidMount) :: this.state.username : ' + this.state.username);
       // We should check the expiration of the token
       if (!this.jwt)  this.props.history.pushState(null, '/signin');
     }
@@ -35,7 +30,6 @@ export default (ComponentToBeRendered) => {
 
     render() {
       let username = this.user.username;
-      console.log('ProtectedComponent (render) :: this.state.username : ' + this.state.username);
       if (this.jwt) {
         return <ComponentToBeRendered {...this.props} username={this.state.username} />;
       } else {

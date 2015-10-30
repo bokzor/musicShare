@@ -130,7 +130,6 @@ apiRoutes.post('/addMusic', function (req, res) {
 
 
   User.findOne({ username: req.decoded.user.username }, function (err, user) {
-    console.log(user);
     user.musics.push(music);
     user.save(err => {
       if(err) {
@@ -162,7 +161,7 @@ apiRoutes.get('/profile/:username', function (req, res) {
 });
 
 // use in App component
-apiRoutes.get('/user', function (req, res) {
+/*apiRoutes.get('/user', function (req, res) {
   User.findOne({ username: req.decoded.user.username }, { 'password': 0, 'musics': 0 }, function (err, user) {
     if (err) {
       return res.status(400).send({ message: err });
@@ -172,6 +171,6 @@ apiRoutes.get('/user', function (req, res) {
     }
     res.send(user);
   });
-});
+});*/
 
 export default apiRoutes;
