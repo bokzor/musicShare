@@ -6,6 +6,7 @@ class ProfileStore {
     this.bindActions(ProfileActions);
     this.user = {};
     this.user.musics = [];
+    this.username = '';
   }
 
   onGetUserSuccess(data) {
@@ -13,6 +14,10 @@ class ProfileStore {
   }
 
   onGetUserFail(err) {
+  }
+
+  onGetUsernameConnected(username) {
+    this.username = username;
   }
 }
 

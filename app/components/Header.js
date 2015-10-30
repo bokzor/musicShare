@@ -46,7 +46,7 @@ class Header extends React.Component {
                 <span className="thumb-sm avatar pull-right m-t-n-sm m-b-n-sm m-l-sm">
                   <img src="images/a0.png" alt="..."/>
                 </span>
-                BokZor <b className="caret"></b>
+                {this.props.username} <b className="caret"></b>
               </a>
               <ul className="dropdown-menu animated fadeInRight">
                 <li>

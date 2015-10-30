@@ -7,15 +7,19 @@ class AuthStore {
     this.bindActions(AuthActions);
     this.login = {};
     this.jwt = '';
+    this.user = '';
     this.canSubmit = false;
+    this.username = '';
   }
 
 
   onLoginSuccess(response) {
     this.jwt = response.data.token;
     this.user = response.data.user;
+    this.username = this.user.username;
     toastr.success(response.data.message);
     cookie.save('XSRF-TOKEN', this.jwt);
+    cookie.save('user', response.data.user);
   }
 
   onLoginFail(response) {
@@ -26,9 +30,10 @@ class AuthStore {
   onSignupSuccess(response) {
     this.jwt = response.data.token;
     this.user = response.data.user;
+    this.username = this.user.username;
     toastr.success(response.data.message);
     cookie.save('XSRF-TOKEN', this.jwt);
-
+    cookie.save('user', response.data.user);
   }
 
   onSignupFail(response) {

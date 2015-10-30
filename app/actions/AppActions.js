@@ -1,18 +1,17 @@
 import alt from '../alt';
 import axios from 'axios';
 
-class ProfileActions {
+class AppActions {
   constructor() {
     this.generateActions(
       'getUserSuccess',
-      'getUserFail',
-      'getUsernameConnected'
+      'getUserFail'
     );
   }
 
-  async getUser(username) {
+  async getUser() {
     try {
-      const response = await axios.get('/api/profile/' + username);
+      const response = await axios.get('/api/user');
       this.actions.getUserSuccess(response.data);
     }
     catch(err) {
@@ -21,4 +20,4 @@ class ProfileActions {
   }
 }
 
-export default alt.createActions(ProfileActions);
+export default alt.createActions(AppActions);
