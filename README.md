@@ -11,5 +11,5 @@ To install :
 To launch :
 
 * `$ npm run watch`
-
+* `gulp`
 
