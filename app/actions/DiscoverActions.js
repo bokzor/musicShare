@@ -1,14 +1,11 @@
 import alt from '../alt';
 import axios from 'axios';
-import GenreData from '../data/GenreData'
 
-class InfiniteActions {
+class DiscoverActions {
   constructor() {
     this.generateActions(
       'getMusicsSuccess',
-      'getMusicsFail',
-      'getGenreMusicsSuccess',
-      'getGenreMusicsFail'
+      'getMusicsFail'
     );
   }
 
@@ -26,4 +23,4 @@ class InfiniteActions {
 
 }
 
-export default alt.createActions(InfiniteActions);
+export default alt.createActions(DiscoverActions);

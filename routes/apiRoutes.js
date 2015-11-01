@@ -150,51 +150,71 @@ apiRoutes.post('/addMusic', function (req, res) {
 
 
 // use in Profile component
-apiRoutes.get('/profile/:username',function (req, res) {
+apiRoutes.get('/profile/:username', function (req, res) {
 
-  User.findOne({ username: req.params.username }, 'username')
+  User.findOne({username: req.params.username}, 'username')
     .exec((err, user) => {
       Music.find({userId: user.id})
-        .sort( { 'createdAt': -1 })
+        .sort({'createdAt': -1})
         .exec((err, musics) => {
           var newUser = {
             user,
             musics: musics
           };
           res.send(newUser);
-      });
+        });
     });
 });
 
 // use in App component
 /*apiRoutes.get('/user', function (req, res) {
-  User.findOne({ username: req.decoded.user.username }, { 'password': 0, 'musics': 0 }, function (err, user) {
-    if (err) {
-      return res.status(400).send({ message: err });
-    }
-    if (!user) {
-      return res.status(404).send({ message: 'User not found.' });
-    }
-    res.send(user);
-  });
-});*/
+ User.findOne({ username: req.decoded.user.username }, { 'password': 0, 'musics': 0 }, function (err, user) {
+ if (err) {
+ return res.status(400).send({ message: err });
+ }
+ if (!user) {
+ return res.status(404).send({ message: 'User not found.' });
+ }
+ res.send(user);
+ });
+ });*/
 
 apiRoutes.get('/test', function (req, res) {
 
-  User.findOne({username: 'bokzor'}, 'following username')
-    .then(userAdri => {
+  for (var i=0; i < 1000; i++){
+    let music = new Music();
+    music.name = 'Maceo Plex Boiler Room Berlin DJ Set';
+    music.title = 'Maceo Plex Boiler Room Berlin DJ Set';
+    music.artist = 'Maceo';
+    music.img = 'https://i.ytimg.com/vi/5vHRUsP20dQ/sddefault.jpg'
+    music.isMix = true;
+    music.duration = 200000;
+    music.url = 'https://youtu.be/v/5vHRUsP20dQ';
+    music.genres = ['Techno'];
+    music.hostType = 'soudncloud';
 
-      User.findOne({username: 'max'}, 'following username')
-        .then(user => {
-          userAdri.following.push(user);
-        });
+    music.userId = req.decoded.user.id;
 
-      User.findOne({username: 'maxime'}, 'following username')
-        .then(user => {
-          userAdri.following.push(user);
-          userAdri.save();
-        });
-    });
+    music.save();
+  }
+
+
+
+
+  /*  User.findOne({username: 'bokzor'}, 'following username')
+   .then(userAdri => {
+
+   User.findOne({username: 'max'}, 'following username')
+   .then(user => {
+   userAdri.following.push(user);
+   });
+
+   User.findOne({username: 'maxime'}, 'following username')
+   .then(user => {
+   userAdri.following.push(user);
+   userAdri.save();
+   });
+   });*/
 });
 
 apiRoutes.get('/friends', function (req, res) {
@@ -211,15 +231,13 @@ apiRoutes.get('/discover', function (req, res) {
   User
     .findById(req.decoded.user.id, 'following username')
     .exec(function (err, user) {
-      console.log(user);
-      Music.find({userId: {$in: user.following} })
-        .sort({ createdAt: -1 })
-        .limit(1000).exec((err, musics) => {
-          res.send(musics);
+      Music.find({userId: {$in: user.following}})
+        .sort({createdAt: -1})
+        .limit(200).exec((err, musics) => {
+        res.send(musics);
       })
     });
 });
-
 
 
 apiRoutes.get('/userSearch', function (req, res) {
@@ -230,6 +248,24 @@ apiRoutes.get('/userSearch', function (req, res) {
     });
 });
 
+
+apiRoutes.get('/genreMusics', function (req, res) {
+  const genre = req.query.genre;
+  User
+    .findById(req.decoded.user.id, 'following username')
+    .exec(function (err, user) {
+      Music.find({
+          $and: [
+            {userId: {$in: user.following}},
+            {genres: genre}
+          ]
+        })
+        .sort({createdAt: -1})
+        .limit(200).exec((err, musics) => {
+        res.send(musics);
+      })
+    });
+});
 
 
 export default apiRoutes;
