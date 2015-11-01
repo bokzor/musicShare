@@ -58,6 +58,7 @@ class InfiniteList extends React.Component {
   }
 
   render() {
+    return <div></div>;
   }
 }
 
