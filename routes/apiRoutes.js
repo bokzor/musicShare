@@ -129,38 +129,41 @@ apiRoutes.post('/addMusic', function (req, res) {
   music.hostType = req.body.music.hostType;
   music.tags = req.body.music.tags;
 
-  User.findById(req.decoded.user.id, function (err, user) {
-    user.musics.push(music);
-    user.save(err => {
-      if (err) {
-        res.status(400).json({
-          success: 'false',
-          error: err
-        });
-      } else {
-        res.status(201).json({
-          message: 'Music added',
-          success: 'true'
-        });
-      }
-    })
-  });
+  music.userId = req.decoded.user.id;
+
+  music.save(err => {
+    if (err) {
+      res.status(400).json({
+        success: 'false',
+        error: err
+      });
+    } else {
+      res.status(201).json({
+        message: 'Music added',
+        success: 'true'
+      });
+    }
+  })
+
+
 });
 
 
 // use in Profile component
 apiRoutes.get('/profile/:username',function (req, res) {
-  User.findOne({ username: req.params.username },'username musics')
-    .sort( { 'musics.createdAt': -1 } )
+
+  User.findOne({ username: req.params.username }, 'username')
     .exec((err, user) => {
-    if (err) {
-      return res.status(400).send({message: err});
-    }
-    if (!user) {
-      return res.status(404).send({message: 'User not found.'});
-    }
-    res.send(user);
-  });
+      Music.find({userId: user.id})
+        .sort( { 'createdAt': -1 })
+        .exec((err, musics) => {
+          var newUser = {
+            user,
+            musics: musics
+          };
+          res.send(newUser);
+      });
+    });
 });
 
 // use in App component
@@ -227,5 +230,7 @@ apiRoutes.get('/userSearch', function (req, res) {
       res.send(users);
     });
 });
+
+
 
 export default apiRoutes;

@@ -13,7 +13,8 @@ var musicSchema = new mongoose.Schema({
     url: { type: String },
     hostType: { type: String },
     takenCount: { type: Number, default: 0 },
-    createdAt: { type: Date, default: Date.now }
+    createdAt: { type: Date, default: Date.now },
+    userId: { type: mongoose.Schema.Types.ObjectId, ref: 'User'}
 });
 
 module.exports = {

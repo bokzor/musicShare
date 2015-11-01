@@ -1,5 +1,4 @@
 var mongoose = require('mongoose');
-var musicSchema = require('./music').schema;
 var bcrypt = require('bcrypt'),
     SALT_WORK_FACTOR = 10;
 
@@ -14,8 +13,7 @@ var userSchema = new mongoose.Schema({
     following: [{ type: mongoose.Schema.Types.ObjectId, ref: 'User'}],
     followedByCount: { type: Number, default: 0 },
     followingCount: { type: Number, default: 0 },
-    createdAt: { type: Date, default: Date.now },
-    musics: [musicSchema]
+    createdAt: { type: Date, default: Date.now }
 });
 
 

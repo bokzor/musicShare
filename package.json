@@ -32,6 +32,8 @@
     "react": "^0.14.0",
     "react-cookie": "^0.3.4",
     "react-dom": "^0.14.0",
+    "react-infinite": "^0.5.10",
+    "react-list": "^0.7.3",
     "react-router": "^1.0.0-rc3",
     "react-select": "^0.8.2",
     "request": "^2.58.0",
