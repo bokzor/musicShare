@@ -1,6 +1,9 @@
 import React from 'react';
+import ReactList from 'react-list';
 
 import InfiniteStore from '../stores/InfiniteStore'
+import InfiniteActions from '../actions/InfiniteActions'
+
 import MusicItem from './MusicItem'
 
 
@@ -8,57 +11,37 @@ class InfiniteList extends React.Component {
 
   constructor(props){
     super(props);
-    this.isInfiniteLoading = false;
     this.state = InfiniteStore.getState();
-    this.state.elements = this.buildElements(0, 20)
     this.onChange = this.onChange.bind(this);
   }
 
   onChange(state) {
     this.setState(state);
+    console.log(this.state.musics, 'dd')
   }
 
   componentDidMount() {
-   InfiniteStore.listen(this.onChange);
+    InfiniteStore.listen(this.onChange);
+    InfiniteActions.getMusics();
   }
 
   componentWillUnmount() {
     InfiniteStore.unlisten(this.onChange);
   }
 
-  buildElements(start, end) {
-    var elements = [];
-    for (var i = start; i < end; i++) {
-      elements.push(<MusicItem key={i}/>)
-    }
-    return elements;
-  }
 
-  handleInfiniteLoad() {
-    this.setState({
-      isInfiniteLoading: true
-    });
-
-    console.log('infinite load');
-
-    setTimeout(function() {
-      var elemLength = that.state.elements.length,
-        newElements = that.buildElements(elemLength, elemLength + 1000);
-      that.setState({
-        isInfiniteLoading: false,
-        elements: that.state.elements.concat(newElements)
-      });
-    }, 2500);
-  }
-
-  elementInfiniteLoad() {
-    return <div className="infinite-list-item">
-      Loading...
-    </div>;
+  renderItem(index, key) {
+    return <MusicItem key={key} music={this.state.musics[index]} />
   }
 
   render() {
-    return <div></div>;
+    return <ReactList
+      length={this.state.musics.length}
+      itemRenderer={this.renderItem.bind(this)}
+      type='uniform'
+      pageSize={30}
+      threshold={200}
+    />;
   }
 }
 

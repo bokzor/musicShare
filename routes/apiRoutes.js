@@ -214,8 +214,7 @@ apiRoutes.get('/discover', function (req, res) {
       console.log(user);
       Music.find({userId: {$in: user.following} })
         .sort({ createdAt: -1 })
-        .limit(30).exec((err, musics) => {
-          console.log(musics);
+        .limit(1000).exec((err, musics) => {
           res.send(musics);
       })
     });

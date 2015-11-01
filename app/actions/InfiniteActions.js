@@ -4,17 +4,18 @@ import axios from 'axios';
 class InfiniteActions {
   constructor() {
     this.generateActions(
-
+      'getMusicsSuccess',
+      'getMusicsFail'
     );
   }
 
-  async getUser(username) {
+  async getMusics() {
     try {
-      const response = await axios.get('/api/profile/' + username);
-      this.actions.getUserSuccess(response.data);
+      const response = await axios.get('/api/discover');
+      this.actions.getMusicsSuccess(response.data);
     }
     catch(err) {
-      this.actions.getUserFail(err);
+      this.actions.getMusicsFail(err);
     }
   }
 }
