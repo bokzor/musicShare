@@ -7,7 +7,7 @@ class AuthStore {
     this.bindActions(AuthActions);
     this.login = {};
     this.jwt = '';
-    this.user = '';
+    this.user = {};
     this.canSubmit = false;
     this.username = '';
   }

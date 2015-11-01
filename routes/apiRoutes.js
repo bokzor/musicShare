@@ -210,14 +210,14 @@ apiRoutes.get('/friends', function (req, res) {
 apiRoutes.get('/discover', function (req, res) {
   User
     .findById(req.decoded.user.id, 'following username')
-    .populate('following', 'musics')
     .exec(function (err, user) {
-      let musics = [];
-      for (var people of user.following) {
-        musics.push(people.musics);
-      }
-
-      res.send(_.sortBy(musics, 'createdAt'));
+      console.log(user);
+      Music.find({userId: {$in: user.following} })
+        .sort({ createdAt: -1 })
+        .limit(30).exec((err, musics) => {
+          console.log(musics);
+          res.send(musics);
+      })
     });
 });
 
