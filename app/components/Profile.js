@@ -47,7 +47,6 @@ class Profile extends React.Component {
 
   render() {
     let data = this.state.data;
-    console.log('data : ' + JSON.stringify(data, null, 4));
 
     let musicTop = this.state.data.musics.slice(0, 6).map((music) => {
       return (
