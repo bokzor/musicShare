@@ -1,5 +1,7 @@
 const express = require('express');
 const jwt = require('jsonwebtoken');
+const _ = require('lodash');
+
 
 const User = require('../models/user');
 const Music = require('../models/music').model;
@@ -200,6 +202,23 @@ apiRoutes.get('/friends', function (req, res) {
       res.send(user);
     });
 });
+
+
+apiRoutes.get('/discover', function (req, res) {
+  User
+    .findById(req.decoded.user.id, 'following username')
+    .populate('following', 'musics')
+    .exec(function (err, user) {
+      let musics = [];
+      for (var people of user.following) {
+        musics.push(people.musics);
+      }
+
+      res.send(_.sortBy(musics, 'createdAt'));
+    });
+});
+
+
 
 apiRoutes.get('/userSearch', function (req, res) {
   User

@@ -1,6 +1,7 @@
 import React from 'react';
 import mixin from 'mixin-decorator'
 import composeAnimation from '../decorators/composeAnimation'
+import moment from 'moment'
 
 import FooterInContent from './FooterInContent';
 
@@ -53,7 +54,7 @@ class Profile extends React.Component {
           <div className="item">
             <div className="pos-rlt">
               <div className="bottom">
-                <span className="badge bg-info m-l-sm m-b-sm">{music.duration}</span>
+                <span className="badge bg-info m-l-sm m-b-sm">{moment.utc(music.duration).format('HH:mm:ss')}</span>
               </div>
               <div className="item-overlay opacity r r-2x bg-black">
                 <div className="center text-center m-t-n">
@@ -77,7 +78,7 @@ class Profile extends React.Component {
           <div className="item">
             <div className="pos-rlt">
               <div className="bottom">
-                <span className="badge bg-info m-l-sm m-b-sm">{music.duration}</span>
+                <span className="badge bg-info m-l-sm m-b-sm">{moment.utc(music.duration).format('HH:mm:ss')}</span>
               </div>
               <div className="item-overlay opacity r r-2x bg-black">
                 <div className="text-info padder m-t-sm text-sm">

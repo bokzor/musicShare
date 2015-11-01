@@ -107,7 +107,7 @@ class AddMusicAd extends React.Component {
                     <TextInput
                       type="text"
                       validationError="Please enter a Title"
-                      validations="maxLength:50,minLength:3"
+                      validations="maxLength:100,minLength:3"
                       required
                       name="title"
                       placeholder="Title"
