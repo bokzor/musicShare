@@ -4,16 +4,17 @@ import ProfileActions from '../actions/ProfileActions';
 class ProfileStore {
   constructor() {
     this.bindActions(ProfileActions);
-    this.user = {};
-    this.user.musics = [];
+    this.data = {};
+    this.data.user = {};
+    this.data.musics = [];
     this.username = '';
   }
 
-  onGetUserSuccess(data) {
-    this.user = data;
+  onGetDataSuccess(data) {
+    this.data = data;
   }
 
-  onGetUserFail(err) {
+  onGetDataFail(err) {
   }
 
   onGetUsernameConnected(username) {

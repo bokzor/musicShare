@@ -152,7 +152,7 @@ apiRoutes.post('/addMusic', function (req, res) {
 // use in Profile component
 apiRoutes.get('/profile/:username',function (req, res) {
 
-  User.findOne({ username: req.params.username }, 'username')
+  User.findOne({ username: req.params.username }, 'username followedBy followedByCount')
     .exec((err, user) => {
       Music.find({userId: user.id})
         .sort( { 'createdAt': -1 })

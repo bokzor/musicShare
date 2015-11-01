@@ -16,7 +16,8 @@ export default (ComponentToBeRendered) => {
     componentWillMount() {
       this.jwt = cookie.load('XSRF-TOKEN');
       this.user = cookie.load('user');
-      this.setState({ username: this.user.username });
+      if (this.user)
+        this.setState({ username: this.user.username });
     }
 
     componentDidMount() {
@@ -29,7 +30,6 @@ export default (ComponentToBeRendered) => {
     }
 
     render() {
-      let username = this.user.username;
       if (this.jwt) {
         return <ComponentToBeRendered {...this.props} username={this.state.username} />;
       } else {
