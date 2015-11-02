@@ -21,9 +21,9 @@ class Profile extends React.Component {
   componentDidMount() {
     ProfileStore.listen(this.onChange);
     if (this.props.params.username) {
-      ProfileActions.getUser(this.props.params.username);
+      ProfileActions.getData(this.props.params.username);
     } else {
-      ProfileActions.getUser(this.props.usernameConnectedCookie);
+      ProfileActions.getData(this.props.usernameConnectedCookie);
     }
   }
 
@@ -34,7 +34,7 @@ class Profile extends React.Component {
   componentDidUpdate(prevProps) {
     // Fetch new charachter data when URL path changes
     if (prevProps.params.username !== this.props.params.username) {
-      ProfileActions.getUser(this.props.params.username);
+      ProfileActions.getData(this.props.params.username);
     }
   }
 
@@ -48,9 +48,9 @@ class Profile extends React.Component {
   }
 
   render() {
-    let user = this.state.user;
+    let data = this.state.data;
 
-    let musicTop = this.state.user.musics.slice(0, 6).map((music) => {
+    let musicTop = this.state.data.musics.slice(0, 6).map((music) => {
       return (
         <div key={music._id} className="col-xs-6 col-sm-4">
           <div className="item">
@@ -75,6 +75,7 @@ class Profile extends React.Component {
     });
 
 
+
     return (
       <section className="vbox">
         <section className="w-f-md">
@@ -94,19 +95,20 @@ class Profile extends React.Component {
                       </span>
                     </div>
                     <div className="bottom gd bg-info wrapper-lg img-container-bottom">
-                      <span className="pull-right text-sm">{user.followedByCount} <br/>Followers</span>
+                      <span className="pull-right text-sm">{data.user.followedByCount} <br/>Followers</span>
 
-                      {this.props.usernameConnectedCookie !== this.state.user.username
+                      {this.props.usernameConnectedCookie !== this.state.data.user.username
                         ?
-                        <a
-                          className="pull-right btn btn-default btn-following"
-                          onClick={ this.handleFollowButton.bind(this) }>Follow {user.username}
-                        </a>
+
+                          <a
+                            className="pull-right btn btn-default btn-following"
+                            onClick={ this.handleFollowButton.bind(this) }>Follow {data.user.username}
+                          </a>
                         :
                         <span></span>
                       }
 
-                      <span className="h2 font-thin">{user.username} | <small>Adrien Bokor</small></span>
+                      <span className="h2 font-thin">{data.user.username} | <small>Adrien Bokor</small></span>
                     </div>
                     <div className="img-container">
                       <div className="img-container-center">

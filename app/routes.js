@@ -3,6 +3,7 @@ import {Route} from 'react-router';
 
 import App from './components/App';
 import Discover from './components/Discover';
+import Search from './components/Search';
 import Profile from './components/Profile';
 import Genres from './components/Genres';
 import Signin from './components/Signin';
@@ -17,6 +18,7 @@ const routes = (
     <Route path='/signup' component={Signup}/>
     <Route component={App}>
       <Route path='/' component={Discover}/>
+      <Route path='/search/:search' component={Search}/>
       <Route path='/genres' component={Genres}/>
       <Route path='/genres/:genreId' component={Genres}/>
       <Route path='/profile' component={Profile}/>

@@ -152,7 +152,8 @@ apiRoutes.post('/addMusic', function (req, res) {
 // use in Profile component
 apiRoutes.get('/profile/:username', function (req, res) {
 
-  User.findOne({username: req.params.username}, 'username')
+
+  User.findOne({ username: req.params.username }, 'username followedBy followedByCount')
     .exec((err, user) => {
       Music.find({userId: user.id})
         .sort({'createdAt': -1})
@@ -227,19 +228,23 @@ apiRoutes.get('/friends', function (req, res) {
     });
 });
 
-
-apiRoutes.get('/discover', function (req, res) {
+apiRoutes.get('/musicSearch', function (req, res) {
+  let pattern = req.query.search;
   User
     .findById(req.decoded.user.id, 'following username')
     .exec(function (err, user) {
-      Music.find({userId: {$in: user.following}})
-        .sort({createdAt: -1})
-        .limit(200).exec((err, musics) => {
-        res.send(musics);
-      })
+
+      console.log(user);
+      Music.find({ $and: [
+        {userId: {$in: user.following}},
+        {name: {$regex: pattern, $options: "i"}}
+      ]})
+        .sort({ createdAt: -1 })
+        .limit(30).exec((err, musics) => {
+          res.send(musics);
+        })
     });
 });
-
 
 apiRoutes.get('/userSearch', function (req, res) {
   User

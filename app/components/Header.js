@@ -1,7 +1,22 @@
 import React from 'react';
+
+import Router from 'react-router';
 import {Link} from 'react-router';
 
 class Header extends React.Component {
+  constructor(props) {
+    super(props);
+  }
+
+  searchChange() {
+    if (this.refs.searchTextField.value) {
+      this.props.history.replaceState(null, '/search/' + this.refs.searchTextField.value);
+    } else {
+      this.props.history.replaceState(null, '/');
+      //this.props.history.goBack();
+    }
+  }
+
   render() {
     return (
       <header className="bg-white-only header header-md navbar navbar-fixed-top-xs">
@@ -34,8 +49,13 @@ class Header extends React.Component {
           <button type="submit" className="btn btn-sm bg-white btn-icon rounded"><i className="fa fa-search"></i>
           </button>
         </span>
-              <input type="text" className="form-control input-sm no-border rounded"
-                     placeholder="Search songs, albums..."/>
+              <input
+                type="text"
+                className="form-control input-sm no-border rounded"
+                ref='searchTextField'
+                placeholder="Search songs..."
+                onChange={this.searchChange.bind(this)}
+                />
             </div>
           </div>
         </form>

@@ -22,6 +22,7 @@ class App extends React.Component {
       <section className="vbox">
         <Header
           username={this.props.username}
+          history={this.props.history}
         />
         <section>
           <section className="hbox stretch">
