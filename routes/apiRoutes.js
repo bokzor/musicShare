@@ -156,6 +156,7 @@ apiRoutes.get('/profile/:username', function (req, res) {
     .exec((err, user) => {
       Music.find({userId: user.id})
         .sort({'createdAt': -1})
+        .limit(1000)
         .exec((err, musics) => {
           var newUser = {
             user,
