@@ -4,7 +4,12 @@ import InfiniteActions from '../actions/InfiniteActions';
 class InfiniteStore {
   constructor() {
     this.bindActions(InfiniteActions);
+    this.musics = [];
 
+  }
+
+  onGetMusicsSuccess(data){
+    this.musics = data;
   }
 
 }

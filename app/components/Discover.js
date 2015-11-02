@@ -1,7 +1,35 @@
 import React from 'react';
+
+import DiscoverStore from '../stores/DiscoverStore'
+import DiscoverActions from '../actions/DiscoverActions'
+
 import InfiniteList from './InfiniteList'
 
 class Discover extends React.Component {
+
+  constructor(props) {
+    super(props);
+    this.state = DiscoverStore.getState();
+    this.onChange = this.onChange.bind(this);
+  }
+
+  onChange(state) {
+    this.setState(state);
+  }
+
+  componentDidMount() {
+    DiscoverStore.listen(this.onChange);
+    DiscoverActions.getMusics();
+
+  }
+
+  componentWillUnmount() {
+    DiscoverStore.unlisten(this.onChange);
+  }
+
+
+
+
   render() {
     return (
       <section>
@@ -18,7 +46,7 @@ class Discover extends React.Component {
             </h2>
 
             <div className="row row-sm">
-              <InfiniteList />
+              <InfiniteList musics={this.state.musics} />
             </div>
 
           </section>

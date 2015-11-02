@@ -1,9 +1,11 @@
-import React from 'react';
+import React from 'react'
 import mixin from 'mixin-decorator'
 import composeAnimation from '../decorators/composeAnimation'
 import moment from 'moment'
 
-import FooterInContent from './FooterInContent';
+import MusicItem from './MusicItem'
+import InfiniteList from './InfiniteList'
+import FooterInContent from './FooterInContent'
 
 import ProfileActions from '../actions/ProfileActions'
 import ProfileStore from '../stores/ProfileStore'
@@ -72,44 +74,6 @@ class Profile extends React.Component {
       );
     });
 
-    let musicsBottom = this.state.user.musics.slice(6).map((music) => {
-      return (
-        <div key={music._id} className="col-xs-6 col-sm-4 col-md-3 col-lg-2">
-          <div className="item">
-            <div className="pos-rlt">
-              <div className="bottom">
-                <span className="badge bg-info m-l-sm m-b-sm">{moment.utc(music.duration).format('HH:mm:ss')}</span>
-              </div>
-              <div className="item-overlay opacity r r-2x bg-black">
-                <div className="text-info padder m-t-sm text-sm">
-                  <i className="fa fa-star"></i>
-                  <i className="fa fa-star"></i>
-                  <i className="fa fa-star"></i>
-                  <i className="fa fa-star"></i>
-                  <i className="fa fa-star-o text-muted"></i>
-                </div>
-                <div className="center text-center m-t-n">
-                  <a href="#"><i className="icon-control-play i-2x"></i></a>
-                </div>
-                <div className="bottom padder m-b-sm">
-                  <a href="#" className="pull-right">
-                    <i className="fa fa-heart-o"></i>
-                  </a>
-                  <a href="#">
-                    <i className="fa fa-plus-circle"></i>
-                  </a>
-                </div>
-              </div>
-              <a href="#"><img src={music.img} alt="" className="r r-2x img-full"/></a>
-            </div>
-            <div className="padder-v">
-              <a href="#" className="text-ellipsis">{music.title}</a>
-              <a href="#" className="text-ellipsis text-xs text-muted">{music.artist}</a>
-            </div>
-          </div>
-        </div>
-      )
-    });
 
     return (
       <section className="vbox">
@@ -120,7 +84,8 @@ class Profile extends React.Component {
                 <section className="scrollable">
                   <div className="m-t-n-xxs item pos-rlt">
                     <div className="top text-right img-container-top">
-                      <span className="musicbar animate bg-success bg-empty inline m-r-lg m-t" style={{ width: '25px', height: '30px' }}>
+                      <span className="musicbar animate bg-success bg-empty inline m-r-lg m-t"
+                            style={{ width: '25px', height: '30px' }}>
                         <span className="bar1 a3 lter"></span>
                         <span className="bar2 a5 lt"></span>
                         <span className="bar3 a1 bg"></span>
@@ -133,12 +98,12 @@ class Profile extends React.Component {
 
                       {this.props.usernameConnectedCookie !== this.state.user.username
                         ?
-                          <a
-                            className="pull-right btn btn-default btn-following"
-                            onClick={ this.handleFollowButton.bind(this) }>Follow {user.username}
-                          </a>
+                        <a
+                          className="pull-right btn btn-default btn-following"
+                          onClick={ this.handleFollowButton.bind(this) }>Follow {user.username}
+                        </a>
                         :
-                          <span></span>
+                        <span></span>
                       }
 
                       <span className="h2 font-thin">{user.username} | <small>Adrien Bokor</small></span>
@@ -216,8 +181,10 @@ class Profile extends React.Component {
                         </div>
                       </div>
                     </div>
-                    <a href="#" className="pull-right text-muted m-t-lg" data-toggle="class:fa-spin"><i className="icon-refresh i-lg  inline" id="refresh"></i></a>
-                    <h2 className="font-thin m-b">My Music Library <span className="musicbar animate inline m-l-sm" style={{ width: '20px', height: '20px '}}>
+                    <a href="#" className="pull-right text-muted m-t-lg" data-toggle="class:fa-spin"><i
+                      className="icon-refresh i-lg  inline" id="refresh"></i></a>
+                    <h2 className="font-thin m-b">My Music Library <span className="musicbar animate inline m-l-sm"
+                                                                         style={{ width: '20px', height: '20px '}}>
                       <span className="bar1 a1 bg-primary lter"></span>
                       <span className="bar2 a2 bg-info lt"></span>
                       <span className="bar3 a3 bg-success"></span>
@@ -226,7 +193,7 @@ class Profile extends React.Component {
                     </span></h2>
                     <div className="row row-sm">
 
-                      {musicsBottom}
+                      <InfiniteList musics={this.state.user.musics.slice(6)}/>
 
                     </div>
                     <FooterInContent/>
