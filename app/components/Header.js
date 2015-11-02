@@ -1,43 +1,23 @@
 import React from 'react';
-import {Link} from 'react-router';
-import {debounce} from 'lodash'
 
-import HeaderActions from '../actions/HeaderActions';
-import HeaderStore from '../stores/HeaderStore';
+import Router from 'react-router';
+import {Link} from 'react-router';
 
 class Header extends React.Component {
   constructor(props) {
     super(props);
-    this.state = HeaderStore.getState();
-    this.onChange = this.onChange.bind(this);
-
-    // limit this function every 500 ms
-    this.onSearch = debounce(this.onSearch, 500);
   }
 
-  componentDidMount () {
-    HeaderStore.listen(this.onChange);
-  }
-
-  componentWillUnmount() {
-    HeaderStore.unlisten(this.onChange);
-  }
-
-  onChange(state) {
-    this.setState(state);
-  }
-
-  onSearch(event){
-    HeaderActions.updateSearchQuery(event.target.value);
-    HeaderActions.getSearchMusic(this.state.searchQuery);
+  searchChange() {
+    if (this.refs.searchTextField.value) {
+      this.props.history.replaceState(null, '/search/' + this.refs.searchTextField.value);
+    } else {
+      this.props.history.replaceState(null, '/');
+      //this.props.history.goBack();
+    }
   }
 
   render() {
-    let search = this.state.searchMusic.map((music) => {
-      console.log('Header.js :: render - ' + JSON.stringify(music, null, 4));
-
-    });
-
     return (
       <header className="bg-white-only header header-md navbar navbar-fixed-top-xs">
         <div className="navbar-header aside bg-info nav-xs">
@@ -72,8 +52,9 @@ class Header extends React.Component {
               <input
                 type="text"
                 className="form-control input-sm no-border rounded"
+                ref='searchTextField'
                 placeholder="Search songs..."
-                onChange={this.onSearch.bind(this)}
+                onChange={this.searchChange.bind(this)}
                 />
             </div>
           </div>

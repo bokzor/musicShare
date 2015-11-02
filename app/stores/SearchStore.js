@@ -1,15 +1,16 @@
 import alt from '../alt'
-import HeaderActions from '../actions/HeaderActions'
+import SearchActions from '../actions/SearchActions'
 import {difference} from 'lodash'
 
-class HeaderStore {
+class SearchStore {
   constructor() {
-    this.bindActions(HeaderActions);
+    this.bindActions(SearchActions);
     this.searchMusic = [];
     this.searchQuery = '';
   }
 
   onGetSearchMusicSuccess(data) {
+    this.searchMusic = [];
     difference(data, this.friends);
     this.searchMusic = data;
   }
@@ -18,9 +19,9 @@ class HeaderStore {
     console.log(err);
   }
 
-  onUpdateSearchQuery(data){
-    this.searchQuery = data;
+  onUpdateSearchQuery(search){
+    this.searchQuery = search;
   }
 }
 
-export default alt.createStore(HeaderStore)
+export default alt.createStore(SearchStore)

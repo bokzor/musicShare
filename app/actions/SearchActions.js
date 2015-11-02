@@ -1,7 +1,7 @@
 import alt from '../alt';
 import axios from 'axios';
 
-class HeaderActions {
+class SearchActions {
   constructor() {
     this.generateActions(
       'getSearchMusicSuccess',
@@ -9,10 +9,6 @@ class HeaderActions {
       'updateSearchQuery'
     );
   }
-
-  /*async getSearchMusic(search) {
-    console.log('search : ' + search);
-  }*/
 
   async getSearchMusic(search) {
     try {
@@ -29,4 +25,4 @@ class HeaderActions {
   }
 }
 
-export default alt.createActions(HeaderActions);
+export default alt.createActions(SearchActions);
