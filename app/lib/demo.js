@@ -5,12 +5,6 @@ $(document).ready(function(){
     cssSelectorAncestor: "#jp_container_N"
   }, [
     {
-      title:"Cloudless Days",
-      artist:"ADG3 Studios",
-      mp3:"https://r2---sn-cxab5jvh-cg0d.googlevideo.com/videoplayback?ms=au&ipbits=0&pl=17&mv=m&mt=1446211229&source=youtube&fexp=9405967%2C9407536%2C9408254%2C9408502%2C9408710%2C9414764%2C9416126%2C9416675%2C9417707%2C9418201%2C9418203%2C9418401%2C9419965%2C9420282%2C9421026%2C9421581%2C9421946%2C9422342%2C9422596%2C9423355&id=o-ALaVPpyUknSEUdpe4L_rMSOs-ildxd3gjOvCnlTaA8Ck&mm=31&expire=1446232913&itag=43&upn=yYhci9SDoq0&sver=3&sparams=dur%2Cid%2Cinitcwndbps%2Cip%2Cipbits%2Citag%2Clmt%2Cmime%2Cmm%2Cmn%2Cms%2Cmv%2Cpl%2Cratebypass%2Crequiressl%2Csource%2Cupn%2Cexpire&mn=sn-cxab5jvh-cg0d&signature=B2D76C01243A97BC8963E5712E4076F1086AE8AB.3998247359EDBDCCAEF7A1DAAF9CC32789598C76&requiressl=yes&initcwndbps=1957500&ip=80.236.231.58&mime=video%2Fwebm&key=yt6&ratebypass=yes&dur=0.000&lmt=1343058811818321",
-      poster: "images/m0.jpg"
-    },
-    {
       title:"Pass The Buck",
       artist:"Fritz",
       mp3:"https://r2---sn-cxab5jvh-cg0d.googlevideo.com/videoplayback?ms=au&ipbits=0&pl=17&mv=m&mt=1446211229&source=youtube&fexp=9405967%2C9407536%2C9408254%2C9408502%2C9408710%2C9414764%2C9416126%2C9416675%2C9417707%2C9418201%2C9418203%2C9418401%2C9419965%2C9420282%2C9421026%2C9421581%2C9421946%2C9422342%2C9422596%2C9423355&id=o-ALaVPpyUknSEUdpe4L_rMSOs-ildxd3gjOvCnlTaA8Ck&mm=31&expire=1446232913&itag=43&upn=yYhci9SDoq0&sver=3&sparams=dur%2Cid%2Cinitcwndbps%2Cip%2Cipbits%2Citag%2Clmt%2Cmime%2Cmm%2Cmn%2Cms%2Cmv%2Cpl%2Cratebypass%2Crequiressl%2Csource%2Cupn%2Cexpire&mn=sn-cxab5jvh-cg0d&signature=B2D76C01243A97BC8963E5712E4076F1086AE8AB.3998247359EDBDCCAEF7A1DAAF9CC32789598C76&requiressl=yes&initcwndbps=1957500&ip=80.236.231.58&mime=video%2Fwebm&key=yt6&ratebypass=yes&dur=0.000&lmt=1343058811818321",

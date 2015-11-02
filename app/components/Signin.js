@@ -2,8 +2,6 @@ import React from 'react'
 import alt from '../alt'
 
 import {Link} from 'react-router'
-import mixin from 'mixin-decorator'
-import addChangeHandler from '../decorators/changeHandler'
 import AuthActions from '../actions/AuthActions'
 import AuthStore from '../stores/AuthStore'
 
@@ -11,7 +9,6 @@ import Cookie from 'react-cookie'
 import Formsy from 'formsy-react'
 import TextInput from './TextInput'
 
-@mixin(addChangeHandler)
 class Signin extends React.Component {
 
   constructor(props) {

@@ -206,22 +206,22 @@ apiRoutes.get('/friends', function (req, res) {
     });
 });
 
-
-apiRoutes.get('/discover', function (req, res) {
+apiRoutes.get('/musicSearch', function (req, res) {
+  let pattern = req.query.search;
   User
     .findById(req.decoded.user.id, 'following username')
-    .populate('following', 'musics')
     .exec(function (err, user) {
-      let musics = [];
-      for (var people of user.following) {
-        musics.push(people.musics);
-      }
-
-      res.send(_.sortBy(musics, 'createdAt'));
+      console.log(user);
+      Music.find({ $and: [
+        {userId: {$in: user.following}},
+        {name: {$regex: pattern, $options: "i"}}
+      ]})
+        .sort({ createdAt: -1 })
+        .limit(30).exec((err, musics) => {
+          res.send(musics);
+        })
     });
 });
-
-
 
 apiRoutes.get('/userSearch', function (req, res) {
   User
