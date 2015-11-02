@@ -8,10 +8,13 @@ class ProfileStore {
     this.data.user = {};
     this.data.musics = [];
     this.username = '';
+
   }
 
   onGetDataSuccess(data) {
     this.data = data;
+    this.followed = data.followed;
+    this.followedByCount = data.user.followedByCount;
   }
 
   onGetDataFail(err) {

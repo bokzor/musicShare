@@ -19,6 +19,32 @@ class ProfileActions {
       this.actions.getDataFail(err);
     }
   }
+
+  async follow(username) {
+    try {
+      const response = await axios.post('/api/follow', {
+        username: username
+      });
+      this.actions.followSuccess(response.data);
+    }
+    catch(err) {
+      this.actions.followFail(err);
+    }
+  }
+
+  async unfollow(username) {
+    try {
+      const response = await axios.post('/api/unfollow', {
+        username: username
+      });
+      this.actions.UnfollowSuccess(response.data);
+    }
+    catch(err) {
+      this.actions.UnfollowFail(err);
+    }
+  }
+
+
 }
 
 export default alt.createActions(ProfileActions);

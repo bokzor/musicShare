@@ -10,7 +10,7 @@ var userSchema = new mongoose.Schema({
     email: { type: String, index: { unique: true }, required: true },
     connected: {type: Boolean, default: false },
     followedBy: [{ type: mongoose.Schema.Types.ObjectId, ref: 'User'}],
-    following: [{ type: mongoose.Schema.Types.ObjectId, ref: 'User'}],
+    following: [{ type: mongoose.Schema.Types.ObjectId, ref: 'User'} ],
     followedByCount: { type: Number, default: 0 },
     followingCount: { type: Number, default: 0 },
     createdAt: { type: Date, default: Date.now }

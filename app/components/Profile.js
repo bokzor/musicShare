@@ -6,6 +6,9 @@ import moment from 'moment'
 import MusicItem from './MusicItem'
 import InfiniteList from './InfiniteList'
 import FooterInContent from './FooterInContent'
+import MusicBar from './MusicBar'
+import FollowedButton from './FollowedButton'
+import UnfollowedButton from './UnfollowedButton'
 
 import ProfileActions from '../actions/ProfileActions'
 import ProfileStore from '../stores/ProfileStore'
@@ -32,7 +35,6 @@ class Profile extends React.Component {
   }
 
   componentDidUpdate(prevProps) {
-    // Fetch new charachter data when URL path changes
     if (prevProps.params.username !== this.props.params.username) {
       ProfileActions.getData(this.props.params.username);
     }
@@ -44,11 +46,31 @@ class Profile extends React.Component {
 
   handleFollowButton(event) {
     event.preventDefault();
-    alert('Follow xxx');
+    ProfileActions.follow(this.state.data.user.username);
+    this.setState({
+      followed: true,
+      followedByCount: this.state.followedByCount + 1
+    });
+  }
+
+  handleUnfollowButton(event) {
+    event.preventDefault();
+    ProfileActions.unfollow(this.state.data.user.username);
+    this.setState({
+      followed: false,
+      followedByCount: this.state.followedByCount - 1
+    });
+
   }
 
   render() {
     let data = this.state.data;
+
+    if (this.state.followed) {
+      var button = <UnfollowedButton onClick={this.handleUnfollowButton.bind(this)} username={data.user.username}/>
+    } else {
+      var button = <FollowedButton onClick={this.handleFollowButton.bind(this)} username={data.user.username}/>
+    }
 
     let musicTop = this.state.data.musics.slice(0, 6).map((music) => {
       return (
@@ -75,7 +97,6 @@ class Profile extends React.Component {
     });
 
 
-
     return (
       <section className="vbox">
         <section className="w-f-md">
@@ -95,20 +116,14 @@ class Profile extends React.Component {
                       </span>
                     </div>
                     <div className="bottom gd bg-info wrapper-lg img-container-bottom">
-                      <span className="pull-right text-sm">{data.user.followedByCount} <br/>Followers</span>
-
-                      {this.props.usernameConnectedCookie !== this.state.data.user.username
+                      <span className="pull-right text-sm">{this.state.followedByCount} <br/>Followers</span>
+                      {this.props.params.username
                         ?
-
-                          <a
-                            className="pull-right btn btn-default btn-following"
-                            onClick={ this.handleFollowButton.bind(this) }>Follow {data.user.username}
-                          </a>
+                        button
                         :
-                        <span></span>
+                        null
                       }
-
-                      <span className="h2 font-thin">{data.user.username} | <small>Adrien Bokor</small></span>
+                      <span className="h2 font-thin">{data.user.username}</span>
                     </div>
                     <div className="img-container">
                       <div className="img-container-center">
@@ -140,59 +155,14 @@ class Profile extends React.Component {
                               <small className="text-muted clear text-ellipsis">by Chris Fox</small>
                             </span>
                           </a>
-                          <a href="#" className="list-group-item clearfix">
-                            <span className="pull-right h2 text-muted m-l">2</span>
-                            <span className="pull-left thumb-sm avatar m-r">
-                              <img src="images/a5.png" alt="..."/>
-                            </span>
-                            <span className="clear">
-                              <span>Lementum ligula vitae</span>
-                              <small className="text-muted clear text-ellipsis">by Amanda Conlan</small>
-                            </span>
-                          </a>
-                          <a href="#" className="list-group-item clearfix">
-                            <span className="pull-right h2 text-muted m-l">3</span>
-                            <span className="pull-left thumb-sm avatar m-r">
-                              <img src="images/a6.png" alt="..."/>
-                            </span>
-                            <span className="clear">
-                              <span>Aliquam sollicitudin venenatis</span>
-                              <small className="text-muted clear text-ellipsis">by Dan Doorack</small>
-                            </span>
-                          </a>
-                          <a href="#" className="list-group-item clearfix">
-                            <span className="pull-right h2 text-muted m-l">4</span>
-                            <span className="pull-left thumb-sm avatar m-r">
-                              <img src="images/a7.png" alt="..."/>
-                            </span>
-                            <span className="clear">
-                              <span>Aliquam sollicitudin venenatis ipsum</span>
-                              <small className="text-muted clear text-ellipsis">by Lauren Taylor</small>
-                            </span>
-                          </a>
-                          <a href="#" className="list-group-item clearfix">
-                            <span className="pull-right h2 text-muted m-l">5</span>
-                            <span className="pull-left thumb-sm avatar m-r">
-                              <img src="images/a8.png" alt="..."/>
-                            </span>
-                            <span className="clear">
-                              <span>Vestibulum ullamcorper</span>
-                              <small className="text-muted clear text-ellipsis">by Dan Doorack</small>
-                            </span>
-                          </a>
                         </div>
                       </div>
                     </div>
                     <a href="#" className="pull-right text-muted m-t-lg" data-toggle="class:fa-spin"><i
                       className="icon-refresh i-lg  inline" id="refresh"></i></a>
-                    <h2 className="font-thin m-b">My Music Library <span className="musicbar animate inline m-l-sm"
-                                                                         style={{ width: '20px', height: '20px '}}>
-                      <span className="bar1 a1 bg-primary lter"></span>
-                      <span className="bar2 a2 bg-info lt"></span>
-                      <span className="bar3 a3 bg-success"></span>
-                      <span className="bar4 a4 bg-warning dk"></span>
-                      <span className="bar5 a5 bg-danger dker"></span>
-                    </span></h2>
+                    <h2 className="font-thin m-b">My Music Library
+                      <MusicBar />
+                    </h2>
                     <div className="row row-sm">
 
                       <InfiniteList musics={this.state.data.musics.slice(6)}/>

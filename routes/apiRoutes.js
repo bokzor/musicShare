@@ -12,7 +12,7 @@ const config = require('../config');
 const apiRoutes = express.Router();
 
 // route to create a new user
-apiRoutes.post('/signup', function (req, res, next) {
+apiRoutes.post('/signup', (req, res, next) => {
   const username = req.body.username;
   const email = req.body.email;
   const password = req.body.password;
@@ -44,7 +44,7 @@ apiRoutes.post('/signup', function (req, res, next) {
 });
 
 // route to authenticate an user. Return a token
-apiRoutes.post('/auth', function (req, res) {
+apiRoutes.post('/auth', (req, res) => {
   const email = req.body.email;
   const password = req.body.password;
 
@@ -87,7 +87,7 @@ apiRoutes.post('/auth', function (req, res) {
 });
 
 // route middleware to verify a token
-apiRoutes.use(function (req, res, next) {
+apiRoutes.use((req, res, next) => {
 
   // check header or url parameters or post parameters for token
   var token = req.body.token || req.query.token || req.headers['x-xsrf-token'];
@@ -116,7 +116,7 @@ apiRoutes.use(function (req, res, next) {
   }
 });
 
-apiRoutes.post('/addMusic', function (req, res) {
+apiRoutes.post('/addMusic', (req, res) => {
   let music = new Music();
   music.name = req.body.music.completeName;
   music.title = req.body.music.title;
@@ -151,6 +151,9 @@ apiRoutes.post('/addMusic', function (req, res) {
 
 // use in Profile component
 apiRoutes.get('/profile/:username', function (req, res) {
+
+  var followed = false;
+
   User.findOne({username: req.params.username}, 'username followedBy followedByCount')
     .exec((err, user) => {
       if (err) {
@@ -159,35 +162,84 @@ apiRoutes.get('/profile/:username', function (req, res) {
           error: err
         });
       }
+
       if (user) {
         Music.find({userId: user.id})
           .sort({'createdAt': -1})
           .limit(1000)
+
           .exec((err, musics) => {
+            if(user.followedBy.indexOf(req.decoded.user.id) > -1)
+              followed = true;
+
             var newUser = {
+              followed: followed,
               user,
               musics: musics
             };
+
             res.send(newUser);
           });
       }
     });
 });
 
-// use in App component
-/*apiRoutes.get('/user', function (req, res) {
- User.findOne({ username: req.decoded.user.username }, { 'password': 0, 'musics': 0 }, function (err, user) {
- if (err) {
- return res.status(400).send({ message: err });
- }
- if (!user) {
- return res.status(404).send({ message: 'User not found.' });
- }
- res.send(user);
- });
- });*/
+apiRoutes.post('/follow', (req, res) => {
+  const toFollow = req.body.username;
 
-apiRoutes.get('/test', function (req, res) {
+  User.findOne(req.decoded.user.id, 'followingCount following')
+    .exec((err, currentUser) => {
+      if (currentUser) {
+        User.findOne({username: toFollow}, 'followedByCount followedBy')
+          .exec((err, user) => {
+            if (user) {
+
+              currentUser.followingCount++;
+              currentUser.following.push(user);
+              currentUser.save();
+
+              user.followedByCount++;
+              user.followedBy.push(currentUser);
+              user.save();
+
+              res.send(currentUser);
+            }
+          });
+      }
+    });
+});
+
+
+
+apiRoutes.post('/unfollow', (req, res) => {
+  const toFollow = req.body.username;
+
+  User.findOne(req.decoded.user.id, 'followingCount following')
+    .exec((err, currentUser) => {
+      if (currentUser) {
+
+        User.findOne({username: toFollow}, 'followedByCount followedBy')
+          .exec((err, user) => {
+            if (user) {
+
+              currentUser.followingCount--;
+              currentUser.following.remove(user);
+              currentUser.save();
+
+              user.followedByCount--;
+              user.followedBy.remove(currentUser);
+              user.save();
+
+              res.send(currentUser);
+            }
+          });
+      }
+    });
+});
+
+
+
+apiRoutes.get('/test', (req, res) => {
 
   for (var i = 0; i < 1000; i++) {
     let music = new Music();
@@ -223,7 +275,7 @@ apiRoutes.get('/test', function (req, res) {
    });*/
 });
 
-apiRoutes.get('/friends', function (req, res) {
+apiRoutes.get('/friends', (req, res) => {
   User
     .findById(req.decoded.user.id, 'following username')
     .populate('following', 'username')
@@ -232,7 +284,7 @@ apiRoutes.get('/friends', function (req, res) {
     });
 });
 
-apiRoutes.get('/musicSearch', function (req, res) {
+apiRoutes.get('/musicSearch', (req, res) => {
   let pattern = req.query.search;
   User
     .findById(req.decoded.user.id, 'following username')
@@ -252,7 +304,7 @@ apiRoutes.get('/musicSearch', function (req, res) {
     });
 });
 
-apiRoutes.get('/discover', function (req, res) {
+apiRoutes.get('/discover', (req, res) => {
   User
     .findById(req.decoded.user.id, 'following username')
     .exec(function (err, user) {
@@ -264,7 +316,7 @@ apiRoutes.get('/discover', function (req, res) {
     });
 });
 
-apiRoutes.get('/userSearch', function (req, res) {
+apiRoutes.get('/userSearch', (req, res) => {
   User
     .find({username: new RegExp(req.query.search, "i")}, 'username').limit(5)
     .exec((err, users) => {
@@ -273,7 +325,7 @@ apiRoutes.get('/userSearch', function (req, res) {
 });
 
 
-apiRoutes.get('/genreMusics', function (req, res) {
+apiRoutes.get('/genreMusics', (req, res) => {
   const genre = req.query.genre;
   User
     .findById(req.decoded.user.id, 'following username')
