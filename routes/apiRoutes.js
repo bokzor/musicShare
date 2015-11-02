@@ -195,11 +195,11 @@ apiRoutes.post('/follow', (req, res) => {
             if (user) {
 
               currentUser.followingCount++;
-              currentUser.following.push(user);
+              currentUser.following.addToSet(user);
               currentUser.save();
 
               user.followedByCount++;
-              user.followedBy.push(currentUser);
+              user.followedBy.addToSet(currentUser);
               user.save();
 
               res.send(currentUser);
