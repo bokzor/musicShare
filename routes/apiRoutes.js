@@ -151,20 +151,26 @@ apiRoutes.post('/addMusic', function (req, res) {
 
 // use in Profile component
 apiRoutes.get('/profile/:username', function (req, res) {
-
-
-  User.findOne({ username: req.params.username }, 'username followedBy followedByCount')
+  User.findOne({username: req.params.username}, 'username followedBy followedByCount')
     .exec((err, user) => {
-      Music.find({userId: user.id})
-        .sort({'createdAt': -1})
-        .limit(1000)
-        .exec((err, musics) => {
-          var newUser = {
-            user,
-            musics: musics
-          };
-          res.send(newUser);
+      if (err) {
+        res.status(400).json({
+          success: 'false',
+          error: err
         });
+      }
+      if (user) {
+        Music.find({userId: user.id})
+          .sort({'createdAt': -1})
+          .limit(1000)
+          .exec((err, musics) => {
+            var newUser = {
+              user,
+              musics: musics
+            };
+            res.send(newUser);
+          });
+      }
     });
 });
 
@@ -183,7 +189,7 @@ apiRoutes.get('/profile/:username', function (req, res) {
 
 apiRoutes.get('/test', function (req, res) {
 
-  for (var i=0; i < 1000; i++){
+  for (var i = 0; i < 1000; i++) {
     let music = new Music();
     music.name = 'Maceo Plex Boiler Room Berlin DJ Set';
     music.title = 'Maceo Plex Boiler Room Berlin DJ Set';
@@ -199,8 +205,6 @@ apiRoutes.get('/test', function (req, res) {
 
     music.save();
   }
-
-
 
 
   /*  User.findOne({username: 'bokzor'}, 'following username')
@@ -235,14 +239,16 @@ apiRoutes.get('/musicSearch', function (req, res) {
     .exec(function (err, user) {
 
       console.log(user);
-      Music.find({ $and: [
-        {userId: {$in: user.following}},
-        {name: {$regex: pattern, $options: "i"}}
-      ]})
-        .sort({ createdAt: -1 })
-        .limit(30).exec((err, musics) => {
-          res.send(musics);
+      Music.find({
+          $and: [
+            {userId: {$in: user.following}},
+            {name: {$regex: pattern, $options: "i"}}
+          ]
         })
+        .sort({createdAt: -1})
+        .limit(30).exec((err, musics) => {
+        res.send(musics);
+      })
     });
 });
 

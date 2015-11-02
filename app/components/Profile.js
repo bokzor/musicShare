@@ -195,7 +195,7 @@ class Profile extends React.Component {
                     </span></h2>
                     <div className="row row-sm">
 
-                      <InfiniteList musics={this.state.user.musics.slice(6)}/>
+                      <InfiniteList musics={this.state.data.musics.slice(6)}/>
 
                     </div>
                     <FooterInContent/>

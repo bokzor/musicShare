@@ -44,12 +44,10 @@ class Search extends React.Component {
     } else {
       SearchActions.getSearchMusic(this.props.params.search);
     }
-    console.log('onSearch3 - OK');
   }
 
   render() {
     let search = this.state.searchMusic.map((music) => {
-      //console.log('Header.js :: render - ' + JSON.stringify(music, null, 4));
       return (
         <p key={music._id}>{JSON.stringify(music, null, 4)}</p>
       )
@@ -71,7 +69,7 @@ class Search extends React.Component {
            <h3>{this.props.params.search} </h3>
             <div className="row row-sm">
               {search}
-              <InfiniteList />
+              <InfiniteList musics={this.state.musics} />
             </div>
           </section>
         </section>
