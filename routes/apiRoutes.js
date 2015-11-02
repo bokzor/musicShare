@@ -246,6 +246,18 @@ apiRoutes.get('/musicSearch', function (req, res) {
     });
 });
 
+apiRoutes.get('/discover', function (req, res) {
+  User
+    .findById(req.decoded.user.id, 'following username')
+    .exec(function (err, user) {
+      Music.find({userId: {$in: user.following}})
+        .sort({createdAt: -1})
+        .limit(200).exec((err, musics) => {
+        res.send(musics);
+      })
+    });
+});
+
 apiRoutes.get('/userSearch', function (req, res) {
   User
     .find({username: new RegExp(req.query.search, "i")}, 'username').limit(5)
