@@ -212,7 +212,7 @@ apiRoutes.get('/profile/:username/:page', function (req, res) {
 apiRoutes.post('/follow', (req, res) => {
   const toFollow = req.body.username;
 
-  User.findOne({username : req.decoded.user.username}, 'username followingCount following')
+  User.findOne({username: req.decoded.user.username}, 'username followingCount following')
     .exec((err, currentUser) => {
       if (currentUser) {
         User.findOne({username: toFollow}, 'followedByCount followedBy')
@@ -341,8 +341,8 @@ apiRoutes.get('/discover/:page', (req, res) => {
         .limit(nbPerPage)
         .skip(nbPerPage * page)
         .exec((err, musics) => {
-        res.send(musics);
-      })
+          res.send(musics);
+        })
     });
 });
 
@@ -357,6 +357,9 @@ apiRoutes.get('/userSearch', (req, res) => {
 
 apiRoutes.get('/genreMusics', (req, res) => {
   const genre = req.query.genre;
+  const page = req.query.page ? req.query.page : 0;
+
+
   User
     .findById(req.decoded.user.id, 'following username')
     .exec(function (err, user) {
@@ -367,9 +370,11 @@ apiRoutes.get('/genreMusics', (req, res) => {
           ]
         })
         .sort({createdAt: -1})
-        .limit(50).exec((err, musics) => {
-        res.send(musics);
-      })
+        .limit(nbPerPage)
+        .skip(nbPerPage * page)
+        .exec((err, musics) => {
+          res.send(musics);
+        })
     });
 });
 

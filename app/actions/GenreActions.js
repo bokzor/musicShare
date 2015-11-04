@@ -6,22 +6,19 @@ import axios from 'axios'
 class GenreActions {
   constructor() {
     this.generateActions(
-      'getGenresSuccess',
       'getMusicsSuccess',
       'getMusicsFail'
     );
   }
 
-  getGenres() {
-    this.actions.getGenresSuccess(GenreData);
-  }
 
-  async getGenreMusics(genreId) {
+  async getGenreMusics(genreId, page) {
     try {
       const genre = GenreData.find(e => e.value == genreId).label;
       const response = await axios.get('/api/genreMusics', {
         params: {
-          genre : genre
+          genre : genre,
+          page: page
         }
       });
       this.actions.getMusicsSuccess(response.data);
@@ -31,9 +28,9 @@ class GenreActions {
     }
   }
 
-  async getMusics() {
+  async getMusics(page=0) {
     try {
-      const response = await axios.get('/api/discover');
+      const response = await axios.get('/api/discover/' + page);
       this.actions.getMusicsSuccess(response.data);
     }
     catch(err) {

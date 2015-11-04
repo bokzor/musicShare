@@ -23,6 +23,7 @@ class Profile extends React.Component {
 
   componentDidMount() {
     ProfileStore.listen(this.onChange);
+
     if (this.props.params.username) {
       ProfileActions.getData(this.props.params.username);
     } else {
@@ -70,6 +71,8 @@ class Profile extends React.Component {
     } else {
       ProfileActions.getMoreMusics(this.props.usernameConnectedCookie, this.state.page);
     }
+    this.state.isLoading = true;
+
   }
 
   render() {

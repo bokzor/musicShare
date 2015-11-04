@@ -6,17 +6,17 @@ class GenreStore {
     this.bindActions(GenreActions);
     this.genres = [];
     this.musics = [];
+    this.isLoading = true;
+    this.page = 0;
   }
 
-  onGetGenresSuccess(data) {
-    this.genres = data;
+  onGetMusicsSuccess(data) {
+    this.page++;
+    this.musics = this.musics.concat(data);
+    this.isLoading = false;
   }
 
-  onGetMusicsSuccess(data){
-    this.musics = data;
-  }
-
-  onGetMusicsFail(err){
+  onGetMusicsFail(err) {
     console.log(err);
   }
 }

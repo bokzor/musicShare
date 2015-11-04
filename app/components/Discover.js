@@ -29,6 +29,8 @@ class Discover extends React.Component {
 
   loadMoreItems(){
     DiscoverActions.getMusics(this.state.page);
+    this.state.isLoading = true;
+
   }
 
 
