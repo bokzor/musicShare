@@ -10,6 +10,7 @@ class ProfileStore {
     this.followed = false;
     this.isLoading = true;
     this.page = 1;
+    this.followedByCount = 0;
   }
 
   onGetDataSuccess(data) {
@@ -27,6 +28,15 @@ class ProfileStore {
 
   onGetDataFail(err) {
     this.isLoading = false;
+  }
+
+  onFollowSuccess(data){
+    this.followedByCount = data.followedByCount;
+    this.followed = true;
+  }
+
+  onFollowFail(err){
+    console.log(err);
   }
 
   onGetUsernameConnected(username) {

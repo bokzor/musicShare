@@ -9,9 +9,9 @@ class DiscoverActions {
     );
   }
 
-  async getMusics() {
+  async getMusics(page=0) {
     try {
-      const response = await axios.get('/api/discover');
+      const response = await axios.get('/api/discover/' + page);
       this.actions.getMusicsSuccess(response.data);
     }
     catch(err) {

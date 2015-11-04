@@ -48,7 +48,7 @@ class Profile extends React.Component {
 
   handleFollowButton(event) {
     event.preventDefault();
-    ProfileActions.follow(this.state.data.user.username);
+    ProfileActions.follow(this.state.user.username);
     this.setState({
       followed: true,
       followedByCount: this.state.followedByCount + 1
@@ -57,7 +57,7 @@ class Profile extends React.Component {
 
   handleUnfollowButton(event) {
     event.preventDefault();
-    ProfileActions.unfollow(this.state.data.user.username);
+    ProfileActions.unfollow(this.state.user.username);
     this.setState({
       followed: false,
       followedByCount: this.state.followedByCount - 1
@@ -75,7 +75,7 @@ class Profile extends React.Component {
   render() {
 
     if (this.state.followed) {
-      var button = <FollowedButton onClick={this.handleFollowButton.bind(this)} username={this.state.user.username}/>
+      var button = <UnfollowedButton onClick={this.handleUnfollowButton.bind(this)} username={this.state.user.username}/>
     } else {
       var button = <FollowedButton onClick={this.handleFollowButton.bind(this)} username={this.state.user.username}/>
     }

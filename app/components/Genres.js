@@ -86,7 +86,7 @@ class Genre extends React.Component {
                       }
                     </h2>
                     <div className="row row-sm">
-                      <InfiniteList musics={this.state.musics} genre={this.state.genre} />
+                      <InfiniteList musics={this.state.musics} genre={this.state.genre}/>
                     </div>
                   </section>
                 </section>

@@ -192,8 +192,7 @@ apiRoutes.get('/profile/:username', function (req, res) {
 // use in Profile component
 apiRoutes.get('/profile/:username/:page', function (req, res) {
 
-  if (!req.params.page)
-    var page = 0;
+  var page = req.params.page;
 
   User.findOne({username: req.params.username}, 'username')
     .exec((err, user) => {
@@ -213,12 +212,14 @@ apiRoutes.get('/profile/:username/:page', function (req, res) {
 apiRoutes.post('/follow', (req, res) => {
   const toFollow = req.body.username;
 
-  User.findOne(req.decoded.user.id, 'followingCount following')
+  User.findOne({username : req.decoded.user.username}, 'username followingCount following')
     .exec((err, currentUser) => {
       if (currentUser) {
         User.findOne({username: toFollow}, 'followedByCount followedBy')
           .exec((err, user) => {
             if (user) {
+
+              console.log(currentUser);
 
               currentUser.followingCount++;
               currentUser.following.addToSet(user);
@@ -228,7 +229,7 @@ apiRoutes.post('/follow', (req, res) => {
               user.followedBy.addToSet(currentUser);
               user.save();
 
-              res.send(currentUser);
+              res.send(user);
             }
           });
       }
@@ -328,13 +329,18 @@ apiRoutes.get('/musicSearch', (req, res) => {
     });
 });
 
-apiRoutes.get('/discover', (req, res) => {
+apiRoutes.get('/discover/:page', (req, res) => {
+
+  var page = req.params.page;
+
   User
     .findById(req.decoded.user.id, 'following username')
     .exec(function (err, user) {
       Music.find({userId: {$in: user.following}})
         .sort({createdAt: -1})
-        .limit(50).exec((err, musics) => {
+        .limit(nbPerPage)
+        .skip(nbPerPage * page)
+        .exec((err, musics) => {
         res.send(musics);
       })
     });

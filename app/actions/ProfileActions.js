@@ -8,6 +8,9 @@ class ProfileActions {
       'getDataFail',
       'getUsernameConnected',
       'getMoreMusicsSuccess',
+      'followFail',
+      'unfollowSuccess',
+      'followSuccess'
     );
   }
 
@@ -48,10 +51,10 @@ class ProfileActions {
       const response = await axios.post('/api/unfollow', {
         username: username
       });
-      this.actions.UnfollowSuccess(response.data);
+      this.actions.unfollowSuccess(response.data);
     }
     catch(err) {
-      this.actions.UnfollowFail(err);
+      this.actions.followFail(err);
     }
   }
 
