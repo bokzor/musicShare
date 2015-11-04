@@ -28,6 +28,7 @@ class Profile extends React.Component {
     } else {
       ProfileActions.getData(this.props.usernameConnectedCookie);
     }
+    this.state.isLoading = true;
   }
 
   componentWillUnmount() {
@@ -37,6 +38,7 @@ class Profile extends React.Component {
   componentDidUpdate(prevProps) {
     if (prevProps.params.username !== this.props.params.username) {
       ProfileActions.getData(this.props.params.username);
+      this.state.isLoading = true;
     }
   }
 
@@ -60,19 +62,25 @@ class Profile extends React.Component {
       followed: false,
       followedByCount: this.state.followedByCount - 1
     });
+  }
 
+  loadMoreItems(){
+    if (this.props.params.username) {
+      ProfileActions.getMoreMusics(this.props.params.username, this.state.page);
+    } else {
+      ProfileActions.getMoreMusics(this.props.usernameConnectedCookie, this.state.page);
+    }
   }
 
   render() {
-    let data = this.state.data;
 
     if (this.state.followed) {
-      var button = <UnfollowedButton onClick={this.handleUnfollowButton.bind(this)} username={data.user.username}/>
+      var button = <FollowedButton onClick={this.handleFollowButton.bind(this)} username={this.state.user.username}/>
     } else {
-      var button = <FollowedButton onClick={this.handleFollowButton.bind(this)} username={data.user.username}/>
+      var button = <FollowedButton onClick={this.handleFollowButton.bind(this)} username={this.state.user.username}/>
     }
 
-    let musicTop = this.state.data.musics.slice(0, 6).map((music) => {
+    let musicTop = this.state.musics.slice(0, 6).map((music) => {
       return (
         <div key={music._id} className="col-xs-6 col-sm-4">
           <div className="item">
@@ -123,7 +131,7 @@ class Profile extends React.Component {
                         :
                         null
                       }
-                      <span className="h2 font-thin">{data.user.username}</span>
+                      <span className="h2 font-thin">{this.state.user.username}</span>
                     </div>
                     <div className="img-container">
                       <div className="img-container-center">
@@ -158,14 +166,18 @@ class Profile extends React.Component {
                         </div>
                       </div>
                     </div>
-                    <a href="#" className="pull-right text-muted m-t-lg" data-toggle="class:fa-spin"><i
-                      className="icon-refresh i-lg  inline" id="refresh"></i></a>
+                    <a href="#" className="pull-right text-muted m-t-lg" data-toggle="class:fa-spin">
+                      <i className="icon-refresh i-lg  inline" id="refresh"></i></a>
                     <h2 className="font-thin m-b">My Music Library
                       <MusicBar />
                     </h2>
                     <div className="row row-sm">
 
-                      <InfiniteList musics={this.state.data.musics.slice(6)}/>
+                      <InfiniteList
+                        isLoading={this.state.isLoading}
+                        musics={this.state.musics.slice(6)}
+                        loadMoreItems={this.loadMoreItems.bind(this)}
+                      />
 
                     </div>
                     <FooterInContent/>

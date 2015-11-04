@@ -19,6 +19,7 @@ class Signin extends React.Component {
 
   componentWillMount() {
     Cookie.remove('XSRF-TOKEN');
+    Cookie.remove('username');
     alt.recycle();
   }
 

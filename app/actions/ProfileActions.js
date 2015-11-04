@@ -6,14 +6,25 @@ class ProfileActions {
     this.generateActions(
       'getDataSuccess',
       'getDataFail',
-      'getUsernameConnected'
+      'getUsernameConnected',
+      'getMoreMusicsSuccess',
     );
   }
 
   async getData(username) {
     try {
-      const response = await axios.get('/api/profile/' + username);
+      const response = await axios.get(`/api/profile/${username}`);
       this.actions.getDataSuccess(response.data);
+    }
+    catch(err) {
+      this.actions.getDataFail(err);
+    }
+  }
+
+  async getMoreMusics(username, page){
+    try {
+      const response = await axios.get(`/api/profile/${username}/${page}`);
+      this.actions.getMoreMusicsSuccess(response.data);
     }
     catch(err) {
       this.actions.getDataFail(err);

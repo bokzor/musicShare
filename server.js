@@ -2,7 +2,7 @@ var express = require('express');
 var path = require('path');
 var logger = require('morgan');
 var bodyParser = require('body-parser');
-var async = require('async');
+
 var request = require('request');
 var cookieParser = require('cookie-parser');
 var reactCookie = require('react-cookie');

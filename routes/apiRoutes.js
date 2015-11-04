@@ -8,6 +8,9 @@ const Music = require('../models/music').model;
 
 const config = require('../config');
 
+
+const nbPerPage = 30;
+
 // get an instance of the router for api routes
 const apiRoutes = express.Router();
 
@@ -152,6 +155,7 @@ apiRoutes.post('/addMusic', (req, res) => {
 // use in Profile component
 apiRoutes.get('/profile/:username', function (req, res) {
 
+
   var followed = false;
 
   User.findOne({username: req.params.username}, 'username followedBy followedByCount')
@@ -166,10 +170,10 @@ apiRoutes.get('/profile/:username', function (req, res) {
       if (user) {
         Music.find({userId: user.id})
           .sort({'createdAt': -1})
-          .limit(1000)
+          .limit(nbPerPage)
 
           .exec((err, musics) => {
-            if(user.followedBy.indexOf(req.decoded.user.id) > -1)
+            if (user.followedBy.indexOf(req.decoded.user.id) > -1)
               followed = true;
 
             var newUser = {
@@ -179,6 +183,28 @@ apiRoutes.get('/profile/:username', function (req, res) {
             };
 
             res.send(newUser);
+          });
+      }
+    });
+});
+
+
+// use in Profile component
+apiRoutes.get('/profile/:username/:page', function (req, res) {
+
+  if (!req.params.page)
+    var page = 0;
+
+  User.findOne({username: req.params.username}, 'username')
+    .exec((err, user) => {
+      if (user) {
+        Music.find({userId: user.id})
+          .sort({'createdAt': -1})
+          .limit(nbPerPage)
+          .skip(nbPerPage * page)
+
+          .exec((err, musics) => {
+            res.send(musics);
           });
       }
     });
@@ -210,7 +236,6 @@ apiRoutes.post('/follow', (req, res) => {
 });
 
 
-
 apiRoutes.post('/unfollow', (req, res) => {
   const toFollow = req.body.username;
 
@@ -236,7 +261,6 @@ apiRoutes.post('/unfollow', (req, res) => {
       }
     });
 });
-
 
 
 apiRoutes.get('/test', (req, res) => {
@@ -310,7 +334,7 @@ apiRoutes.get('/discover', (req, res) => {
     .exec(function (err, user) {
       Music.find({userId: {$in: user.following}})
         .sort({createdAt: -1})
-        .limit(200).exec((err, musics) => {
+        .limit(50).exec((err, musics) => {
         res.send(musics);
       })
     });
@@ -337,7 +361,7 @@ apiRoutes.get('/genreMusics', (req, res) => {
           ]
         })
         .sort({createdAt: -1})
-        .limit(200).exec((err, musics) => {
+        .limit(50).exec((err, musics) => {
         res.send(musics);
       })
     });
