@@ -1,4 +1,5 @@
 import React from 'react'
+import alt from '../alt'
 import mixin from 'mixin-decorator'
 import composeAnimation from '../decorators/composeAnimation'
 import moment from 'moment'
@@ -38,6 +39,7 @@ class Profile extends React.Component {
 
   componentDidUpdate(prevProps) {
     if (prevProps.params.username !== this.props.params.username) {
+      alt.recycle(ProfileStore);
       ProfileActions.getData(this.props.params.username);
       this.state.isLoading = true;
     }

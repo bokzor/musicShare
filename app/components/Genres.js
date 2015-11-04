@@ -39,7 +39,6 @@ class Genre extends React.Component {
 
   componentDidUpdate(prevProps) {
     if (!isEqual(prevProps.params, this.props.params)) {
-
       alt.recycle(GenreStore);
       if (this.props.params.genreId)
         GenreActions.getGenreMusics(this.props.params.genreId, 0);

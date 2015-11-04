@@ -9,11 +9,12 @@ class ProfileStore {
     this.username = '';
     this.followed = false;
     this.isLoading = true;
-    this.page = 1;
+    this.page = 0;
     this.followedByCount = 0;
   }
 
   onGetDataSuccess(data) {
+    this.page++;
     this.isLoading = false;
     this.user = data.user;
     this.musics = data.musics;
@@ -23,6 +24,7 @@ class ProfileStore {
 
   onGetMoreMusicsSuccess(musics){
     this.page++;
+    this.isLoading = false;
     this.musics = this.musics.concat(musics);
   }
 

@@ -311,11 +311,14 @@ apiRoutes.get('/friends', (req, res) => {
 
 apiRoutes.get('/musicSearch', (req, res) => {
   let pattern = req.query.search;
+  let page = req.query.page;
+
   User
     .findById(req.decoded.user.id, 'following username')
     .exec(function (err, user) {
 
-      console.log(user);
+      user.following.push(user.id);
+
       Music.find({
           $and: [
             {userId: {$in: user.following}},
@@ -323,7 +326,9 @@ apiRoutes.get('/musicSearch', (req, res) => {
           ]
         })
         .sort({createdAt: -1})
-        .limit(30).exec((err, musics) => {
+        .limit(nbPerPage)
+        .skip(nbPerPage * page)
+        .exec((err, musics) => {
         res.send(musics);
       })
     });

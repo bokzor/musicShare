@@ -10,11 +10,12 @@ class SearchActions {
     );
   }
 
-  async getSearchMusic(search) {
+  async getSearchMusic(search, page=0) {
     try {
       const response = await axios.get('/api/musicSearch', {
         params: {
-          search: search
+          search: search,
+          page: page
         }
       });
       this.actions.getSearchMusicSuccess(response.data);
