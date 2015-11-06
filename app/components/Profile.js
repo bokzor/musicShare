@@ -9,6 +9,7 @@ import FooterInContent from './FooterInContent'
 import MusicBar from './MusicBar'
 import FollowedButton from './FollowedButton'
 import UnfollowedButton from './UnfollowedButton'
+import Dropzone from 'react-dropzone'
 
 import ProfileActions from '../actions/ProfileActions'
 import ProfileStore from '../stores/ProfileStore'
@@ -115,6 +116,41 @@ class Profile extends React.Component {
                         <span className="bar5 a2 dker"></span>
                       </span>
                     </div>
+
+                    <div style={{position: 'absolute', zIndex: '10', width: '500px', right: '0', bottom: '0', margin: '-35px 20px'}}>
+                      <section className="panel panel-info">
+                        <div className="panel-body">
+                          <a href="#" className="thumb pull-right m-l m-b-xs m-t-xs" style={{width: '100px'}}>
+                            <img src="images/plex1.jpg" alt="..."/>
+                            <i className="on md b-white bottom"></i>
+                          </a>
+                          <div className="clear">
+                            <div className="h2 m-b-xs font-thin">Bokzor</div>
+                            <small className="block text-muted"><strong>2,415</strong> followers • <strong>225</strong> following • <strong>55</strong> music</small>
+                            <a href="#" className="btn btn-success m-t-xs" style={{float: 'right'}}>Follow Bokzor</a>
+                            <a className="btn btn-default m-t-xs m-r" style={{float: 'right'}}>
+                              <span className="text">Profile</span>
+                            </a>
+                            <a className="btn btn-default m-t-xs m-r" style={{float: 'right'}}>
+                              <span className="text">Cover</span>
+                            </a>
+                          </div>
+
+                          <div className="m-t-xs">
+                            <Dropzone
+                              disableClick={true}
+                              multiple={false}
+                              onDrop={this.onDrop}
+                              style={{width: '150px', height: '100px', borderWidth: '2px', borderColor: '#bce8f1', borderStyle: 'dashed', borderRadius: '2px', textAlign: 'center', padding: '10px'}}
+                              >
+                              <div>(Profile)</div>
+                            </Dropzone>
+                          </div>
+
+                        </div>
+                      </section>
+                    </div>
+
                     <div className="bottom gd bg-info wrapper-lg img-container-bottom">
                       <span className="pull-right text-sm">{this.state.followedByCount} <br/>Followers</span>
                       {this.props.params.username
