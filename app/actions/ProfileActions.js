@@ -6,7 +6,9 @@ class ProfileActions {
     this.generateActions(
       'getDataSuccess',
       'getDataFail',
-      'getUsernameConnected'
+      'getUsernameConnected',
+      'addProfilePicture',
+      'addCoverPicture'
     );
   }
 

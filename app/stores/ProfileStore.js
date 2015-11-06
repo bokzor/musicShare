@@ -8,10 +8,12 @@ class ProfileStore {
     this.data.user = {};
     this.data.musics = [];
     this.username = '';
-    this.picturePreview = {};
-    this.isProfilePicture = true;
-    this.isCoverPicture = false;
-    this.textPicture = 'profile';
+    this.picture = {};
+    this.profilePreview = '';
+    this.coverPreview = '';
+    this.isProfilePicture = false;
+    this.isCoverPicture = true;
+    this.textPicture = 'cover';
   }
 
   onGetDataSuccess(data) {
@@ -25,6 +27,20 @@ class ProfileStore {
 
   onGetUsernameConnected(username) {
     this.username = username;
+  }
+
+  onAddProfilePicture(pictures) {
+    this.profilePreview = '';
+    this.coverPreview = '';
+    this.picture = pictures[0];
+    this.profilePreview = this.picture.preview;
+  }
+
+  onAddCoverPicture(pictures) {
+    this.profilePreview = '';
+    this.coverPreview = '';
+    this.picture = pictures[0];
+    this.coverPreview = this.picture.preview;
   }
 }
 

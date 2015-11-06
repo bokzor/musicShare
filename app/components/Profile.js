@@ -66,7 +66,9 @@ class Profile extends React.Component {
   handleProfilePicture(event) {
     event.preventDefault();
     this.setState({
-      picturePreview: {},
+      picture: {},
+      profilePreview: '',
+      coverPreview: '',
       textPicture: 'profile',
       isProfilePicture: true,
       isCoverPicture: false
@@ -76,19 +78,23 @@ class Profile extends React.Component {
   handleCoverPicture(event) {
     event.preventDefault();
     this.setState({
-      picturePreview: {},
+      picture: {},
+      profilePreview: '',
+      coverPreview: '',
       textPicture: 'cover',
       isProfilePicture: false,
       isCoverPicture: true
     });
   }
 
-  onDrop(files) {
-    console.log('Received files: ', files);
-    console.log('State :: textPicture : ' + this.state.textPicture
-      + ' - isProfilePicture : ' + this.state.isProfilePicture
-      + ' - isCoverPicture : ' + this.state.isCoverPicture);
-
+  onDrop(pictures) {
+    console.log('Received files: ', pictures);
+    if (this.state.isProfilePicture) {
+      ProfileActions.addProfilePicture(pictures);
+    }
+    if (this.state.isCoverPicture) {
+      ProfileActions.addCoverPicture(pictures);
+    }
   }
 
   savePicture() {
@@ -152,7 +158,11 @@ class Profile extends React.Component {
                       <section className="panel panel-info">
                         <div className="panel-body">
                           <a href="#" className="thumb pull-right m-l m-b-xs m-t-xs" style={{width: '100px'}}>
-                            <img src="images/plex1.jpg" alt="..."/>
+                            {
+                              this.state.profilePreview === ''
+                                ? <img src="images/plex1.jpg" alt="..."/>
+                                : <img src={this.state.profilePreview} />
+                            }
                             <i className="on md b-white bottom"></i>
                           </a>
                           <div className="clear">
@@ -203,7 +213,11 @@ class Profile extends React.Component {
                     </div>
                     <div className="img-container">
                       <div className="img-container-center">
-                        <img className="img-full img-responsive" src="images/m43.jpg" alt="..."/>
+                        {
+                          this.state.coverPreview === ''
+                            ? <img className="img-full img-responsive" src="images/m43.jpg" alt="..."/>
+                            : <img src={this.state.coverPreview} />
+                        }
                       </div>
                     </div>
                   </div>
