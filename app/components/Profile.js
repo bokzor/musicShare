@@ -45,10 +45,6 @@ class Profile extends React.Component {
     this.setState(state);
   }
 
-  onDrop(files) {
-    console.log('Received files: ', files);
-  }
-
   handleFollowButton(event) {
     event.preventDefault();
     ProfileActions.follow(this.state.data.user.username);
@@ -71,7 +67,7 @@ class Profile extends React.Component {
     event.preventDefault();
     this.setState({
       picturePreview: {},
-      textPicture: 'Change your profile picture',
+      textPicture: 'profile',
       isProfilePicture: true,
       isCoverPicture: false
     });
@@ -81,10 +77,22 @@ class Profile extends React.Component {
     event.preventDefault();
     this.setState({
       picturePreview: {},
-      textPicture: 'Change your cover picture',
+      textPicture: 'cover',
       isProfilePicture: false,
       isCoverPicture: true
     });
+  }
+
+  onDrop(files) {
+    console.log('Received files: ', files);
+    console.log('State :: textPicture : ' + this.state.textPicture
+      + ' - isProfilePicture : ' + this.state.isProfilePicture
+      + ' - isCoverPicture : ' + this.state.isCoverPicture);
+
+  }
+
+  savePicture() {
+    console.log('New ' + this.state.textPicture + ' picture saved!');
   }
 
   render() {
@@ -176,11 +184,14 @@ class Profile extends React.Component {
                             <Dropzone
                               disableClick={true}
                               multiple={false}
-                              onDrop={this.onDrop}
+                              onDrop={this.onDrop.bind(this)}
                               style={{width: '150px', height: '100px', borderWidth: '2px', borderColor: '#bce8f1', borderStyle: 'dashed', borderRadius: '2px', textAlign: 'center', padding: '10px'}}
                               >
-                              <div>{this.state.textPicture}</div>
+                              <div>Change your {this.state.textPicture} picture! Drop a file here to upload.</div>
                             </Dropzone>
+                            <button className="m-t-xs" type="button" onClick={this.savePicture.bind(this)}>
+                              Save
+                            </button>
                           </div>
 
                         </div>

@@ -11,7 +11,7 @@ class ProfileStore {
     this.picturePreview = {};
     this.isProfilePicture = true;
     this.isCoverPicture = false;
-    this.textPicture = 'Change your cover picture';
+    this.textPicture = 'profile';
   }
 
   onGetDataSuccess(data) {
