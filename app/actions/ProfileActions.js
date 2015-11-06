@@ -46,6 +46,33 @@ class ProfileActions {
     }
   }
 
+  async uploadProfilePicture(picture) {
+    /*console.log('uploadProfilePicture picture: ', picture
+      + ' picture.name: ' + picture.name
+      + ' picture.type: ' + picture.type);*/
+    axios.post('/api/uploadProfilePictureOnAWS', {
+      filename: picture.name,
+      filetype: picture.type
+    })
+    .then(function (result) {
+      console.log('result: ', result);
+      var signedUrl = result.data;
+      console.log('signedUrl: ', signedUrl);
+      var options = {
+        headers: {
+          'Content-Type': picture.type
+        }
+      };
+
+      return axios.put(signedUrl, picture, options);
+    })
+    .then(function (result) {
+      console.log(result);
+    })
+    .catch(function (err) {
+      console.log(err);
+    });
+  }
 
 }
 

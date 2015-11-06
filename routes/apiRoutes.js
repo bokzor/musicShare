@@ -1,6 +1,7 @@
 const express = require('express');
 const jwt = require('jsonwebtoken');
 const _ = require('lodash');
+const aws = require('../aws/aws');
 
 
 const User = require('../models/user');
@@ -10,6 +11,11 @@ const config = require('../config');
 
 // get an instance of the router for api routes
 const apiRoutes = express.Router();
+
+apiRoutes.get('/testAWS', (req, res) => {
+  console.log('call /api/testAWS');
+  aws.signToAWS();
+});
 
 // route to create a new user
 apiRoutes.post('/signup', (req, res, next) => {
@@ -154,7 +160,7 @@ apiRoutes.get('/profile/:username', function (req, res) {
 
   var followed = false;
 
-  User.findOne({username: req.params.username}, 'username followedBy followedByCount')
+  User.findOne({username: req.params.username}, '_id username followedBy followedByCount')
     .exec((err, user) => {
       if (err) {
         res.status(400).json({
@@ -343,5 +349,15 @@ apiRoutes.get('/genreMusics', (req, res) => {
     });
 });
 
+apiRoutes.post('/uploadProfilePictureOnAWS', (req, res) => {
+  /*console.log('APIROUTES /uploadProfilePictureOnAWS - req.body.filename: ' + req.body.filename
+    + ' req.body.filetype: ' + req.body.filetype);*/
+  const filename = req.body.filename;
+  const filetype = req.body.filetype;
+  console.log('call /api/uploadProfilePictureOnAWS');
+  aws.signAndUploadToAWS(filename, filetype, function(result) {
+    res.send(result);
+  });
+});
 
 export default apiRoutes;

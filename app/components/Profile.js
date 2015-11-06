@@ -90,6 +90,7 @@ class Profile extends React.Component {
   onDrop(pictures) {
     console.log('Received files: ', pictures);
     if (this.state.isProfilePicture) {
+      //this.state.data.user._id
       ProfileActions.addProfilePicture(pictures);
     }
     if (this.state.isCoverPicture) {
@@ -98,6 +99,9 @@ class Profile extends React.Component {
   }
 
   savePicture() {
+    ProfileActions.uploadProfilePicture(this.state.picture);
+    //console.log(this.state.textPicture + ' picture saved!');
+    //ProfileActions.uploadCoverPicture();
     console.log('New ' + this.state.textPicture + ' picture saved!');
   }
 
