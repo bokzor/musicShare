@@ -8,7 +8,10 @@ class ProfileStore {
     this.data.user = {};
     this.data.musics = [];
     this.username = '';
-
+    this.picturePreview = {};
+    this.isProfilePicture = true;
+    this.isCoverPicture = false;
+    this.textPicture = 'Change your cover picture';
   }
 
   onGetDataSuccess(data) {

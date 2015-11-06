@@ -65,7 +65,26 @@ class Profile extends React.Component {
       followed: false,
       followedByCount: this.state.followedByCount - 1
     });
+  }
 
+  handleProfilePicture(event) {
+    event.preventDefault();
+    this.setState({
+      picturePreview: {},
+      textPicture: 'Change your profile picture',
+      isProfilePicture: true,
+      isCoverPicture: false
+    });
+  }
+
+  handleCoverPicture(event) {
+    event.preventDefault();
+    this.setState({
+      picturePreview: {},
+      textPicture: 'Change your cover picture',
+      isProfilePicture: false,
+      isCoverPicture: true
+    });
   }
 
   render() {
@@ -137,10 +156,18 @@ class Profile extends React.Component {
                               :
                               null
                             }
-                            <a className="btn btn-default m-t-xs m-r" style={{float: 'right'}}>
+                            <a
+                              onClick={this.handleProfilePicture.bind(this)}
+                              className="btn btn-default m-t-xs m-r"
+                              style={{float: 'right'}}
+                              >
                               <span className="text">Profile</span>
                             </a>
-                            <a className="btn btn-default m-t-xs m-r" style={{float: 'right'}}>
+                            <a
+                              onClick={this.handleCoverPicture.bind(this)}
+                              className="btn btn-default m-t-xs m-r"
+                              style={{float: 'right'}}
+                              >
                               <span className="text">Cover</span>
                             </a>
                           </div>
@@ -152,7 +179,7 @@ class Profile extends React.Component {
                               onDrop={this.onDrop}
                               style={{width: '150px', height: '100px', borderWidth: '2px', borderColor: '#bce8f1', borderStyle: 'dashed', borderRadius: '2px', textAlign: 'center', padding: '10px'}}
                               >
-                              <div>(Profile)</div>
+                              <div>{this.state.textPicture}</div>
                             </Dropzone>
                           </div>
 
