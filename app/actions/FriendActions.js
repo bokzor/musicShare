@@ -8,7 +8,10 @@ class FriendActions {
       'getFriendsListFail',
       'getSearchListSuccess',
       'getSearchListFail',
-      'updateSearchQuery'
+      'updateSearchQuery',
+      'addFriend',
+      'addFollower',
+      'removeFollower'
     );
   }
 
@@ -35,6 +38,8 @@ class FriendActions {
       this.actions.getSearchListFail(err);
     }
   }
+
+
 
 
 

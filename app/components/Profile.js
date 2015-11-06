@@ -14,6 +14,9 @@ import UnfollowedButton from './UnfollowedButton'
 import ProfileActions from '../actions/ProfileActions'
 import ProfileStore from '../stores/ProfileStore'
 
+import FriendActions from '../actions/FriendActions'
+
+
 @mixin(composeAnimation)
 class Profile extends React.Component {
   constructor(props) {
@@ -52,6 +55,7 @@ class Profile extends React.Component {
   handleFollowButton(event) {
     event.preventDefault();
     ProfileActions.follow(this.state.user.username);
+    FriendActions.addFollower({username: this.state.user.username});
     this.setState({
       followed: true,
       followedByCount: this.state.followedByCount + 1
@@ -61,6 +65,7 @@ class Profile extends React.Component {
   handleUnfollowButton(event) {
     event.preventDefault();
     ProfileActions.unfollow(this.state.user.username);
+    FriendActions.removeFollower({username: this.state.user.username});
     this.setState({
       followed: false,
       followedByCount: this.state.followedByCount - 1

@@ -30,7 +30,7 @@ apiRoutes.post('/signup', (req, res, next) => {
     if (err) return next(err);
     // we create a new token
     const token = jwt.sign({user: {username: newUser.username}}, config.secretToken, {
-      expiresIn: 1440 * 60 // expires in 24 hours
+      expiresIn: 1440 * 60 * 14 // expires in 24 hours
     });
 
     // let's fetch it to get the expires param
@@ -215,7 +215,7 @@ apiRoutes.post('/follow', (req, res) => {
   User.findOne({username: req.decoded.user.username}, 'username followingCount following')
     .exec((err, currentUser) => {
       if (currentUser) {
-        User.findOne({username: toFollow}, 'followedByCount followedBy')
+        User.findOne({username: toFollow}, 'username followedByCount followedBy')
           .exec((err, user) => {
             if (user) {
 

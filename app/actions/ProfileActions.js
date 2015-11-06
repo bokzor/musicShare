@@ -1,6 +1,8 @@
 import alt from '../alt';
 import axios from 'axios';
 
+
+
 class ProfileActions {
   constructor() {
     this.generateActions(
