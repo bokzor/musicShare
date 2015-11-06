@@ -5,7 +5,7 @@ class FollowedButton extends React.Component {
 
   render() {
     return (
-        <a onClick={this.props.onClick} className="pull-right btn btn-default btn-following">
+        <a onClick={this.props.onClick} className="btn btn-success m-t-xs" style={{float: 'right'}}>
           Follow {this.props.username}
         </a>
     );

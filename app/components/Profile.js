@@ -45,6 +45,10 @@ class Profile extends React.Component {
     this.setState(state);
   }
 
+  onDrop(files) {
+    console.log('Received files: ', files);
+  }
+
   handleFollowButton(event) {
     event.preventDefault();
     ProfileActions.follow(this.state.data.user.username);
@@ -125,9 +129,14 @@ class Profile extends React.Component {
                             <i className="on md b-white bottom"></i>
                           </a>
                           <div className="clear">
-                            <div className="h2 m-b-xs font-thin">Bokzor</div>
-                            <small className="block text-muted"><strong>2,415</strong> followers • <strong>225</strong> following • <strong>55</strong> music</small>
-                            <a href="#" className="btn btn-success m-t-xs" style={{float: 'right'}}>Follow Bokzor</a>
+                            <div className="h2 m-b-xs font-thin"><span>{data.user.username}</span></div>
+                            <small className="block text-muted"><strong>{this.state.followedByCount}</strong> followers • <strong>225</strong> following • <strong>55</strong> music</small>
+                            {this.props.params.username
+                              ?
+                              button
+                              :
+                              null
+                            }
                             <a className="btn btn-default m-t-xs m-r" style={{float: 'right'}}>
                               <span className="text">Profile</span>
                             </a>
@@ -152,14 +161,7 @@ class Profile extends React.Component {
                     </div>
 
                     <div className="bottom gd bg-info wrapper-lg img-container-bottom">
-                      <span className="pull-right text-sm">{this.state.followedByCount} <br/>Followers</span>
-                      {this.props.params.username
-                        ?
-                        button
-                        :
-                        null
-                      }
-                      <span className="h2 font-thin">{data.user.username}</span>
+
                     </div>
                     <div className="img-container">
                       <div className="img-container-center">
