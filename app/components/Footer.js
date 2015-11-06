@@ -1,6 +1,45 @@
 import React from 'react';
 
+
 class Footer extends React.Component {
+
+  constructor(props) {
+    super(props);
+  }
+
+  componentDidMount() {
+    console.log('test');
+    this.initPlayer();
+  }
+
+  initPlayer() {
+    this.player = new jPlayerPlaylist({
+      jPlayer: "#jplayer_N",
+      cssSelectorAncestor: "#jp_container_N"
+    }, [
+      {
+        title: "Back Home",
+        artist: "3studios",
+        mp3: "https://www.dropbox.com/s/zdxnk7xbm07itn9/03%20Back%20Home.mp3?dl=1",
+        poster: "images/m0.jpg"
+      },
+    ], {
+      playlistOptions: {
+        enableRemoveControls: true,
+        autoPlay: false
+      },
+      swfPath: "js/jPlayer",
+      supplied: "webmv, ogv, m4v, oga, mp3",
+      smoothPlayBar: true,
+      keyEnabled: true,
+      audioFullScreen: false
+    });
+  }
+
+  play() {
+    this.player.play();
+  }
+
   render() {
     return (
       <footer className="footer bg-dark">
@@ -9,7 +48,7 @@ class Footer extends React.Component {
             <div id="jplayer_N" className="jp-jplayer hide"></div>
             <div className="jp-gui">
               <div className="jp-video-play hide">
-                <a className="jp-video-play-icon">play</a>
+                <a onClick={this.play.bind(this)} className="jp-video-play-icon">play</a>
               </div>
               <div className="jp-interface">
                 <div className="jp-controls">
@@ -68,7 +107,7 @@ class Footer extends React.Component {
             <div className="jp-no-solution hide">
               <span>Update Required</span>
               To play the media you will need to either update your browser to a recent version or update your <a
-                href="http://get.adobe.com/flashplayer/" target="_blank">Flash plugin</a>.
+              href="http://get.adobe.com/flashplayer/" target="_blank">Flash plugin</a>.
             </div>
           </div>
         </div>

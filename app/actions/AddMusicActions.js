@@ -27,6 +27,7 @@ class AddMusicActions {
 
   async addMusic(music) {
 
+    // translate id into genre label
     music.genres = GenreData.find(e => e.value == music.genres).label;
 
     try {
@@ -41,6 +42,7 @@ class AddMusicActions {
     }
   }
 
+  // fetch data from the link
   fetchUrl(e) {
     let url = e.target.value;
     var idVideo = '';

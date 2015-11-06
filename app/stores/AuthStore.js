@@ -18,8 +18,8 @@ class AuthStore {
     this.user = response.data.user;
     this.username = this.user.username;
     toastr.success(response.data.message);
-    cookie.save('XSRF-TOKEN', this.jwt);
-    cookie.save('user', response.data.user);
+    cookie.save('XSRF-TOKEN', this.jwt, {path: '/'});
+    cookie.save('user', response.data.user, {path: '/'});
   }
 
   onLoginFail(response) {
@@ -32,8 +32,8 @@ class AuthStore {
     this.user = response.data.user;
     this.username = this.user.username;
     toastr.success(response.data.message);
-    cookie.save('XSRF-TOKEN', this.jwt);
-    cookie.save('user', response.data.user);
+    cookie.save('XSRF-TOKEN', this.jwt, {path: '/'});
+    cookie.save('user', response.data.user, {path: '/'});
   }
 
   onSignupFail(response) {

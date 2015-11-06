@@ -6,10 +6,14 @@ class SearchStore {
     this.bindActions(SearchActions);
     this.musics = [];
     this.searchQuery = '';
+    this.isLoading = true;
+    this.page = 0;
   }
 
   onGetSearchMusicSuccess(data) {
-    this.musics = data;
+    this.isLoading = false;
+    this.page++;
+    this.musics = this.musics.concat(data);
   }
 
   onGetSearchMusicFail() {

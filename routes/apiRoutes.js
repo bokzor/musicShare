@@ -8,6 +8,9 @@ const Music = require('../models/music').model;
 
 const config = require('../config');
 
+
+const nbPerPage = 30;
+
 // get an instance of the router for api routes
 const apiRoutes = express.Router();
 
@@ -27,7 +30,7 @@ apiRoutes.post('/signup', (req, res, next) => {
     if (err) return next(err);
     // we create a new token
     const token = jwt.sign({user: {username: newUser.username}}, config.secretToken, {
-      expiresIn: 1440 * 60 // expires in 24 hours
+      expiresIn: 1440 * 60 * 14 // expires in 24 hours
     });
 
     // let's fetch it to get the expires param
@@ -152,6 +155,7 @@ apiRoutes.post('/addMusic', (req, res) => {
 // use in Profile component
 apiRoutes.get('/profile/:username', function (req, res) {
 
+
   var followed = false;
 
   User.findOne({username: req.params.username}, 'username followedBy followedByCount')
@@ -166,10 +170,10 @@ apiRoutes.get('/profile/:username', function (req, res) {
       if (user) {
         Music.find({userId: user.id})
           .sort({'createdAt': -1})
-          .limit(1000)
+          .limit(nbPerPage)
 
           .exec((err, musics) => {
-            if(user.followedBy.indexOf(req.decoded.user.id) > -1)
+            if (user.followedBy.indexOf(req.decoded.user.id) > -1)
               followed = true;
 
             var newUser = {
@@ -184,15 +188,38 @@ apiRoutes.get('/profile/:username', function (req, res) {
     });
 });
 
+
+// use in Profile component
+apiRoutes.get('/profile/:username/:page', function (req, res) {
+
+  var page = req.params.page;
+
+  User.findOne({username: req.params.username}, 'username')
+    .exec((err, user) => {
+      if (user) {
+        Music.find({userId: user.id})
+          .sort({'createdAt': -1})
+          .limit(nbPerPage)
+          .skip(nbPerPage * page)
+
+          .exec((err, musics) => {
+            res.send(musics);
+          });
+      }
+    });
+});
+
 apiRoutes.post('/follow', (req, res) => {
   const toFollow = req.body.username;
 
-  User.findOne(req.decoded.user.id, 'followingCount following')
+  User.findOne({username: req.decoded.user.username}, 'username followingCount following')
     .exec((err, currentUser) => {
       if (currentUser) {
-        User.findOne({username: toFollow}, 'followedByCount followedBy')
+        User.findOne({username: toFollow}, 'username followedByCount followedBy')
           .exec((err, user) => {
             if (user) {
+
+              console.log(currentUser);
 
               currentUser.followingCount++;
               currentUser.following.addToSet(user);
@@ -202,13 +229,12 @@ apiRoutes.post('/follow', (req, res) => {
               user.followedBy.addToSet(currentUser);
               user.save();
 
-              res.send(currentUser);
+              res.send(user);
             }
           });
       }
     });
 });
-
 
 
 apiRoutes.post('/unfollow', (req, res) => {
@@ -236,7 +262,6 @@ apiRoutes.post('/unfollow', (req, res) => {
       }
     });
 });
-
 
 
 apiRoutes.get('/test', (req, res) => {
@@ -286,11 +311,14 @@ apiRoutes.get('/friends', (req, res) => {
 
 apiRoutes.get('/musicSearch', (req, res) => {
   let pattern = req.query.search;
+  let page = req.query.page;
+
   User
     .findById(req.decoded.user.id, 'following username')
     .exec(function (err, user) {
 
-      console.log(user);
+      user.following.push(user.id);
+
       Music.find({
           $and: [
             {userId: {$in: user.following}},
@@ -298,21 +326,28 @@ apiRoutes.get('/musicSearch', (req, res) => {
           ]
         })
         .sort({createdAt: -1})
-        .limit(30).exec((err, musics) => {
+        .limit(nbPerPage)
+        .skip(nbPerPage * page)
+        .exec((err, musics) => {
         res.send(musics);
       })
     });
 });
 
-apiRoutes.get('/discover', (req, res) => {
+apiRoutes.get('/discover/:page', (req, res) => {
+
+  var page = req.params.page;
+
   User
     .findById(req.decoded.user.id, 'following username')
     .exec(function (err, user) {
       Music.find({userId: {$in: user.following}})
         .sort({createdAt: -1})
-        .limit(200).exec((err, musics) => {
-        res.send(musics);
-      })
+        .limit(nbPerPage)
+        .skip(nbPerPage * page)
+        .exec((err, musics) => {
+          res.send(musics);
+        })
     });
 });
 
@@ -327,6 +362,9 @@ apiRoutes.get('/userSearch', (req, res) => {
 
 apiRoutes.get('/genreMusics', (req, res) => {
   const genre = req.query.genre;
+  const page = req.query.page ? req.query.page : 0;
+
+
   User
     .findById(req.decoded.user.id, 'following username')
     .exec(function (err, user) {
@@ -337,9 +375,11 @@ apiRoutes.get('/genreMusics', (req, res) => {
           ]
         })
         .sort({createdAt: -1})
-        .limit(200).exec((err, musics) => {
-        res.send(musics);
-      })
+        .limit(nbPerPage)
+        .skip(nbPerPage * page)
+        .exec((err, musics) => {
+          res.send(musics);
+        })
     });
 });
 

@@ -1,10 +1,11 @@
-import React from 'react';
+import React from 'react'
+import alt from '../alt'
 
-import {Link} from 'react-router';
+import {Link} from 'react-router'
 import {debounce} from 'lodash'
 
-import SearchActions from '../actions/SearchActions';
-import SearchStore from '../stores/SearchStore';
+import SearchActions from '../actions/SearchActions'
+import SearchStore from '../stores/SearchStore'
 
 import InfiniteList from './InfiniteList'
 
@@ -29,6 +30,7 @@ class Search extends React.Component {
 
   componentDidUpdate(prevProps) {
     if (prevProps.params.search !== this.props.params.search) {
+      alt.recycle(SearchStore);
       SearchActions.updateSearchQuery(this.props.params.search);
       this.onSearch();
     }
@@ -43,6 +45,14 @@ class Search extends React.Component {
       SearchActions.getSearchMusic(this.state.searchQuery);
     } else {
       SearchActions.getSearchMusic(this.props.params.search);
+    }
+  }
+
+  loadMoreItems(){
+    if (this.state.searchQuery) {
+      SearchActions.getSearchMusic(this.state.searchQuery, this.state.page);
+    } else {
+      SearchActions.getSearchMusic(this.props.params.search, this.state.page);
     }
   }
 
@@ -63,7 +73,11 @@ class Search extends React.Component {
             </h2>
            <h3>{this.props.params.search} </h3>
             <div className="row row-sm">
-              <InfiniteList musics={this.state.musics} />
+              <InfiniteList
+                isLoading={this.state.isLoading}
+                musics={this.state.musics}
+                loadMoreItems={this.loadMoreItems.bind(this)}
+              />
             </div>
           </section>
         </section>

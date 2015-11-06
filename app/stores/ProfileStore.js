@@ -4,20 +4,41 @@ import ProfileActions from '../actions/ProfileActions';
 class ProfileStore {
   constructor() {
     this.bindActions(ProfileActions);
-    this.data = {};
-    this.data.user = {};
-    this.data.musics = [];
+    this.user = {};
+    this.musics = [];
     this.username = '';
-
+    this.followed = false;
+    this.isLoading = true;
+    this.page = 0;
+    this.followedByCount = 0;
   }
 
   onGetDataSuccess(data) {
-    this.data = data;
+    this.page++;
+    this.isLoading = false;
+    this.user = data.user;
+    this.musics = data.musics;
     this.followed = data.followed;
     this.followedByCount = data.user.followedByCount;
   }
 
+  onGetMoreMusicsSuccess(musics){
+    this.page++;
+    this.isLoading = false;
+    this.musics = this.musics.concat(musics);
+  }
+
   onGetDataFail(err) {
+    this.isLoading = false;
+  }
+
+  onFollowSuccess(data){
+    this.followedByCount = data.followedByCount;
+    this.followed = true;
+  }
+
+  onFollowFail(err){
+    console.log(err);
   }
 
   onGetUsernameConnected(username) {

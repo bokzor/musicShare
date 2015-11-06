@@ -29,6 +29,19 @@ class FriendStore {
     this.searchQuery = data;
   }
 
+  onAddFollower(user) {
+    this.friends.push(user);
+  }
+
+  onRemoveFollower(user) {
+    this.friends = this.friends
+      .filter((el) => {
+        return el.username !== user.username;
+      });
+  }
+
+
+
 }
 
 export default alt.createStore(FriendStore)

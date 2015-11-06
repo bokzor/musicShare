@@ -1,4 +1,6 @@
-import React from 'react';
+import alt from '../alt'
+
+import React from 'react'
 import mixin from 'mixin-decorator'
 import {Link} from 'react-router'
 import {isEqual} from 'lodash'
@@ -17,12 +19,13 @@ class Genre extends React.Component {
   constructor(props) {
     super(props);
     this.state = GenreStore.getState();
+    this.genres = GenreData;
     this.onChange = this.onChange.bind(this);
   }
 
   componentDidMount() {
     GenreStore.listen(this.onChange);
-    GenreActions.getGenres();
+
     if (this.props.params.genreId) {
       GenreActions.getGenreMusics(this.props.params.genreId);
     } else {
@@ -36,11 +39,13 @@ class Genre extends React.Component {
 
   componentDidUpdate(prevProps) {
     if (!isEqual(prevProps.params, this.props.params)) {
+      alt.recycle(GenreStore);
       if (this.props.params.genreId)
-        GenreActions.getGenreMusics(this.props.params.genreId);
+        GenreActions.getGenreMusics(this.props.params.genreId, 0);
       else {
-        GenreActions.getMusics();
+        GenreActions.getMusics(0);
       }
+      this.state.isLoading = true;
     }
   }
 
@@ -48,10 +53,19 @@ class Genre extends React.Component {
     this.setState(state);
   }
 
+  loadMoreItems() {
+    if (this.props.params.genreId) {
+      GenreActions.getGenreMusics(this.props.params.genreId, this.state.page);
+    } else {
+      GenreActions.getMusics(this.state.page);
+    }
+    this.state.isLoading = true;
+  }
+
   render() {
     let genre = GenreData.find(e => e.value == this.props.params.genreId);
 
-    let genres = this.state.genres.map((genre) => {
+    let genres = this.genres.map((genre) => {
       return (
         <Link key={genre.value} activeClassName="active" to={'/genres/' + genre.value} className="list-group-item">
           {genre.label}
@@ -86,7 +100,12 @@ class Genre extends React.Component {
                       }
                     </h2>
                     <div className="row row-sm">
-                      <InfiniteList musics={this.state.musics} genre={this.state.genre} />
+                      <InfiniteList
+                        isLoading={this.state.isLoading}
+                        musics={this.state.musics}
+                        loadMoreItems={this.loadMoreItems.bind(this)}
+                        genre={this.state.genre}
+                      />
                     </div>
                   </section>
                 </section>

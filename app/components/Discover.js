@@ -21,11 +21,16 @@ class Discover extends React.Component {
   componentDidMount() {
     DiscoverStore.listen(this.onChange);
     DiscoverActions.getMusics();
-
   }
 
   componentWillUnmount() {
     DiscoverStore.unlisten(this.onChange);
+  }
+
+  loadMoreItems(){
+    DiscoverActions.getMusics(this.state.page);
+    this.state.isLoading = true;
+
   }
 
 
@@ -42,9 +47,12 @@ class Discover extends React.Component {
             </h2>
 
             <div className="row row-sm">
-              <InfiniteList musics={this.state.musics} />
+              <InfiniteList
+                isLoading={this.state.isLoading}
+                musics={this.state.musics}
+                loadMoreItems={this.loadMoreItems.bind(this)}
+              />
             </div>
-
           </section>
         </section>
       </section>
