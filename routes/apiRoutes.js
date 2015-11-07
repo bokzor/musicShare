@@ -160,7 +160,7 @@ apiRoutes.get('/profile/:username', function (req, res) {
 
   var followed = false;
 
-  User.findOne({username: req.params.username}, '_id username followedBy followedByCount')
+  User.findOne({username: req.params.username}, '_id username followedBy followedByCount profilePicture coverPicture')
     .exec((err, user) => {
       if (err) {
         res.status(400).json({
@@ -281,14 +281,14 @@ apiRoutes.get('/test', (req, res) => {
    });*/
 });
 
-apiRoutes.get('/friends', (req, res) => {
+/*apiRoutes.get('/friends', (req, res) => {
   User
     .findById(req.decoded.user.id, 'following username')
     .populate('following', 'username')
     .exec(function (err, user) {
       res.send(user);
     });
-});
+});*/
 
 apiRoutes.get('/musicSearch', (req, res) => {
   let pattern = req.query.search;
@@ -349,7 +349,7 @@ apiRoutes.get('/genreMusics', (req, res) => {
     });
 });
 
-apiRoutes.post('/uploadProfilePictureOnAWS', (req, res) => {
+apiRoutes.post('/uploadPictureOnAWS', (req, res) => {
   /*console.log('APIROUTES /uploadProfilePictureOnAWS - req.body.filename: ' + req.body.filename
     + ' req.body.filetype: ' + req.body.filetype);*/
   const filename = req.body.filename;
@@ -358,6 +358,24 @@ apiRoutes.post('/uploadProfilePictureOnAWS', (req, res) => {
   aws.signAndUploadToAWS(filename, filetype, function(result) {
     res.send(result);
   });
+});
+
+apiRoutes.put('/updatePicture', (req, res) => {
+  const id = req.body.id;
+  const filename = req.body.filename;
+  const text = req.body.text;
+  User
+    .findById(id, function (err, user) {
+      if (err) return handleError(err);
+      if (text === 'profile')
+        user.profilePicture = filename;
+      if (text === 'cover')
+        user.coverPicture = filename;
+      user.save(function (err) {
+        if (err) return handleError(err);
+        res.send(user);
+      });
+    });
 });
 
 export default apiRoutes;

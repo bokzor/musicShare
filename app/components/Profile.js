@@ -106,7 +106,6 @@ class Profile extends React.Component {
     } else {
       console.log('Bad image format!');
     }
-    console.log('New ' + this.state.textPicture + ' picture saved!');
   }
 
   render() {
@@ -168,7 +167,13 @@ class Profile extends React.Component {
                           <a href="#" className="thumb pull-right m-l m-b-xs m-t-xs" style={{width: '100px'}}>
                             {
                               this.state.profilePreview === ''
-                                ? <img src="images/plex1.jpg" alt="..."/>
+                                ? (
+                                    data.user.profilePicture === ''
+                                    ?
+                                      <img src="images/plex1.jpg" alt="..."/>
+                                    :
+                                      <img src={'http://dqrr8ho2x6mhz.cloudfront.net/' + data.user.profilePicture} alt={data.user.username + '_profile'} />
+                                  )
                                 : <img src={this.state.profilePreview} />
                             }
                             <i className="on md b-white bottom"></i>
@@ -223,7 +228,13 @@ class Profile extends React.Component {
                       <div className="img-container-center">
                         {
                           this.state.coverPreview === ''
-                            ? <img className="img-full img-responsive" src="images/m43.jpg" alt="..."/>
+                            ? (
+                                data.user.coverPicture === ''
+                                ?
+                                  <img className="img-full img-responsive" src="images/m43.jpg" alt="..."/>
+                                :
+                                  <img src={'http://dqrr8ho2x6mhz.cloudfront.net/' + data.user.coverPicture} alt={data.user.username + '_cover'} />
+                              )
                             : <img src={this.state.coverPreview} />
                         }
                       </div>

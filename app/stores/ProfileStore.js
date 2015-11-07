@@ -34,6 +34,9 @@ class ProfileStore {
     this.coverPreview = '';
     this.picture = pictures[0];
     this.profilePreview = this.picture.preview;
+    this.isProfilePicture = true;
+    this.isCoverPicture = false;
+    this.textPicture = 'profile';
   }
 
   onAddCoverPicture(pictures) {
@@ -41,6 +44,13 @@ class ProfileStore {
     this.coverPreview = '';
     this.picture = pictures[0];
     this.coverPreview = this.picture.preview;
+    this.isProfilePicture = false;
+    this.isCoverPicture = true;
+    this.textPicture = 'cover';
+  }
+
+  onUploadPictureSuccess(message) {
+    toastr.success(message);
   }
 }
 
