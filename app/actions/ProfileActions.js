@@ -46,12 +46,12 @@ class ProfileActions {
     }
   }
 
-  async uploadProfilePicture(picture) {
+  async uploadPicture(picture, id, text, extension) {
     /*console.log('uploadProfilePicture picture: ', picture
       + ' picture.name: ' + picture.name
       + ' picture.type: ' + picture.type);*/
     axios.post('/api/uploadProfilePictureOnAWS', {
-      filename: picture.name,
+      filename: id + '_' + text + extension,
       filetype: picture.type
     })
     .then(function (result) {

@@ -99,9 +99,13 @@ class Profile extends React.Component {
   }
 
   savePicture() {
-    ProfileActions.uploadProfilePicture(this.state.picture);
-    //console.log(this.state.textPicture + ' picture saved!');
-    //ProfileActions.uploadCoverPicture();
+    let pattern = /(.jpg|.jpeg|.gif|.png|.bmp)$/i;
+    if (pattern.test(this.state.picture.name)) {
+      let extension = pattern.exec(this.state.picture.name);
+      ProfileActions.uploadPicture(this.state.picture, this.state.data.user._id, this.state.textPicture, extension[0]);
+    } else {
+      console.log('Bad image format!');
+    }
     console.log('New ' + this.state.textPicture + ' picture saved!');
   }
 
