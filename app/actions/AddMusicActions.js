@@ -1,15 +1,15 @@
 import alt from '../alt'
 import axios from 'axios'
 import GenreData from '../data/GenreData'
+import utils from '../lib/utils'
+
 
 var client_youtube = 'AIzaSyCNgsM94-HneaMwxGz25LdzfKUxk_mBeAg';
 var client_soundcloud = '7220cd79b258ae2f8d427b34d761fb16';
-//var client_soundcloud = '02gUJC0hH2ct1EGOcYXQIzRFU91c72Ea';
 
 var urlSoundcloud = 'http://api.soundcloud.com/resolve';
 var urlYoutube = 'https://www.googleapis.com/youtube/v3/videos';
 
-var regexYoutube = /(youtu(?:\.be|be\.com)\/(?:.*v(?:\/|=)|(?:.*\/)?)([\w'-]+))/i;
 
 class AddMusicActions {
   constructor() {
@@ -51,14 +51,13 @@ class AddMusicActions {
       if (url.indexOf('soundcloud.com') > 0) {
         this.actions.getSoundCloudData(url);
 
-      } else if (idVideo = url.match(regexYoutube)[2]) {
+      } else if (idVideo = utils.getIdYoutube(url)) {
         this.actions.getYoutubeData(idVideo);
       }
     }
   }
 
   async getSoundCloudData(url) {
-    console.log(this);
     try {
       const response = await axios.get(urlSoundcloud, {
         params: {

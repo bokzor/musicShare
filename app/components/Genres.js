@@ -4,6 +4,7 @@ import React from 'react'
 import mixin from 'mixin-decorator'
 import {Link} from 'react-router'
 import {isEqual} from 'lodash'
+import Loader from 'react-loader'
 
 import composeAnimation from '../decorators/composeAnimation'
 
@@ -12,6 +13,7 @@ import GenreStore from '../stores/GenreStore'
 import GenreData from '../data/GenreData'
 
 import InfiniteList from './InfiniteList'
+
 
 @mixin(composeAnimation)
 class Genre extends React.Component {
@@ -100,12 +102,14 @@ class Genre extends React.Component {
                       }
                     </h2>
                     <div className="row row-sm">
-                      <InfiniteList
-                        isLoading={this.state.isLoading}
-                        musics={this.state.musics}
-                        loadMoreItems={this.loadMoreItems.bind(this)}
-                        genre={this.state.genre}
-                      />
+                      <Loader color="#4cb6cb" loaded={!this.state.isLoading}>
+                        <InfiniteList
+                          isLoading={this.state.isLoading}
+                          musics={this.state.musics}
+                          loadMoreItems={this.loadMoreItems.bind(this)}
+                          genre={this.state.genre}
+                        />
+                      </Loader>
                     </div>
                   </section>
                 </section>

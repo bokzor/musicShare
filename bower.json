@@ -3,6 +3,7 @@
   "dependencies": {
     "jquery": "^2.1.4",
     "toastr": "^2.1.1",
-    "bootstrap": "^3.3.5"
+    "bootstrap": "^3.3.5",
+    "soundmanager2": "V2.97a.20150601+DEV"
   }
 }

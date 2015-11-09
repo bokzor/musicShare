@@ -120,17 +120,7 @@ apiRoutes.use((req, res, next) => {
 });
 
 apiRoutes.post('/addMusic', (req, res) => {
-  let music = new Music();
-  music.name = req.body.music.completeName;
-  music.title = req.body.music.title;
-  music.artist = req.body.music.artist;
-  music.img = req.body.music.image;
-  music.isMix = req.body.music.isMix;
-  music.duration = req.body.music.duration;
-  music.url = req.body.music.url;
-  music.genres = req.body.music.genres;
-  music.hostType = req.body.music.hostType;
-  music.tags = req.body.music.tags;
+  let music = new Music(req.body.music);
 
   music.userId = req.decoded.user.id;
 

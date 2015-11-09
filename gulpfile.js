@@ -20,7 +20,7 @@ var dependencies = [
   'react',
   'react-dom',
   'react-router',
-  'underscore'
+  'underscore',
 ];
 
 /*
@@ -34,6 +34,8 @@ gulp.task('vendor', function() {
     'bower_components/bootstrap/dist/js/bootstrap.js',
     'bower_components/magnific-popup/dist/jquery.magnific-popup.js',
     'bower_components/toastr/toastr.js',
+    'bower_components/soundmanager2/script/soundmanager2.js',
+
     'app/lib/jquery.jplayer.min.js',
     'app/lib/jplayer.playlist.min.js',
     'app/lib/demo.js'

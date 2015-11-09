@@ -18,10 +18,10 @@ class AddMusicStore {
   onGetSoundCloudSuccess(data) {
     this.urlIsValid = true;
     [this.music.artist, this.music.title] = data.title.split('-', 2);
-    this.music.completeName = data.title;
+    this.music.name = data.title;
     this.music.duration = data.duration;
-    this.music.image = data.artwork_url;
-    this.music.url = data.url;
+    this.music.img = data.artwork_url;
+    this.music.url = data.uri;
     this.music.isMix = data.duration > 1200000;
     this.music.hostType = 'soundcloud';
   }
@@ -29,8 +29,8 @@ class AddMusicStore {
   onGetYoutubeSuccess(data){
     this.urlIsValid = true;
     [this.music.artist, this.music.title] = data.snippet.title.split('-', 2);
-    this.music.completeName = data.snippet.title;
-    this.music.image = data.snippet.thumbnails.standard.url;
+    this.music.name = data.snippet.title;
+    this.music.img = data.snippet.thumbnails.standard.url;
     this.music.duration = moment.duration(data.contentDetails.duration).asMilliseconds();
     this.music.url = 'https://youtu.be/v/' + data.id;
     this.music.isMix = data.duration > 1200000;

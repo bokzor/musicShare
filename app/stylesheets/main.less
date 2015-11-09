@@ -125,3 +125,26 @@ body > div > section {
   display: block;
   color: #a94442;
 }
+
+.crop {
+  width: 100%;
+  overflow: hidden;
+  position: relative;
+}
+.crop::before {
+  content: "";
+  display: block;
+  padding-top: 75%;
+}
+.crop img {
+  display: block;
+  width: 100%;
+  height: auto;
+  position: absolute;
+  top: 0;
+  left: 0;
+}
+
+.item-overlay {
+  z-index: 1;
+}

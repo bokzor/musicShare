@@ -1,54 +1,73 @@
-import React from 'react';
+import React from 'react'
+import PlayerActions from '../actions/PlayerActions'
+import PlayerStore from '../stores/PlayerStore'
+import utils from '../lib/utils'
+
+const isBrowser = typeof window !== 'undefined';
+const Sound = isBrowser ? require('react-sound') : undefined;
 
 
 class Footer extends React.Component {
 
   constructor(props) {
     super(props);
+    this.state = PlayerStore.getState();
+    this.onChange = this.onChange.bind(this);
+
   }
 
   componentDidMount() {
-    console.log('test');
+    PlayerStore.listen(this.onChange);
     this.initPlayer();
   }
 
-  initPlayer() {
-    this.player = new jPlayerPlaylist({
-      jPlayer: "#jplayer_N",
-      cssSelectorAncestor: "#jp_container_N"
-    }, [
-      {
-        title: "Back Home",
-        artist: "3studios",
-        mp3: "https://www.dropbox.com/s/zdxnk7xbm07itn9/03%20Back%20Home.mp3?dl=1",
-        poster: "images/m0.jpg"
-      },
-    ], {
-      playlistOptions: {
-        enableRemoveControls: true,
-        autoPlay: false
-      },
-      swfPath: "js/jPlayer",
-      supplied: "webmv, ogv, m4v, oga, mp3",
-      smoothPlayBar: true,
-      keyEnabled: true,
-      audioFullScreen: false
-    });
+  componentWillUnmount() {
+    PlayerStore.unlisten(this.onChange);
   }
 
-  play() {
-    this.player.play();
+  initPlayer() {
+    this.player = soundManager.setup({url: '/swf/', wmode: 'transparent', debugMode: true});
   }
+
+  onChange(state) {
+    this.setState(state);
+  }
+
+  handleSongPlaying(music) {
+    this.setState({duration: music.duration})
+    this.setState({position: (music.position / music.duration) * 100});
+  }
+
+  handleSeek(event) {
+    let coord = utils.getClickPosition(event);
+    let position = (coord.x / event.target.clientWidth) * 100;
+    this.setState({position: position});
+  }
+
 
   render() {
+
+
     return (
+
       <footer className="footer bg-dark">
+        {(this.state.stream_url)
+          ?
+          <Sound
+            url={this.state.stream_url}
+            playStatus={Sound.status.PLAYING}
+            onPlaying={this.handleSongPlaying.bind(this)}
+            position={this.state.position * this.state.duration}
+          />
+
+          : null
+        }
         <div id="jp_container_N">
           <div className="jp-type-playlist">
             <div id="jplayer_N" className="jp-jplayer hide"></div>
             <div className="jp-gui">
               <div className="jp-video-play hide">
-                <a onClick={this.play.bind(this)} className="jp-video-play-icon">play</a>
+                <a className="jp-video-play-icon">play</a>
               </div>
               <div className="jp-interface">
                 <div className="jp-controls">
@@ -62,8 +81,14 @@ class Footer extends React.Component {
                   <div><a className="" data-toggle="dropdown" data-target="#playlist"><i className="icon-list"></i></a>
                   </div>
                   <div className="jp-progress hidden-xs">
-                    <div className="jp-seek-bar dk">
-                      <div className="jp-play-bar bg-info">
+                    <div
+                      className="jp-seek-bar dk"
+                      onClick={this.handleSeek.bind(this)}
+                    >
+                      <div
+                        style={{width: this.state.position + '%'}}
+                        className="jp-play-bar bg-info"
+                      >
                       </div>
                       <div className="jp-title text-lt">
                         <ul>
