@@ -8,7 +8,7 @@ class LeftNav extends React.Component {
         <section className="vbox">
           <section className="w-f-md scrollable">
             <div className="slim-scroll" data-height="auto" data-disable-fade-out="true" data-distance="0"
-                 data-size="10px" data-railOpacity="0.2">
+                 data-size="10px" data-railopacity="0.2">
               <nav className="nav-primary hidden-xs">
                 <ul className="nav bg clearfix">
                   <li className="hidden-nav-xs padder m-t m-b-sm text-xs text-muted">
@@ -16,7 +16,6 @@ class LeftNav extends React.Component {
                   </li>
                   <li>
                     <Link to="/">
-
                       <i className="icon-disc icon text-success"></i>
                       <span className="font-bold">What's new</span>
                     </Link>

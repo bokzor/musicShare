@@ -152,7 +152,7 @@ class Footer extends React.Component {
     if (this.state.currentSongIndex == this.state.musics.length - 1) {
       this.handleStop();
     } else {
-      PlayerActions.next();
+     // PlayerActions.next();
     }
   }
 
@@ -205,7 +205,7 @@ class Footer extends React.Component {
               </div>
               <div className="jp-interface">
                 <div className="jp-controls">
-                  <div><a oncliCk={PlayerActions.prev()} className="jp-previous"><i className="icon-control-rewind i-lg"/></a></div>
+                  <div><a  className="jp-previous"><i className="icon-control-rewind i-lg"/></a></div>
                   <div>
                     { (!this.state.isPlaying)
                       ?
@@ -214,7 +214,7 @@ class Footer extends React.Component {
                       <a onClick={this.handlePause} className="jp-pause"><i className="icon-control-pause i-2x"/></a>
                     }
                   </div>
-                  <div><a oncliCk={PlayerActions.next()} className="jp-next"><i className="icon-control-forward i-lg"/></a></div>
+                  <div><a  className="jp-next"><i className="icon-control-forward i-lg"/></a></div>
                   <div className="hide"><a className="jp-stop"><i className="fa fa-stop"/></a></div>
                   <div><a clasName="" data-toggle="dropdown" data-target="#playlist"><i className="icon-list"/></a>
                   </div>

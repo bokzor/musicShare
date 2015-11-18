@@ -41,15 +41,14 @@ class FriendList extends React.Component {
 
   render() {
     let friends = this.state.friends.filter(this.filterByUsername).map((friend) => {
-      console.log(friend);
       return (
-        <FriendListItem key={friend.id} username={friend.username} />
+        <FriendListItem key={friend._id} username={friend.username} />
       )
     });
 
     let search = this.state.searchList.map((user) => {
       return (
-        <FriendListItem key={user.id} username={user.username} />
+        <FriendListItem key={user._id} username={user.username} />
       )
     });
 
