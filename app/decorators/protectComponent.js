@@ -5,6 +5,8 @@ import cookie from 'react-cookie';
 import Signin from '../components/Signin';
 
 export default (ComponentToBeRendered) => {
+
+  // handle the verification of the authentification
   class ProtectedComponent extends React.Component {
 
     constructor(props) {
@@ -16,6 +18,7 @@ export default (ComponentToBeRendered) => {
     componentWillMount() {
       this.jwt = cookie.load('XSRF-TOKEN');
       this.user = cookie.load('user');
+
       if (this.user)
         this.setState({ username: this.user.username });
     }
@@ -30,6 +33,7 @@ export default (ComponentToBeRendered) => {
     }
 
     render() {
+
       if (this.jwt) {
         return <ComponentToBeRendered {...this.props} username={this.state.username} />;
       } else {

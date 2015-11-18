@@ -15,7 +15,7 @@ import GenreData from '../data/GenreData'
 import InfiniteList from './InfiniteList'
 
 
-@mixin(composeAnimation)
+//@mixin(composeAnimation)
 class Genre extends React.Component {
 
   constructor(props) {

@@ -1,7 +1,6 @@
 import React from 'react'
-import {Decorator as FormsyElement} from 'formsy-react';
+import {HOC} from 'formsy-react';
 
-@FormsyElement()
 class TextInput extends React.Component {
   render() {
     var className = this.props.showError() ? 'has-error' : '';
@@ -31,4 +30,4 @@ class TextInput extends React.Component {
   }
 }
 
-export default TextInput
+export default HOC(TextInput)

@@ -14,7 +14,7 @@ class AuthStore {
 
 
   onLoginSuccess(response) {
-    this.jwt = response.data.token;
+    this.jwt = response.data.user.token;
     this.user = response.data.user;
     this.username = this.user.username;
     toastr.success(response.data.message);
@@ -28,9 +28,9 @@ class AuthStore {
   }
 
   onSignupSuccess(response) {
-    this.jwt = response.data.token;
+    this.jwt = response.data.user.token;
     this.user = response.data.user;
-    this.username = this.user.username;
+    this.username = response.data.user.username;
     toastr.success(response.data.message);
     cookie.save('XSRF-TOKEN', this.jwt, {path: '/'});
     cookie.save('user', response.data.user, {path: '/'});

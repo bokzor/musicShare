@@ -18,7 +18,7 @@ import ProfileStore from '../stores/ProfileStore'
 import FriendActions from '../actions/FriendActions'
 
 
-@mixin(composeAnimation)
+//@mixin(composeAnimation)
 class Profile extends React.Component {
   constructor(props) {
     super(props);
@@ -89,7 +89,8 @@ class Profile extends React.Component {
       var button = <UnfollowedButton onClick={this.handleUnfollowButton.bind(this)}
                                      username={this.state.user.username}/>
     } else {
-      var button = <FollowedButton onClick={this.handleFollowButton.bind(this)} username={this.state.user.username}/>
+      var button = <FollowedButton onClick={this.handleFollowButton.bind(this)}
+                                   username={this.state.user.username}/>
     }
 
     let musicTop = this.state.musics.slice(0, 6).map((music) => {

@@ -27,6 +27,8 @@ class AddMusicActions {
 
   async addMusic(music) {
 
+    console.log(music);
+
     // translate id into genre label
     music.genres = GenreData.find(e => e.value == music.genres).label;
 
@@ -50,7 +52,7 @@ class AddMusicActions {
     if (url) {
       if (url.indexOf('soundcloud.com') > 0) {
         this.actions.getSoundCloudData(url);
-
+        console.log('soundcloud');
       } else if (idVideo = utils.getIdYoutube(url)) {
         this.actions.getYoutubeData(idVideo);
       }
@@ -65,7 +67,6 @@ class AddMusicActions {
           client_id: client_soundcloud
         }
       });
-
       response.data.url = url;
       this.actions.getSoundCloudSuccess(response.data);
     }

@@ -7,15 +7,17 @@ import PlayerActions from '../actions/PlayerActions'
 class MusicItem extends React.Component {
   constructor(props) {
     super(props);
+    this.handlePlay = this.handlePlay.bind(this);
   }
 
-  play() {
-    PlayerActions.play(this.props.music.url);
+  handlePlay(e) {
+    e.preventDefault();
+    PlayerActions.play(this.props.music);
   }
 
   render() {
     return (
-      <div key={this.props.music._id} className="col-xs-6 col-sm-4 col-md-3 col-lg-3">
+      <div className="col-xs-6 col-sm-4 col-md-3 col-lg-3">
         <div className="item">
           <div className="pos-rlt">
             <div className="bottom">
@@ -24,7 +26,13 @@ class MusicItem extends React.Component {
             </div>
             <div className="item-overlay opacity r r-2x bg-black">
               <div className="center text-center m-t-n">
-                <a onClick={this.play.bind(this)} href="#"><i className="fa fa-play-circle i-2x"></i></a>
+                <a onClick={this.handlePlay} href="#"><i className="fa fa-play-circle i-2x"></i></a>
+              </div>
+              <div className="bottom padder m-b-sm">
+                <a href="#" data-toggle="class">
+                  <i className="fa fa-plus-circle text"></i>
+                  <i className="fa fa-check-circle text-active text-info"></i>
+                </a>
               </div>
             </div>
             <div className="crop">

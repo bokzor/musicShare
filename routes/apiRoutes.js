@@ -12,7 +12,7 @@ const config = require('../config');
 const nbPerPage = 30;
 
 // get an instance of the router for api routes
-const apiRoutes = express.Router();
+var apiRoutes = express.Router();
 
 // route to create a new user
 apiRoutes.post('/signup', (req, res, next) => {
@@ -29,18 +29,18 @@ apiRoutes.post('/signup', (req, res, next) => {
   newUser.save(function (err) {
     if (err) return next(err);
     // we create a new token
-    const token = jwt.sign({user: {username: newUser.username}}, config.secretToken, {
+    const token = jwt.sign({user: {username: newUser.username, id: newUser.id}}, config.secretToken, {
       expiresIn: 1440 * 60 * 14 // expires in 24 hours
     });
+
+    console.log(token);
 
     // let's fetch it to get the expires param
     const decoded = jwt.decode(token);
 
     res.status(201).send({
       message: 'Registration Successfull',
-      token: token,
-      user: {id: newUser.id, username: newUser.username},
-      expires: decoded.exp
+      user: {id: newUser.id, username: newUser.username, expires: decoded.exp, token: token},
     });
 
   })
@@ -78,9 +78,7 @@ apiRoutes.post('/auth', (req, res) => {
           res.json({
             success: true,
             message: 'Welcome ' + user.username,
-            user: {id: user.id, username: user.username},
-            token: token,
-            expires: decoded.exp
+            user: {id: user.id, username: user.username, token: token, expires: decoded.exp},
           });
         }
       });
@@ -256,7 +254,7 @@ apiRoutes.post('/unfollow', (req, res) => {
 
 apiRoutes.get('/test', (req, res) => {
 
-  for (var i = 0; i < 1000; i++) {
+  for (var i = 0; i < 100; i++) {
     let music = new Music();
     music.name = 'Maceo Plex Boiler Room Berlin DJ Set';
     music.title = 'Maceo Plex Boiler Room Berlin DJ Set';
@@ -266,13 +264,30 @@ apiRoutes.get('/test', (req, res) => {
     music.duration = 200000;
     music.url = 'https://youtu.be/v/5vHRUsP20dQ';
     music.genres = ['Techno'];
-    music.hostType = 'soudncloud';
+    music.hostType = 'youtube';
 
     music.userId = req.decoded.user.id;
 
     music.save();
   }
 
+
+  for (var i = 0; i < 100; i++) {
+    let music = new Music();
+    music.name = 'Maceo Plex Boiler Room Berlin DJ Set';
+    music.title = 'Maceo Plex Boiler Room Berlin DJ Set';
+    music.artist = 'Maceo';
+    music.img = 'https://i1.sndcdn.com/artworks-000135513720-rt0k2s-t200x200.jpg'
+    music.isMix = true;
+    music.duration = 200000;
+    music.url = 'https://api.soundcloud.com/stamenofficial/stamen-i-wanna-feel-original-mix';
+    music.genres = ['Techno'];
+    music.hostType = 'soundcloud';
+
+    music.userId = req.decoded.user.id;
+
+    music.save();
+  }
 
   /*  User.findOne({username: 'bokzor'}, 'following username')
    .then(userAdri => {
@@ -319,8 +334,8 @@ apiRoutes.get('/musicSearch', (req, res) => {
         .limit(nbPerPage)
         .skip(nbPerPage * page)
         .exec((err, musics) => {
-        res.send(musics);
-      })
+          res.send(musics);
+        })
     });
 });
 
@@ -331,13 +346,17 @@ apiRoutes.get('/discover/:page', (req, res) => {
   User
     .findById(req.decoded.user.id, 'following username')
     .exec(function (err, user) {
-      Music.find({userId: {$in: user.following}})
-        .sort({createdAt: -1})
-        .limit(nbPerPage)
-        .skip(nbPerPage * page)
-        .exec((err, musics) => {
-          res.send(musics);
-        })
+      if (user)
+        Music.find({userId: {$in: user.following}})
+          .sort({createdAt: -1})
+          .limit(nbPerPage)
+          .skip(nbPerPage * page)
+          .exec((err, musics) => {
+            res.send(musics);
+          })
+      else {
+        console.log(req.decoded);
+      }
     });
 });
 
@@ -374,4 +393,4 @@ apiRoutes.get('/genreMusics', (req, res) => {
 });
 
 
-export default apiRoutes;
+module.exports = apiRoutes;

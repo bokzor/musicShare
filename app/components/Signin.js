@@ -80,7 +80,7 @@ class Signin extends React.Component {
                 type="password"
                 classInput="rounded input-lg text-center no-border"
                 validationError="Please enter a password"
-                validations="isLength:8"
+                validations="minLength:8"
                 required
                 name="password"
                 placeholder="Password"

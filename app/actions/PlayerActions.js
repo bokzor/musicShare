@@ -13,21 +13,24 @@ var urlYoutube = 'https://www.googleapis.com/youtube/v3/videos';
 class PlayerActions {
   constructor() {
     this.generateActions(
-      'playSoundCloud'
+      'playSuccess',
+      'removeFromPlaylist'
     );
-
-
   }
 
-  play(url) {
-    if (url.indexOf('soundcloud.com') > 0) {
-      this.actions.playSoundCloud(url + '/stream?client_id=' + client_soundcloud);
+  play(music) {
+    if (music.hostType == 'soundcloud')
+      music.stream_url = music.url + '/stream?client_id=' + client_soundcloud;
 
-    } else if (idVideo = utils.getIdYoutube(url)) {
-      //this.actions.playYoutube(idVideo);
-    }
+    this.actions.playSuccess(music);
   }
 
+  addToPlaylist(music) {
+    if (music.url.indexOf('soundcloud') > 0)
+      music.stream_url = music.url + '/stream?client_id=' + client_soundcloud;
+
+    this.actions.addToPlayListSuccess(music);
+  }
 
 
 }

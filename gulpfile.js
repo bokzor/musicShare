@@ -20,7 +20,7 @@ var dependencies = [
   'react',
   'react-dom',
   'react-router',
-  'underscore',
+  'underscore'
 ];
 
 /*
@@ -66,7 +66,7 @@ gulp.task('browserify-vendor', function() {
 gulp.task('browserify', ['browserify-vendor'], function() {
   return browserify('app/main.js')
     .external(dependencies)
-    .transform(babelify)
+    .transform(babelify, { presets: ['es2015', 'react', 'stage-0'] })
     .bundle()
     .pipe(source('bundle.js'))
     .pipe(gulpif(production, streamify(uglify({ mangle: false }))))
@@ -81,9 +81,7 @@ gulp.task('browserify', ['browserify-vendor'], function() {
 gulp.task('browserify-watch', ['browserify-vendor'], function() {
   var bundler = watchify(browserify('app/main.js', watchify.args));
   bundler.external(dependencies);
-  bundler.transform(babelify.configure({
-    optional: ["es7.decorators", "runtime"]
-  }));
+  bundler.transform(babelify, { presets: ['es2015', 'react', 'stage-0'] })
   bundler.on('update', rebundle);
   return rebundle();
 

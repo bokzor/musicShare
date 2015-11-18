@@ -1,24 +1,35 @@
-var express = require('express');
+// Babel ES6/JSX Compiler
+require('babel-core/register');
+require("babel-polyfill");
+
 var path = require('path');
-var logger = require('morgan');
+var express = require('express');
 var bodyParser = require('body-parser');
-
+var compression = require('compression');
+var favicon = require('serve-favicon');
+var logger = require('morgan');
+var colors = require('colors');
+var mongoose = require('mongoose');
 var request = require('request');
-var cookieParser = require('cookie-parser');
-var reactCookie = require('react-cookie');
-
-var swig  = require('swig');
 var React = require('react');
 var ReactDOM = require('react-dom/server');
 var Router = require('react-router');
+var swig  = require('swig');
+var xml2js = require('xml2js');
+
+
+var cookieParser = require('cookie-parser');
+var reactCookie = require('react-cookie');
+
 var RoutingContext = Router.RoutingContext;
+
+
 var routes = require('./app/routes');
-
-var mongoose = require('mongoose');
 var Music = require('./models/music').model;
-
 var config = require('./config');
 var apiRoutes = require('./routes/apiRoutes');
+
+
 
 mongoose.connect(config.database);
 
@@ -45,9 +56,10 @@ var app = express();
 app.use(cookieParser())
 
 app.set('port', process.env.PORT || 3000);
+app.use(compression());
 app.use(logger('dev'));
 app.use(bodyParser.json());
-app.use(bodyParser.urlencoded({extended: false}));
+app.use(bodyParser.urlencoded({ extended: false }));
 app.use(express.static(path.join(__dirname, 'public')));
 
 // routes for the api
@@ -55,33 +67,30 @@ app.use('/api', apiRoutes);
 
 
 
-
 app.use(function(req, res) {
   reactCookie.plugToRequest(req, res);
-  Router.match({ routes: routes, location: req.url }, function(err, redirectLocation, renderProps) {
+  Router.match({ routes: routes.default, location: req.url }, function(err, redirectLocation, renderProps) {
     if (err) {
-      res.send(500, err.message)
+      res.status(500).send(err.message)
     } else if (redirectLocation) {
       res.redirect(302, redirectLocation.pathname + redirectLocation.search)
     } else if (renderProps) {
-      var html = ReactDOM.renderToString(<RoutingContext {...renderProps} />);
+      var html = ReactDOM.renderToString(React.createElement(Router.RoutingContext, renderProps));
       var page = swig.renderFile('views/index.html', { html: html });
-      res.send(200, page);
+      res.status(200).send(page);
     } else {
-      res.send(404, 'Page Not Found')
+      res.status(404).send('Page Not Found')
     }
   });
 });
 
 
-/*app.use(function (req, res) {
-  Router.run(routes, req.path, function (Handler) {
-    reactCookie.plugToRequest(req, res);
-    var html = React.renderToString(React.createElement(Handler));
-    var page = swig.renderFile('views/index.html', {html: html});
-    res.send(page);
-  });
-});*/
+
+app.use(function(err, req, res, next) {
+  console.log(err.stack.red);
+  res.status(err.status || 500);
+  res.send({ message: err.message });
+});
 
 
 app.listen(app.get('port'), function () {

@@ -1,6 +1,5 @@
 import React from 'react';
 import mixin from 'mixin-decorator'
-import addChangeHandler from '../decorators/changeHandler'
 import Select from 'react-select'
 import Formsy from 'formsy-react'
 import TextInput from './TextInput'
@@ -9,7 +8,7 @@ import SelectInput from './SelectInput'
 import AddMusicStore from '../stores/AddMusicStore'
 import AddMusicActions from '../actions/AddMusicActions'
 
-@mixin(addChangeHandler)
+//@mixin(addChangeHandler)
 class AddMusicAd extends React.Component {
 
   constructor(props) {
@@ -47,6 +46,7 @@ class AddMusicAd extends React.Component {
     this.state.music.title = data.title;
     this.state.music.genres = data.genres;
     this.state.music.tags = data.tags;
+    console.log(this.state);
     AddMusicActions.addMusic(this.state.music);
     this.refs.form.reset();
   }

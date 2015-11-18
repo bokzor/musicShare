@@ -1,5 +1,7 @@
-import alt from '../alt';
-import axios from 'axios';
+import 'babel-polyfill'
+
+import alt from '../alt'
+import axios from 'axios'
 
 class FriendActions {
   constructor() {

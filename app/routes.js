@@ -11,7 +11,7 @@ import Signup from './components/Signup';
 import AddMusicAd from './components/AddMusicAd';
 
 
-const routes = (
+export default (
   <Route>
     <Route path='/signin' component={Signin}/>
     <Route path='/logout' component={Signin}/>
@@ -28,4 +28,3 @@ const routes = (
   </Route>
 );
 
-export default routes;

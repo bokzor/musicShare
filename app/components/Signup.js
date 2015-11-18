@@ -1,14 +1,12 @@
 import React from 'react'
 import {Link} from 'react-router'
 import mixin from 'mixin-decorator'
-import addChangeHandler from '../decorators/changeHandler'
 import AuthActions from '../actions/AuthActions'
 import AuthStore from '../stores/AuthStore'
 import Formsy from 'formsy-react'
 import TextInput from './TextInput'
 
 
-@mixin(addChangeHandler)
 class Signup extends React.Component {
   constructor(props) {
 
@@ -80,7 +78,7 @@ class Signup extends React.Component {
 
               <TextInput
                 validationError="Please enter a valid password"
-                validations="isLength:8"
+                validations="minLength:8"
                 required
                 name="password"
                 placeholder="Password"
