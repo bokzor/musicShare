@@ -13,11 +13,11 @@ class Playlist extends React.Component {
 
       if(this.props.index == i)
         return (
-          <PlaylistItem music={music} />
+          <PlaylistItem key={music._id} music={music} />
         );
       else {
         return (
-          <PlaylistItem active={true} music={music} />
+          <PlaylistItem key={music._id} active={true} music={music} />
         )
       }
 
