@@ -27,8 +27,6 @@ class AddMusicActions {
 
   async addMusic(music) {
 
-    console.log(music);
-
     // translate id into genre label
     music.genres = GenreData.find(e => e.value == music.genres).label;
 

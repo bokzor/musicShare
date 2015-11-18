@@ -10,14 +10,13 @@ class Playlist extends React.Component {
   render() {
 
     let playlist = this.props.musics.map((music, i) => {
-
       if(this.props.index == i)
         return (
-          <PlaylistItem key={music._id} music={music} />
+          <PlaylistItem key={music._id} active={true} music={music} />
         );
       else {
         return (
-          <PlaylistItem key={music._id} active={true} music={music} />
+          <PlaylistItem key={music._id} music={music} />
         )
       }
 

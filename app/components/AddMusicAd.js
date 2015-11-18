@@ -46,7 +46,6 @@ class AddMusicAd extends React.Component {
     this.state.music.title = data.title;
     this.state.music.genres = data.genres;
     this.state.music.tags = data.tags;
-    console.log(this.state);
     AddMusicActions.addMusic(this.state.music);
     this.refs.form.reset();
   }
@@ -144,7 +143,7 @@ class AddMusicAd extends React.Component {
                     <div className="form-group">
                       <label className="col-sm-2 control-label" style={{ marginTop: '50px' }}>Image</label>
                       <div className="col-sm-6">
-                        <img src={this.state.music.image} style={{ maxHeight: '100px' }}/>
+                        <img src={this.state.music.img} style={{ maxHeight: '100px' }}/>
                       </div>
                     </div>
 

@@ -14,7 +14,9 @@ class PlayerActions {
   constructor() {
     this.generateActions(
       'playSuccess',
-      'removeFromPlaylist'
+      'removeFromPlaylist',
+      'next',
+      'prev'
     );
   }
 

@@ -18,7 +18,7 @@ class PlaylistItem extends React.Component {
         <div>
           <a className="jp-playlist-item-remove">×</a>
           <a className={activeClass + ' jp-playlist-item'}>{this.props.music.title}
-            <span className="jp-artist">{this.props.music.artist}</span></a>
+            <span className="jp-artist"> - {this.props.music.artist}</span></a>
         </div>
       </li>
     );

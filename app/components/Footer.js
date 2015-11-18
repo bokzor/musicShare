@@ -63,17 +63,13 @@ class Footer extends React.Component {
   }
 
   destructPlayer() {
-    console.log('destr');
-
 
     clearInterval(this.time_update_interval);
-    if(this.soundObject) {
+    if (this.soundObject) {
       if (this.soundObject.hasOwnProperty('destruct')) {
-        console.log('destruct');
         this.soundObject.destruct();
       }
       else {
-        console.log('destroy');
         this.soundObject.destroy();
       }
     }
@@ -83,11 +79,9 @@ class Footer extends React.Component {
     this.destructPlayer();
 
     if (music.hostType == 'soundcloud') {
-      console.log('init soundcloud');
       this.initSoundCloud(music);
     }
     if (music.hostType == 'youtube') {
-      console.log('init youtube');
       this.initYoutube(music);
     }
 
@@ -118,9 +112,14 @@ class Footer extends React.Component {
 
 
   onYoutubeStateChange(event) {
-    if(this.time_update_interval)
+    if (this.time_update_interval)
       clearInterval(this.time_update_interval);
     this.time_update_interval = setInterval(this.updateProgressBar.bind(this), 1000);
+
+    if(event.data === 0) {
+      this.playEnd();
+    }
+
   }
 
 
@@ -135,6 +134,7 @@ class Footer extends React.Component {
         //TODO : show a loader
       },
       onfinish: function () {
+        self.playEnd();
         self.setState({position: 0, isPlaying: false});
       },
       whileplaying() {
@@ -150,10 +150,15 @@ class Footer extends React.Component {
 
   playEnd() {
     if (this.state.currentSongIndex == this.state.musics.length - 1) {
-      this.stop();
+      this.handleStop();
     } else {
-      this.next();
+      PlayerActions.next();
     }
+  }
+
+  handleStop() {
+    this.destructPlayer();
+    this.setState({isPlaying: false})
   }
 
   handlePlay() {
@@ -200,7 +205,7 @@ class Footer extends React.Component {
               </div>
               <div className="jp-interface">
                 <div className="jp-controls">
-                  <div><a className="jp-previous"><i className="icon-control-rewind i-lg"/></a></div>
+                  <div><a oncliCk={PlayerActions.prev()} className="jp-previous"><i className="icon-control-rewind i-lg"/></a></div>
                   <div>
                     { (!this.state.isPlaying)
                       ?
@@ -208,9 +213,8 @@ class Footer extends React.Component {
                       :
                       <a onClick={this.handlePause} className="jp-pause"><i className="icon-control-pause i-2x"/></a>
                     }
-
                   </div>
-                  <div><a className="jp-next"><i className="icon-control-forward i-lg"/></a></div>
+                  <div><a oncliCk={PlayerActions.next()} className="jp-next"><i className="icon-control-forward i-lg"/></a></div>
                   <div className="hide"><a className="jp-stop"><i className="fa fa-stop"/></a></div>
                   <div><a clasName="" data-toggle="dropdown" data-target="#playlist"><i className="icon-list"/></a>
                   </div>
