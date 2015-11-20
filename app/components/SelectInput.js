@@ -9,19 +9,9 @@ class SelectInput extends React.Component {
     this.state = {value: ''};
   }
 
-  propTypes:{
-    id: React.PropTypes.string.isRequired,
-    title: React.PropTypes.string.isRequired,
-    name: React.PropTypes.string.isRequired,
-    multiple: React.PropTypes.bool,
-    options: React.PropTypes.array.isRequired,
-    allowCreate: React.PropTypes.bool
-    };
-
   changeValue(value) {
     this.props.setValue(value);
   }
-
 
   render() {
     var className = this.props.showError() || this.props.showRequired() ? 'has-error' : '';

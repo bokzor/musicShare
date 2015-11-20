@@ -5,6 +5,7 @@ import moment from 'moment'
 
 class AddMusicStore {
   constructor() {
+
     this.bindActions(AddMusicActions);
     this.music = {};
     this.isLoading = false;
@@ -19,7 +20,8 @@ class AddMusicStore {
     this.urlIsValid = true;
     [this.music.artist, this.music.title] = data.title.split('-', 2);
     this.music.name = data.title;
-    this.music.duration = data.duration;
+    // data.duration is in ms
+    this.music.duration = data.duration * 1000; // in seconds
     this.music.img = data.artwork_url;
     this.music.url = data.uri;
     this.music.isMix = data.duration > 1200000;

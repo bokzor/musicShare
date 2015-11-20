@@ -13,7 +13,6 @@ class Header extends React.Component {
       this.props.history.replaceState(null, '/search/' + this.refs.searchTextField.value);
     } else {
       this.props.history.replaceState(null, '/');
-      //this.props.history.goBack();
     }
   }
 

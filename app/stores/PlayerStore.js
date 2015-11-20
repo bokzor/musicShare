@@ -38,6 +38,7 @@ class PlayerStore {
   }
 
   onRemoveFromPlaylist(music) {
+    // check if the music is in the playlist
     var index = this.musics.map(function (e) {
       return e._id;
     }).indexOf(music._id);

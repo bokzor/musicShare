@@ -26,12 +26,12 @@ class MusicItem extends React.Component {
             </div>
             <div className="item-overlay opacity r r-2x bg-black">
               <div className="center text-center m-t-n">
-                <a onClick={this.handlePlay} href="#"><i className="fa fa-play-circle i-2x"></i></a>
+                <a onClick={this.handlePlay} href="#"><i className="fa fa-play-circle i-2x"/></a>
               </div>
               <div className="bottom padder m-b-sm">
                 <a href="#" data-toggle="class">
-                  <i className="fa fa-plus-circle text"></i>
-                  <i className="fa fa-check-circle text-active text-info"></i>
+                  <i className="fa fa-plus-circle text"/>
+                  <i className="fa fa-check-circle text-active text-info"/>
                 </a>
               </div>
             </div>

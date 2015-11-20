@@ -24,7 +24,6 @@ class InfiniteList extends React.Component {
     return <MusicItem key={key} music={this.props.musics[index]}/>
   }
 
-
   renderList() {
       return (
         <ReactList

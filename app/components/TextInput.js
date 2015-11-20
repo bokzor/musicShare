@@ -13,8 +13,8 @@ class TextInput extends React.Component {
 
         {/* we display the label */}
         {(this.props.title)
-          ?<label className="col-sm-2 control-label" htmlFor={this.props.id}>{this.props.title}</label>
-          :null
+          ? <label className="col-sm-2 control-label" htmlFor={this.props.id}>{this.props.title}</label>
+          : null
         }
         <div className={classContainer}>
           <input className={'form-control ' + classInput}

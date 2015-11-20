@@ -59,9 +59,13 @@ class Footer extends React.Component {
     this.setState(state);
   }
 
-  handleSongPlaying(music) {
-    this.setState({duration: music.duration});
-  }
+
+  /**
+   * changePosition() change the position
+   * of the current music
+   *
+   * @param {Int} percent
+   */
 
   changePosition(percent) {
     this.setState({position: percent * this.state.duration});
@@ -77,17 +81,13 @@ class Footer extends React.Component {
 
 
   destructPlayer() {
-    // we remove the old interval
+
     clearInterval(this.time_update_interval);
 
     if (this.player) {
 
-      // we check if the player is a soundcloud instance
-      if (this.player.hasOwnProperty('destruct')) {
-        this.player.destruct();
-      } else {
-        this.player.destroy();
-      }
+      // check if the player is a soundcloud instance
+      this.player.hasOwnProperty('destruct') ? this.player.destruct() : this.player.destroy();
 
       this.player = null;
     }
@@ -167,11 +167,7 @@ class Footer extends React.Component {
   }
 
   playEnd() {
-    if (this.state.currentMusicIndex == this.state.musics.length - 1) {
-      this.handleStop();
-    } else {
-      PlayerActions.next();
-    }
+    (this.state.currentMusicIndex == this.state.musics.length - 1) ? this.handleStop() : PlayerActions.next();
   }
 
   handleStop() {
@@ -210,7 +206,7 @@ class Footer extends React.Component {
         this.player.toggleMute();
 
       if (this.music.hostType == 'youtube')
-        this.player.unMute()
+        this.player.unMute();
 
       this.setState({mute: false});
 
@@ -220,7 +216,7 @@ class Footer extends React.Component {
         this.player.toggleMute();
 
       if (this.music.hostType == 'youtube')
-        this.player.mute()
+        this.player.mute();
 
       this.setState({mute: true})
     }
@@ -228,22 +224,12 @@ class Footer extends React.Component {
   }
 
   handleRepeat() {
-
-    if (this.state.repeat) {
-      this.setState({repeat: false});
-    } else {
-      this.setState({repeat: true})
-    }
+    this.state.repeat ? this.setState({repeat: false}) :  this.setState({repeat: true});
   }
 
 
   handleShuffle() {
-
-    if (this.state.shuffle) {
-      this.setState({shuffle: false});
-    } else {
-      this.setState({shuffle: true})
-    }
+    this.state.shuffle ? this.setState({shuffle: false}) : this.setState({shuffle: true});
   }
 
 
@@ -251,11 +237,9 @@ class Footer extends React.Component {
 
     // progress bar
     var progress;
-    if (this.state.duration > 0)
-      progress = this.state.position / this.state.duration * 100;
-    else {
-      progress = 0;
-    }
+
+    this.state.duration > 0 ? progress = this.state.position / this.state.duration * 100 : progress = 0;
+
 
     return (
       <footer className="footer bg-dark">
@@ -264,13 +248,16 @@ class Footer extends React.Component {
           <div className="jp-type-playlist">
             <div id="jplayer_N" className="jp-jplayer hide"></div>
             <div className="jp-gui">
+
               <div className="jp-video-play hide">
                 <a className="jp-video-play-icon">play</a>
               </div>
+
               <div className="jp-interface">
                 <div className="jp-controls">
                   <div><a onClick={PlayerActions.prev} className="jp-previous"><i className="icon-control-rewind i-lg"/></a>
                   </div>
+
                   <div>
                     { (!this.state.isPlaying)
                       ?
@@ -280,26 +267,33 @@ class Footer extends React.Component {
                         className="icon-control-pause i-2x"/></a>
                     }
                   </div>
+
                   <div>
                     <a onClick={PlayerActions.next} className="jp-next">
                       <i className="icon-control-forward i-lg"/>
                     </a>
                   </div>
-                  <div className="hide"><a className="jp-stop"><i className="fa fa-stop"/></a></div>
-                  <div><a data-toggle="dropdown" data-target="#playlist"><i className="icon-list"/></a>
+
+                  <div className="hide">
+                    <a className="jp-stop"><i className="fa fa-stop"/></a>
                   </div>
+
+                  <div>
+                    <a data-toggle="dropdown" data-target="#playlist"><i className="icon-list"/></a>
+                  </div>
+
                   <ProgressBar
                     handleSeek={this.handleSeek}
                     progress={progress}
                     music={this.state.musics[this.state.currentMusicIndex]}
                     changePosition={this.changePosition}
                   />
-                  <div
-                    className="hidden-xs hidden-sm jp-current-time text-xs text-muted">
+
+                  <div className="hidden-xs hidden-sm jp-current-time text-xs text-muted">
                     {utils.formatTime(this.state.position)}
                   </div>
-                  <div
-                    className="hidden-xs hidden-sm jp-duration text-xs text-muted">
+
+                  <div className="hidden-xs hidden-sm jp-duration text-xs text-muted">
                     {utils.formatTime(this.state.duration)}
                   </div>
 
@@ -348,22 +342,22 @@ class Footer extends React.Component {
                     <a className="jp-full-screen" title="full screen"><i className="fa fa-expand"/></a>
                     <a className="jp-restore-screen" title="restore screen"><i className="fa fa-compress text-lt"/></a>
                   </div>
-
                 </div>
+
               </div>
             </div>
-
 
             <Playlist
               musics={this.state.musics}
               index={this.state.currentMusicIndex}
-
             />
+
             <div className="jp-no-solution hide">
               <span>Update Required</span>
               To play the media you will need to either update your browser to a recent version or update your <a
               href="http://get.adobe.com/flashplayer/" target="_blank">Flash plugin</a>.
             </div>
+
           </div>
         </div>
       </footer>

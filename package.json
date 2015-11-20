@@ -43,16 +43,16 @@
     "react-list": "^0.7.3",
     "react-loader": "^2.0.0",
     "react-router": "^1.0.0",
-    "react-select": "^0.8.2",
+    "react-select": "^0.9.1",
     "react-waypoint": "^1.1.0",
     "request": "^2.58.0",
     "serve-favicon": "^2.3.0",
     "swig": "^1.4.2",
-    "underscore": "^1.8.3",
     "xml2js": "^0.4.9",
     "youtube-iframe-player": "^1.0.1"
   },
   "devDependencies": {
+    "underscore": "^1.8.3",
     "babel": "^6.1.18",
     "babel-loader": "^6.1.0",
     "babel-core": "^6.1.19",
