@@ -44,10 +44,10 @@ class Footer extends React.Component {
     this.setState({position : percent * this.state.duration});
 
     if (this.music.hostType == 'soundcloud') {
-      this.soundObject.setPosition(percent * this.state.duration * 1000);
+      this.player.setPosition(percent * this.state.duration * 1000);
     }
     if (this.music.hostType == 'youtube') {
-      this.soundObject.seekTo(percent * this.state.duration);
+      this.player.seekTo(percent * this.state.duration);
     }
   }
 
@@ -69,16 +69,18 @@ class Footer extends React.Component {
   }
 
   destructPlayer() {
-
+    // we remove the old interval
     clearInterval(this.time_update_interval);
-    if (this.soundObject) {
-      if (this.soundObject.hasOwnProperty('destruct')) {
-        this.soundObject.destruct();
+    
+    if (this.player) {
+      // we check if the player is a soundcloud instance
+      if (this.player.hasOwnProperty('destruct')) {
+        this.player.destruct();
       }
       else {
-        this.soundObject.destroy();
+        this.player.destroy();
       }
-      this.soundObject = null;
+      this.player = null;
     }
   }
 
@@ -98,7 +100,7 @@ class Footer extends React.Component {
     let self = this;
     let id = utils.getIdYoutube(music.url);
     Youtube.init(() => {
-      this.soundObject = Youtube.createPlayer('youtube-video', {
+      this.player = Youtube.createPlayer('youtube-video', {
         width: '200',
         height: '200',
         videoId: id,
@@ -112,8 +114,8 @@ class Footer extends React.Component {
 
   updateProgressBar() {
     this.setState({
-      position: this.soundObject.getCurrentTime(),
-      duration: this.soundObject.getDuration()
+      position: this.player.getCurrentTime(),
+      duration: this.player.getDuration()
     });
   }
 
@@ -133,7 +135,7 @@ class Footer extends React.Component {
   initSoundCloud(music) {
     var self = this;
 
-    this.soundObject = soundManager.createSound({
+    this.player = soundManager.createSound({
       url: music.stream_url,
       volume: this.state.volume,
       autoPlay: true,
@@ -170,10 +172,10 @@ class Footer extends React.Component {
 
   handlePlay() {
     if (this.state.musics[this.state.currentMusicIndex].hostType == 'soundcloud')
-      this.soundObject.play();
+      this.player.play();
 
     if (this.state.musics[this.state.currentMusicIndex].hostType == 'youtube')
-      this.soundObject.playVideo();
+      this.player.playVideo();
 
     this.setState({isPlaying: true})
   }
@@ -181,10 +183,10 @@ class Footer extends React.Component {
 
   handlePause() {
     if (this.state.musics[this.state.currentMusicIndex].hostType == 'soundcloud')
-      this.soundObject.pause();
+      this.player.pause();
 
     if (this.state.musics[this.state.currentMusicIndex].hostType == 'youtube')
-      this.soundObject.pauseVideo();
+      this.player.pauseVideo();
 
     this.setState({isPlaying: false})
   }
