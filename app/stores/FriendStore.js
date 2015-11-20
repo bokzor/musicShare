@@ -1,6 +1,6 @@
 import alt from '../alt'
 import FriendActions from '../actions/FriendActions'
-import {difference} from 'lodash'
+import utils from '../lib/utils'
 
 class FriendStore {
   constructor() {
@@ -21,7 +21,8 @@ class FriendStore {
   }
 
   onGetSearchListSuccess(data) {
-    difference(data, this.friends);
+    // return the search list minus the friends list
+    data = utils.onlyInFirstMyObject(data,this.friends).concat(utils.onlyInFirstMyObject(data,this.friends));
     this.searchList = data;
   }
 

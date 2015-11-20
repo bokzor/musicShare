@@ -12,17 +12,16 @@ class PlayerStore {
     this.volume = 50;
     this.isLoading= false;
     this.isPlaying = false;
-    this.currentSongIndex = -1;
+    this.currentMusicIndex = -1;
   }
 
   onPlaySuccess(music){
-
     var index = this.musics.map(function(e) { return e._id; }).indexOf(music._id);
     if(index > -1) {
-      this.currentSongIndex = index;
+      this.currentMusicIndex = index;
     } else {
       this.musics.push(music);
-      this.currentSongIndex++;
+      this.currentMusicIndex++;
     }
 
     this.isPlaying = true;
@@ -32,20 +31,26 @@ class PlayerStore {
     this.musics.push(music);
   }
 
-  onRemoveFromPlaylist(index) {
+  onRemoveFromPlaylist(music) {
+    var index = this.musics.map(function(e) { return e._id; }).indexOf(music._id);
     this.musics.splice(index, 1);
+    if(this.musics.length == 0)
+      this.isPlaying = false;
+    else {
+      this.next();
+    }
   }
 
   onNext(){
-    if(this.currentSongIndex + 1 == this.musics.length) {
-      this.currentSongIndex = 0;
+    if(this.currentMusicIndex + 1 == this.musics.length) {
+      this.currentMusicIndex = 0;
     } else {
-      this.currentSongIndex++;
+      this.currentMusicIndex++;
     }
   }
 
   onPrev() {
-    this.currentSongIndex--;
+    this.currentMusicIndex--;
   }
 
 }

@@ -29,7 +29,7 @@ class Footer extends React.Component {
   }
 
   initPlayer() {
-    this.player = soundManager.setup({url: '/swf/', wmode: 'transparent', debugMode: true});
+    soundManager.setup({url: '/swf/', wmode: 'transparent', debugMode: true});
   }
 
   onChange(state) {
@@ -41,25 +41,31 @@ class Footer extends React.Component {
   }
 
   changePosition(percent) {
-    this.setState({progress: percent * 100, position: percent * this.state.duration});
+    this.setState({position : percent * this.state.duration});
+
+    if (this.music.hostType == 'soundcloud') {
+      this.soundObject.setPosition(percent * this.state.duration * 1000);
+    }
+    if (this.music.hostType == 'youtube') {
+      this.soundObject.seekTo(percent * this.state.duration);
+    }
   }
 
   componentDidUpdate(prevProps, prevState, prevContext) {
-    let music = this.state.musics[this.state.currentSongIndex];
-    // init the player if the currentIndex change
-    if (this.state.currentSongIndex != prevState.currentSongIndex) {
-      this.initSoundObject(music);
+
+    // get the current Music
+    this.music = this.state.musics[this.state.currentMusicIndex];
+
+    if(!this.music) {
+      this.destructPlayer();
+      return
     }
 
-    // change the music position
-    if (this.state.position != prevState.position) {
-      if (music.hostType == 'soundcloud') {
-        this.soundObject.setPosition(this.state.position * 1000);
-      }
-      if (music.hostType == 'youtube') {
-        this.soundObject.seekTo(this.state.position);
-      }
+    // Init the player if the currentIndex change
+    if (this.state.currentMusicIndex != prevState.currentMusicIndex) {
+      this.initSoundObject(this.music);
     }
+
   }
 
   destructPlayer() {
@@ -72,6 +78,7 @@ class Footer extends React.Component {
       else {
         this.soundObject.destroy();
       }
+      this.soundObject = null;
     }
   }
 
@@ -149,7 +156,7 @@ class Footer extends React.Component {
   }
 
   playEnd() {
-    if (this.state.currentSongIndex == this.state.musics.length - 1) {
+    if (this.state.currentMusicIndex == this.state.musics.length - 1) {
       this.handleStop();
     } else {
      // PlayerActions.next();
@@ -162,10 +169,10 @@ class Footer extends React.Component {
   }
 
   handlePlay() {
-    if (this.state.musics[this.state.currentSongIndex].hostType == 'soundcloud')
+    if (this.state.musics[this.state.currentMusicIndex].hostType == 'soundcloud')
       this.soundObject.play();
 
-    if (this.state.musics[this.state.currentSongIndex].hostType == 'youtube')
+    if (this.state.musics[this.state.currentMusicIndex].hostType == 'youtube')
       this.soundObject.playVideo();
 
     this.setState({isPlaying: true})
@@ -173,10 +180,10 @@ class Footer extends React.Component {
 
 
   handlePause() {
-    if (this.state.musics[this.state.currentSongIndex].hostType == 'soundcloud')
+    if (this.state.musics[this.state.currentMusicIndex].hostType == 'soundcloud')
       this.soundObject.pause();
 
-    if (this.state.musics[this.state.currentSongIndex].hostType == 'youtube')
+    if (this.state.musics[this.state.currentMusicIndex].hostType == 'youtube')
       this.soundObject.pauseVideo();
 
     this.setState({isPlaying: false})
@@ -221,7 +228,7 @@ class Footer extends React.Component {
                   <ProgressBar
                     handleSeek={this.handleSeek}
                     progress={progress}
-                    music={this.state.musics[this.state.currentSongIndex]}
+                    music={this.state.musics[this.state.currentMusicIndex]}
                     changePosition={this.changePosition}
                   />
                   <div
@@ -254,7 +261,7 @@ class Footer extends React.Component {
             </div>
             <Playlist
               musics={this.state.musics}
-              index={this.state.currentSongIndex}
+              index={this.state.currentMusicIndex}
 
             />
             <div className="jp-no-solution hide">

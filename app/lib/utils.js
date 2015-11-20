@@ -41,6 +41,17 @@ utils.formatTime = function(time) {
 };
 
 
+utils.onlyInFirst = function (equal, a, b) {
+  return a.filter(current => {
+    return b.filter(equal(current)).length == 0;
+  });
+};
+utils.onlyInFirstMyObject = utils.onlyInFirst.bind(0, a => {
+  return function (b) {
+    return a.username == b.username;
+  };
+});
+
 export default utils
 
 
