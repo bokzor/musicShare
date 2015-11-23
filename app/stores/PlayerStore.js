@@ -19,6 +19,14 @@ class PlayerStore {
 
   onPlaySuccess(music) {
 
+    this.musics = [music];
+    this.currentMusicIndex = 0;
+
+    this.isPlaying = true;
+  }
+
+  onAddToPlaylistSuccess(music) {
+
     var index = this.musics.map(function (e) {
       return e._id;
     }).indexOf(music._id);
@@ -27,14 +35,12 @@ class PlayerStore {
       this.currentMusicIndex = index;
     } else {
       this.musics.push(music);
-      this.currentMusicIndex++;
     }
 
-    this.isPlaying = true;
   }
 
-  addToPlaylist(music) {
-    this.musics.push(music);
+  onSetIsPlaying(bool) {
+    this.isPlaying = bool;
   }
 
   onRemoveFromPlaylist(music) {

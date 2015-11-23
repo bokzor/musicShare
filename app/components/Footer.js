@@ -22,6 +22,7 @@ class Footer extends React.Component {
     this.handleMute = this.handleMute.bind(this);
     this.handleShuffle = this.handleShuffle.bind(this);
     this.handleRepeat = this.handleRepeat.bind(this);
+    this.updateProgressBar = this.updateProgressBar.bind(this);
   }
 
   componentDidMount() {
@@ -40,7 +41,7 @@ class Footer extends React.Component {
     }
 
     // Init the player if the currentIndex change
-    if (this.state.currentMusicIndex != prevState.currentMusicIndex) {
+    if (this.state.currentMusicIndex != prevState.currentMusicIndex || this.music.url != prevState.musics[prevState.currentMusicIndex].url) {
       this.initSoundObject(this.music);
     }
 
@@ -54,6 +55,13 @@ class Footer extends React.Component {
   initPlayer() {
     soundManager.setup({url: '/swf/', wmode: 'transparent', debugMode: true});
   }
+
+  /**
+   * onChange() listen for change in store
+   *
+   *
+   * @param {Object} state
+   */
 
   onChange(state) {
     this.setState(state);
@@ -80,6 +88,12 @@ class Footer extends React.Component {
   }
 
 
+  /**
+   * destructPlayer() free the memory
+   * and clears interval
+   *
+   */
+
   destructPlayer() {
 
     clearInterval(this.time_update_interval);
@@ -92,6 +106,14 @@ class Footer extends React.Component {
       this.player = null;
     }
   }
+
+
+  /**
+   * initSoundObject() create either a youtube
+   * or a soundcloud sound object
+   *
+   * @param {Object} music
+   */
 
   initSoundObject(music) {
     this.destructPlayer();
@@ -106,9 +128,16 @@ class Footer extends React.Component {
 
   }
 
+  /**
+   * initYoutube() create a youtube
+   * sound object
+   *
+   * @param {Object} music
+   */
+
   initYoutube(music) {
-    let self = this;
-    let id = utils.getIdYoutube(music.url);
+    const self = this;
+    const id = utils.getIdYoutube(music.url);
     Youtube.init(() => {
       this.player = Youtube.createPlayer('youtube-video', {
         width: '200',
@@ -121,6 +150,8 @@ class Footer extends React.Component {
       });
     });
   }
+
+
 
   updateProgressBar() {
     this.setState({
@@ -135,9 +166,9 @@ class Footer extends React.Component {
 
     this.time_update_interval = setInterval(this.updateProgressBar.bind(this), 1000);
 
-    if (event.data === 0) {
+    if (event.data === 0)
       this.playEnd();
-    }
+
 
   }
 
@@ -153,7 +184,8 @@ class Footer extends React.Component {
       },
       onfinish: function () {
         self.playEnd();
-        self.setState({position: 0, isPlaying: false});
+        self.setState({position: 0});
+        PlayerActions.setIsPlaying(false);
       },
       whileplaying() {
         self.setState(
@@ -166,37 +198,62 @@ class Footer extends React.Component {
     });
   }
 
+
+  /**
+   * playEnd() plays every music in the playlist
+   *
+   */
+
   playEnd() {
     (this.state.currentMusicIndex == this.state.musics.length - 1) ? this.handleStop() : PlayerActions.next();
   }
 
+  /**
+   * handleStop() stop the music and destruct the player
+   *
+   */
+
+
   handleStop() {
     this.destructPlayer();
-    this.setState({isPlaying: false})
+    PlayerActions.setIsPlaying(false);
   }
+
+  /**
+   * handleTogglePlay() play or pause the current music
+   *
+   */
+
 
   handleTogglePlay() {
 
     if (this.music.hostType == 'soundcloud') {
       if (this.state.isPlaying) {
         this.player.pause();
-        this.setState({isPlaying: false})
+        PlayerActions.setIsPlaying(false);
       } else {
         this.player.play();
-        this.setState({isPlaying: true})
+        PlayerActions.setIsPlaying(true);
       }
     }
 
     if (this.music.hostType == 'youtube') {
       if (!this.state.isPlaying) {
         this.player.playVideo();
-        this.setState({isPlaying: true})
+        PlayerActions.setIsPlaying(true);
       } else {
         this.player.pauseVideo()
-        this.setState({isPlaying: false})
+        PlayerActions.setIsPlaying(false);
       }
     }
   }
+
+  /**
+   * handeleMute() mute or unmute the sound player
+   * of the current music
+   *
+   */
+
 
   handleMute() {
 
@@ -223,10 +280,19 @@ class Footer extends React.Component {
 
   }
 
+  /**
+   * handleRepeat() active or desactive the repeat mode
+   *
+   */
+
   handleRepeat() {
     this.state.repeat ? this.setState({repeat: false}) :  this.setState({repeat: true});
   }
 
+  /**
+   * hanldeShuffle() active or desactive the suffle mode
+   *
+   */
 
   handleShuffle() {
     this.state.shuffle ? this.setState({shuffle: false}) : this.setState({shuffle: true});

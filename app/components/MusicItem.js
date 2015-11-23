@@ -8,11 +8,17 @@ class MusicItem extends React.Component {
   constructor(props) {
     super(props);
     this.handlePlay = this.handlePlay.bind(this);
+    this.handleAddToPlaylist = this.handleAddToPlaylist.bind(this);
   }
 
   handlePlay(e) {
     e.preventDefault();
     PlayerActions.play(this.props.music);
+  }
+
+  handleAddToPlaylist(e){
+    e.preventDefault();
+    PlayerActions.addToPlaylist(this.props.music);
   }
 
   render() {
@@ -30,7 +36,7 @@ class MusicItem extends React.Component {
               </div>
               <div className="bottom padder m-b-sm">
                 <a href="#" data-toggle="class">
-                  <i className="fa fa-plus-circle text"/>
+                  <i onClick={this.handleAddToPlaylist} className="fa fa-plus-circle text"/>
                   <i className="fa fa-check-circle text-active text-info"/>
                 </a>
               </div>

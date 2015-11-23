@@ -15,8 +15,10 @@ class PlayerActions {
     this.generateActions(
       'playSuccess',
       'removeFromPlaylist',
+      'addToPlaylistSuccess',
       'next',
-      'prev'
+      'prev',
+      'setIsPlaying'
     );
   }
 
@@ -31,7 +33,7 @@ class PlayerActions {
     if (music.url.indexOf('soundcloud') > 0)
       music.stream_url = music.url + '/stream?client_id=' + client_soundcloud;
 
-    this.actions.addToPlayListSuccess(music);
+    this.actions.addToPlaylistSuccess(music);
   }
 
 
