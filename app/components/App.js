@@ -26,7 +26,8 @@ class App extends React.Component {
         />
         <section>
           <section className="hbox stretch">
-            <LeftNav/>
+            <LeftNav
+              />
             <section id="content" style={{ paddingBottom: '100px' }}>
               <section className="hbox stretch">
                 {React.cloneElement(this.props.children, {usernameConnectedCookie: this.props.username})}

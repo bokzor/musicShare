@@ -36,8 +36,15 @@ class Profile extends React.Component {
   }
 
   componentDidUpdate(prevProps) {
+    console.log('(1)prevProps.params.username :: ', prevProps.params.username);
+    console.log('(2)this.props.params.username :: ', this.props.params.username);
     if (prevProps.params.username !== this.props.params.username) {
-      ProfileActions.getData(this.props.params.username);
+      //ProfileActions.getData(this.props.params.username);
+      if (this.props.params.username) {
+        ProfileActions.getData(this.props.params.username);
+      } else {
+        ProfileActions.getData(this.props.usernameConnectedCookie);
+      }
     }
   }
 
@@ -88,13 +95,20 @@ class Profile extends React.Component {
   }
 
   onDrop(pictures) {
-    console.log('Received files: ', pictures);
-    if (this.state.isProfilePicture) {
-      //this.state.data.user._id
-      ProfileActions.addProfilePicture(pictures);
-    }
-    if (this.state.isCoverPicture) {
-      ProfileActions.addCoverPicture(pictures);
+    const const_1mb = 1048576;
+    let pattern = /(.jpg|.jpeg|.gif|.png|.bmp)$/i;
+    if (pattern.test(pictures[0].name) && pictures[0].size <= const_1mb) {
+      console.log('Received files: ', pictures);
+      if (this.state.isProfilePicture) {
+        //this.state.data.user._id
+        ProfileActions.addProfilePicture(pictures);
+      }
+      if (this.state.isCoverPicture) {
+        ProfileActions.addCoverPicture(pictures);
+      }
+    } else {
+      toastr.error('Attention! Picture size must not exceed 1MB or picture format is bad!');
+      console.log('Bad image format!');
     }
   }
 
@@ -110,9 +124,9 @@ class Profile extends React.Component {
 
   render() {
     let data = this.state.data;
-    console.log('data :: ', data);
+    /*console.log('data :: ', data);
     console.log('this.username :: ', this.state.username);
-    console.log('usernameConnectedCookie :: ', this.props.usernameConnectedCookie);
+    console.log('usernameConnectedCookie :: ', this.props.usernameConnectedCookie);*/
 
     if (this.state.followed) {
       var button = <UnfollowedButton onClick={this.handleUnfollowButton.bind(this)} username={data.user.username}/>
