@@ -110,6 +110,9 @@ class Profile extends React.Component {
 
   render() {
     let data = this.state.data;
+    console.log('data :: ', data);
+    console.log('this.username :: ', this.state.username);
+    console.log('usernameConnectedCookie :: ', this.props.usernameConnectedCookie);
 
     if (this.state.followed) {
       var button = <UnfollowedButton onClick={this.handleUnfollowButton.bind(this)} username={data.user.username}/>
@@ -187,36 +190,48 @@ class Profile extends React.Component {
                               :
                               null
                             }
-                            <a
-                              onClick={this.handleProfilePicture.bind(this)}
-                              className="btn btn-default m-t-xs m-r"
-                              style={{float: 'right'}}
-                              >
-                              <span className="text">Profile</span>
-                            </a>
-                            <a
-                              onClick={this.handleCoverPicture.bind(this)}
-                              className="btn btn-default m-t-xs m-r"
-                              style={{float: 'right'}}
-                              >
-                              <span className="text">Cover</span>
-                            </a>
+                            {
+                              this.props.usernameConnectedCookie === this.state.username
+                                ?
+                                <div>
+                                  <a
+                                    onClick={this.handleProfilePicture.bind(this)}
+                                    className="btn btn-default m-t-xs m-r"
+                                    style={{float: 'right'}}
+                                    >
+                                    <span className="text">Profile</span>
+                                  </a>
+                                  <a
+                                    onClick={this.handleCoverPicture.bind(this)}
+                                    className="btn btn-default m-t-xs m-r"
+                                    style={{float: 'right'}}
+                                    >
+                                    <span className="text">Cover</span>
+                                  </a>
+                                </div>
+                                :
+                                null
+                            }
                           </div>
-
-                          <div className="m-t-xs">
-                            <Dropzone
-                              disableClick={true}
-                              multiple={false}
-                              onDrop={this.onDrop.bind(this)}
-                              style={{width: '150px', height: '100px', borderWidth: '2px', borderColor: '#bce8f1', borderStyle: 'dashed', borderRadius: '2px', textAlign: 'center', padding: '10px'}}
-                              >
-                              <div>Change your {this.state.textPicture} picture! Drop a file here to upload.</div>
-                            </Dropzone>
-                            <button className="m-t-xs" type="button" onClick={this.savePicture.bind(this)}>
-                              Save
-                            </button>
-                          </div>
-
+                          {
+                            this.props.usernameConnectedCookie === this.state.username
+                              ?
+                              <div className="m-t-xs">
+                                <Dropzone
+                                  disableClick={true}
+                                  multiple={false}
+                                  onDrop={this.onDrop.bind(this)}
+                                  style={{width: '150px', height: '100px', borderWidth: '2px', borderColor: '#bce8f1', borderStyle: 'dashed', borderRadius: '2px', textAlign: 'center', padding: '10px'}}
+                                  >
+                                  <div>Change your {this.state.textPicture} picture! Drop a file here to upload.</div>
+                                </Dropzone>
+                                <button className="m-t-xs" type="button" onClick={this.savePicture.bind(this)}>
+                                  Save
+                                </button>
+                              </div>
+                              :
+                              null
+                          }
                         </div>
                       </section>
                     </div>

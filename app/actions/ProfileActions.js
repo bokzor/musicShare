@@ -9,7 +9,8 @@ class ProfileActions {
       'getUsernameConnected',
       'addProfilePicture',
       'addCoverPicture',
-      'uploadPictureSuccess'
+      'uploadPictureSuccess',
+      'setUsername'
     );
   }
 
@@ -17,6 +18,7 @@ class ProfileActions {
     try {
       const response = await axios.get('/api/profile/' + username);
       this.actions.getDataSuccess(response.data);
+      this.actions.setUsername(username);
     }
     catch(err) {
       this.actions.getDataFail(err);

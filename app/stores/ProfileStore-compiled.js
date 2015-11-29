@@ -22,8 +22,7 @@ class ProfileStore {
     this.followedByCount = data.user.followedByCount;
   }
 
-  onGetDataFail(err) {
-  }
+  onGetDataFail(err) {}
 
   onGetUsernameConnected(username) {
     this.username = username;
@@ -52,10 +51,8 @@ class ProfileStore {
   onUploadPictureSuccess(message) {
     toastr.success(message);
   }
-
-  onSetUsername(username) {
-    this.username = username;
-  }
 }
 
 export default alt.createStore(ProfileStore);
+
+//# sourceMappingURL=ProfileStore-compiled.js.map
