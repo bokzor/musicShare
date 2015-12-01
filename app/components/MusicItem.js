@@ -1,24 +1,63 @@
 import React from 'react'
 import moment from 'moment'
+import ClassNames from 'classnames'
 
 import ImageLoader from 'react-imageloader'
 import PlayerActions from '../actions/PlayerActions'
+import PlayerStore from '../stores/PlayerStore'
 
 class MusicItem extends React.Component {
   constructor(props) {
     super(props);
+    this.state = PlayerStore.getState();
+    this.onChange = this.onChange.bind(this);
     this.handlePlay = this.handlePlay.bind(this);
+    this.handlePause = this.handlePause.bind(this);
     this.handleAddToPlaylist = this.handleAddToPlaylist.bind(this);
+    this.handleRemoveFromPlaylist = this.handleRemoveFromPlaylist.bind(this);
   }
 
-  handlePlay(e) {
-    e.preventDefault();
+  componentDidMount() {
+    PlayerStore.listen(this.onChange);
+  }
+
+  componentWillUnmount() {
+    PlayerStore.unlisten(this.onChange);
+  }
+
+  handlePlay() {
     PlayerActions.play(this.props.music);
   }
 
-  handleAddToPlaylist(e){
-    e.preventDefault();
+  handlePause() {
+    PlayerActions.pause();
+  }
+
+  handleAddToPlaylist() {
     PlayerActions.addToPlaylist(this.props.music);
+  }
+
+  handleRemoveFromPlaylist() {
+    PlayerActions.removeFromPlaylist(this.props.music);
+  }
+
+  onChange(state) {
+    this.setState(state);
+  }
+
+  isInPlaylist() {
+    var index = this.state.musics.map(function (e) {
+      return e._id;
+    }).indexOf(this.props.music._id);
+    return index > -1
+  }
+
+  isPlaying() {
+    var index = this.state.musics.map(function (e) {
+      return e._id;
+    }).indexOf(this.props.music._id);
+
+    return (this.state.isPlaying && this.state.currentMusicIndex == index);
   }
 
   render() {
@@ -32,12 +71,17 @@ class MusicItem extends React.Component {
             </div>
             <div className="item-overlay opacity r r-2x bg-black">
               <div className="center text-center m-t-n">
-                <a onClick={this.handlePlay} href="#"><i className="fa fa-play-circle i-2x"/></a>
+                { (!this.isPlaying())
+                  ?
+                  <a onClick={this.handlePlay} href="#"><i className="fa fa-play-circle i-2x"/></a>
+                  :
+                  <a onClick={this.handlePause} href="#"><i className="icon-control-pause i-2x"/></a>
+                }
               </div>
               <div className="bottom padder m-b-sm">
-                <a href="#" data-toggle="class">
+                <a href="#" className={ClassNames({'active' : this.isInPlaylist() })} >
                   <i onClick={this.handleAddToPlaylist} className="fa fa-plus-circle text"/>
-                  <i className="fa fa-check-circle text-active text-info"/>
+                  <i onClick={this.handleRemoveFromPlaylist} className="fa fa-check-circle text-active text-info"/>
                 </a>
               </div>
             </div>

@@ -18,7 +18,8 @@ class PlayerActions {
       'addToPlaylistSuccess',
       'next',
       'prev',
-      'setIsPlaying'
+      'setPlay',
+      'setPause'
     );
   }
 

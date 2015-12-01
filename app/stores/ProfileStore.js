@@ -19,7 +19,7 @@ class ProfileStore {
     this.user = data.user;
     this.musics = data.musics;
     this.followed = data.followed;
-    this.followedByCount = data.user.followedByCount;
+    this.followedByCount = data.followedByCount;
   }
 
   onGetMoreMusicsSuccess(musics){

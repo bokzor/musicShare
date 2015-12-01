@@ -17,7 +17,7 @@ class Footer extends React.Component {
     super(props);
     this.state = PlayerStore.getState();
     this.onChange = this.onChange.bind(this);
-    this.handleTogglePlay = this.handleTogglePlay.bind(this);
+    this.handlePlay = this.handlePlay.bind(this);
     this.changePosition = this.changePosition.bind(this);
     this.handleMute = this.handleMute.bind(this);
     this.handleShuffle = this.handleShuffle.bind(this);
@@ -43,6 +43,11 @@ class Footer extends React.Component {
     // Init the player if the currentIndex change
     if (this.state.currentMusicIndex != prevState.currentMusicIndex || this.music.url != prevState.musics[prevState.currentMusicIndex].url) {
       this.initSoundObject(this.music);
+    }
+
+    //Pause or Play the player if the state change
+    if (this.state.isPlaying != prevState.isPlaying) {
+      (this.state.isPlaying ? this.handlePlay() : this.handlePause())
     }
 
   }
@@ -143,9 +148,10 @@ class Footer extends React.Component {
         width: '200',
         height: '200',
         videoId: id,
-        playerVars: {'autoplay': 1, 'controls': 0},
+        playerVars: {'autoplay': 0, 'controls': 0},
         events: {
-          'onStateChange': self.onYoutubeStateChange.bind(self)
+          'onStateChange': self.onYoutubeStateChange.bind(self),
+          'onReady': self.onYoutubeReady.bind(this)
         }
       });
     });
@@ -160,16 +166,18 @@ class Footer extends React.Component {
     });
   }
 
+  onYoutubeReady() {
+    this.setState({'isPlaying': true});
+  }
+
   onYoutubeStateChange(event) {
     if (this.time_update_interval)
       clearInterval(this.time_update_interval);
 
-    this.time_update_interval = setInterval(this.updateProgressBar.bind(this), 1000);
+    this.time_update_interval = setInterval(this.updateProgressBar.bind(this), 100);
 
     if (event.data === 0)
       this.playEnd();
-
-
   }
 
   initSoundCloud(music) {
@@ -196,6 +204,8 @@ class Footer extends React.Component {
         );
       }
     });
+    this.setState({'isPlaying': true})
+
   }
 
 
@@ -216,35 +226,33 @@ class Footer extends React.Component {
 
   handleStop() {
     this.destructPlayer();
-    PlayerActions.setIsPlaying(false);
+    PlayerActions.setPause();
   }
 
   /**
-   * handleTogglePlay() play or pause the current music
+   * handlePlay() play the current music
    *
    */
 
 
-  handleTogglePlay() {
-
-    if (this.music.hostType == 'soundcloud') {
-      if (this.state.isPlaying) {
-        this.player.pause();
-        PlayerActions.setIsPlaying(false);
-      } else {
-        this.player.play();
-        PlayerActions.setIsPlaying(true);
-      }
+  handlePlay() {
+    if (this.music.hostType == 'soundcloud')
+      this.player.play();
+    else {
+      this.player.playVideo();
     }
+  }
 
-    if (this.music.hostType == 'youtube') {
-      if (!this.state.isPlaying) {
-        this.player.playVideo();
-        PlayerActions.setIsPlaying(true);
-      } else {
-        this.player.pauseVideo()
-        PlayerActions.setIsPlaying(false);
-      }
+  /**
+   * handlePause() pause the current music
+   *
+   */
+
+  handlePause() {
+    if (this.music.hostType == 'soundcloud')
+      this.player.pause();
+    else {
+      this.player.pauseVideo();
     }
   }
 
@@ -327,9 +335,9 @@ class Footer extends React.Component {
                   <div>
                     { (!this.state.isPlaying)
                       ?
-                      <a onClick={this.handleTogglePlay} className="jp-play"><i className="icon-control-play i-2x"/></a>
+                      <a onClick={PlayerActions.setPlay} className="jp-play"><i className="icon-control-play i-2x"/></a>
                       :
-                      <a onClick={this.handleTogglePlay} className="jp-pause"><i
+                      <a onClick={PlayerActions.setPause} className="jp-pause"><i
                         className="icon-control-pause i-2x"/></a>
                     }
                   </div>

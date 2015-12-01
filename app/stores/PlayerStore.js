@@ -19,10 +19,25 @@ class PlayerStore {
 
   onPlaySuccess(music) {
 
-    this.musics = [music];
-    this.currentMusicIndex = 0;
+    if(this.musics.length > 0) {
+      // check if the music is in the playlist
+      var index = this.musics.map(function (e) {
+        return e._id;
+      }).indexOf(music._id);
 
-    this.isPlaying = true;
+      // we change the currentIndex if in the playlist
+      if(index > -1) {
+        this.currentMusicIndex = index;
+      } else {
+        this.musics.push(music);
+        this.currentMusicIndex = this.musics.length - 1;
+      }
+
+    } else {
+      this.musics = [music];
+      this.currentMusicIndex = 0;
+    }
+
   }
 
   onAddToPlaylistSuccess(music) {
@@ -39,8 +54,12 @@ class PlayerStore {
 
   }
 
-  onSetIsPlaying(bool) {
-    this.isPlaying = bool;
+  onSetPause() {
+    this.isPlaying = false;
+  }
+
+  onSetPlay() {
+    this.isPlaying = true;
   }
 
   onRemoveFromPlaylist(music) {

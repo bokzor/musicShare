@@ -167,7 +167,8 @@ apiRoutes.get('/profile/:username', function (req, res) {
             var newUser = {
               followed: followed,
               user,
-              musics: musics
+              musics: musics,
+              followedByCount: user.followedBy.length
             };
 
             res.send(newUser);
@@ -200,7 +201,7 @@ apiRoutes.get('/profile/:username/:page', function (req, res) {
 apiRoutes.post('/follow', (req, res) => {
   const toFollow = req.body.username;
 
-  User.findOne({username: req.decoded.user.username}, 'username followingCount following')
+  User.findOne({username: toFollow}, 'username followedBy')
     .exec((err, currentUser) => {
       if (currentUser) {
         User.findOne({username: toFollow}, 'username followedByCount followedBy')
@@ -209,12 +210,11 @@ apiRoutes.post('/follow', (req, res) => {
 
               console.log(currentUser);
 
-              currentUser.followingCount++;
               currentUser.following.addToSet(user);
               currentUser.save();
 
-              user.followedByCount++;
               user.followedBy.addToSet(currentUser);
+              user.followedByCount = user.followedBy.length;
               user.save();
 
               res.send(user);
