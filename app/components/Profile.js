@@ -102,14 +102,14 @@ class Profile extends React.Component {
 
     return (
 
-        <section className="vbox">
-          <section className="w-f-md">
-            <section className="hbox stretch">
-              <aside className="col-sm-9 no-padder">
-                <section className="vbox animated fadeInUp">
-                  <section className="scrollable">
-                    <div className="m-t-n-xxs item pos-rlt">
-                      <div className="top text-right img-container-top">
+      <section className="vbox">
+        <section className="w-f-md">
+          <section className="hbox stretch">
+            <aside className="col-sm-9 no-padder">
+              <section className="vbox animated fadeInUp">
+                <section className="scrollable">
+                  <div className="m-t-n-xxs item pos-rlt">
+                    <div className="top text-right img-container-top">
                       <span className="musicbar animate bg-success bg-empty inline m-r-lg m-t"
                             style={{ width: '25px', height: '30px' }}>
                         <span className="bar1 a3 lter"></span>
@@ -118,39 +118,39 @@ class Profile extends React.Component {
                         <span className="bar4 a4 dk"></span>
                         <span className="bar5 a2 dker"></span>
                       </span>
-                      </div>
-                      <div className="bottom gd bg-info wrapper-lg img-container-bottom">
-                        <span className="pull-right text-sm">{this.state.followedByCount} <br/>Followers</span>
-                        {this.props.params.username
-                          ?
-                          button
-                          :
-                          null
-                        }
-                        <span className="h2 font-thin">{this.state.user.username}</span>
-                      </div>
-                      <div className="img-container">
-                        <div className="img-container-center">
-                          <img className="img-full img-responsive" src="images/m43.jpg" alt="..."/>
-                        </div>
+                    </div>
+                    <div className="bottom gd bg-info wrapper-lg img-container-bottom">
+                      <span className="pull-right text-sm">{this.state.followedByCount} <br/>Followers</span>
+                      {this.props.params.username
+                        ?
+                        button
+                        :
+                        null
+                      }
+                      <span className="h2 font-thin">{this.state.user.username}</span>
+                    </div>
+                    <div className="img-container">
+                      <div className="img-container-center">
+                        <img className="img-full img-responsive" src="images/m43.jpg" alt="..."/>
                       </div>
                     </div>
+                  </div>
 
-                    <section className="padder-lg w-f-md" id="bjax-target">
-                      <div className="row">
-                        <div className="col-md-7">
-                          <h3 className="font-thin">New Songs</h3>
-                          <div className="row row-sm">
+                  <section className="padder-lg w-f-md" id="bjax-target">
+                    <div className="row">
+                      <div className="col-md-7">
+                        <h3 className="font-thin">New Songs</h3>
+                        <div className="row row-sm">
 
-                            {musicTop}
+                          {musicTop}
 
-                          </div>
                         </div>
-                        <div className="col-md-5">
-                          <h3 className="font-thin">Top Songs</h3>
-                          <div className="list-group bg-white list-group-lg no-bg auto list-group-top-songs">
-                            <a href="#" className="list-group-item clearfix">
-                              <span className="pull-right h2 text-muted m-l">1</span>
+                      </div>
+                      <div className="col-md-5">
+                        <h3 className="font-thin">Top Songs</h3>
+                        <div className="list-group bg-white list-group-lg no-bg auto list-group-top-songs">
+                          <a href="#" className="list-group-item clearfix">
+                            <span className="pull-right h2 text-muted m-l">1</span>
                             <span className="pull-left thumb-sm avatar m-r">
                               <img src="images/a4.png" alt="..."/>
                             </span>
@@ -158,32 +158,32 @@ class Profile extends React.Component {
                               <span>Little Town</span>
                               <small className="text-muted clear text-ellipsis">by Chris Fox</small>
                             </span>
-                            </a>
-                          </div>
+                          </a>
                         </div>
                       </div>
-                      <a href="#" className="pull-right text-muted m-t-lg" data-toggle="class:fa-spin">
-                        <i className="icon-refresh i-lg  inline" id="refresh"></i></a>
-                      <h2 className="font-thin m-b">My Music Library
-                        <MusicBar />
-                      </h2>
-                      <div className="row row-sm">
+                    </div>
+                    <a href="#" className="pull-right text-muted m-t-lg" data-toggle="class:fa-spin">
+                      <i className="icon-refresh i-lg  inline" id="refresh"></i></a>
+                    <h2 className="font-thin m-b">My Music Library
+                      <MusicBar />
+                    </h2>
+                    <div className="row row-sm">
 
-                        <InfiniteList
-                          isLoading={this.state.isLoading}
-                          musics={this.state.musics.slice(6)}
-                          loadMoreItems={this.loadMoreItems.bind(this)}
-                        />
+                      <InfiniteList
+                        isLoading={this.state.isLoading}
+                        musics={this.state.musics.slice(6)}
+                        loadMoreItems={this.loadMoreItems.bind(this)}
+                      />
 
-                      </div>
-                      <FooterInContent/>
-                    </section>
+                    </div>
+                    <FooterInContent/>
                   </section>
                 </section>
-              </aside>
-            </section>
+              </section>
+            </aside>
           </section>
         </section>
+      </section>
     );
   }
 }

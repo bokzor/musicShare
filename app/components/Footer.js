@@ -158,7 +158,6 @@ class Footer extends React.Component {
   }
 
 
-
   updateProgressBar() {
     this.setState({
       position: this.player.getCurrentTime(),
@@ -294,7 +293,7 @@ class Footer extends React.Component {
    */
 
   handleRepeat() {
-    this.state.repeat ? this.setState({repeat: false}) :  this.setState({repeat: true});
+    this.state.repeat ? this.setState({repeat: false}) : this.setState({repeat: true});
   }
 
   /**
@@ -377,7 +376,7 @@ class Footer extends React.Component {
                       <i className="icon-volume-2"/>
                     </a>
                     <a onClick={this.handleMute}
-                        className={ClassNames({ 'jp-unmute': true, 'hid': !this.state.mute })}
+                       className={ClassNames({ 'jp-unmute': true, 'hid': !this.state.mute })}
                        title="unmute">
                       <i className="icon-volume-off"/>
                     </a>

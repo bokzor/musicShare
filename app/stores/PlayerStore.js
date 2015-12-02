@@ -19,14 +19,14 @@ class PlayerStore {
 
   onPlaySuccess(music) {
 
-    if(this.musics.length > 0) {
+    if (this.musics.length > 0) {
       // check if the music is in the playlist
       var index = this.musics.map(function (e) {
         return e._id;
       }).indexOf(music._id);
 
       // we change the currentIndex if in the playlist
-      if(index > -1) {
+      if (index > -1) {
         this.currentMusicIndex = index;
       } else {
         this.musics.push(music);

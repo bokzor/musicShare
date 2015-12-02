@@ -79,29 +79,29 @@ class MusicItem extends React.Component {
                 }
               </div>
               <div className="bottom padder m-b-sm">
-                <a href="#" className={ClassNames({'active' : this.isInPlaylist() })} >
+                <a href="#" className={ClassNames({'active' : this.isInPlaylist() })}>
                   <i onClick={this.handleAddToPlaylist} className="fa fa-plus-circle text"/>
                   <i onClick={this.handleRemoveFromPlaylist} className="fa fa-check-circle text-active text-info"/>
                 </a>
               </div>
             </div>
             <div className="crop">
-            <a href="#">
-              <img
-                src={this.props.music.img}
-                alt="" className="r r-2x img-full"
-              />
-            </a>
+              <a href="#">
+                <img
+                  src={this.props.music.img}
+                  alt="" className="r r-2x img-full"
+                />
+              </a>
+            </div>
+          </div>
+          <div className="padder-v">
+            <a href="#" className="text-ellipsis">{this.props.music.title}</a>
+            <a href="#" className="text-ellipsis text-xs text-muted">{this.props.music.artist}</a>
           </div>
         </div>
-        <div className="padder-v">
-          <a href="#" className="text-ellipsis">{this.props.music.title}</a>
-          <a href="#" className="text-ellipsis text-xs text-muted">{this.props.music.artist}</a>
-        </div>
       </div>
-  </div>
-  )
-    ;
+    )
+      ;
   }
 }
 

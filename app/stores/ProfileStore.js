@@ -22,7 +22,7 @@ class ProfileStore {
     this.followedByCount = data.followedByCount;
   }
 
-  onGetMoreMusicsSuccess(musics){
+  onGetMoreMusicsSuccess(musics) {
     this.page++;
     this.isLoading = false;
     this.musics = this.musics.concat(musics);
@@ -32,12 +32,12 @@ class ProfileStore {
     this.isLoading = false;
   }
 
-  onFollowSuccess(data){
+  onFollowSuccess(data) {
     this.followedByCount = data.followedByCount;
     this.followed = true;
   }
 
-  onFollowFail(err){
+  onFollowFail(err) {
     console.log(err);
   }
 
