@@ -1,8 +1,8 @@
 import React from 'react'
-import {Decorator as FormsyElement} from 'formsy-react';
+import {HOC} from 'formsy-react'
 import ReactSelect from 'react-select';
 
-@FormsyElement()
+//@FormsyElement()
 class SelectInput extends React.Component {
 
   constructor(props) {
@@ -51,4 +51,4 @@ class SelectInput extends React.Component {
   }
 }
 
-export default SelectInput
+export default HOC(SelectInput)

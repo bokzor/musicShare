@@ -8,7 +8,6 @@ import Formsy from 'formsy-react'
 import TextInput from './TextInput'
 
 
-@mixin(addChangeHandler)
 class Signup extends React.Component {
   constructor(props) {
 

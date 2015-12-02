@@ -9,7 +9,7 @@ import SelectInput from './SelectInput'
 import AddMusicStore from '../stores/AddMusicStore'
 import AddMusicActions from '../actions/AddMusicActions'
 
-@mixin(addChangeHandler)
+//@mixin(addChangeHandler)
 class AddMusicAd extends React.Component {
 
   constructor(props) {

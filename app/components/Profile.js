@@ -13,7 +13,7 @@ import UnfollowedButton from './UnfollowedButton'
 import ProfileActions from '../actions/ProfileActions'
 import ProfileStore from '../stores/ProfileStore'
 
-@mixin(composeAnimation)
+//@mixin(composeAnimation)
 class Profile extends React.Component {
   constructor(props) {
     super(props);

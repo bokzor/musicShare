@@ -10,7 +10,7 @@ import mixin from 'mixin-decorator'
 import composeAnimation from '../decorators/composeAnimation'
 import ProtectComponent from '../decorators/ProtectComponent'
 
-@mixin(composeAnimation)
+//@mixin(composeAnimation)
 class App extends React.Component {
 
   constructor(props) {
