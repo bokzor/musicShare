@@ -13,6 +13,7 @@ class InfiniteActions {
   }
 
   async getMusics() {
+    NProgress.start();
     try {
       const response = await axios.get('/api/discover');
       this.actions.getMusicsSuccess(response.data);
@@ -20,6 +21,7 @@ class InfiniteActions {
     catch(err) {
       this.actions.getMusicsFail(err);
     }
+    NProgress.done();
   }
 
 

@@ -12,19 +12,21 @@ class AuthActions {
   }
 
   async login(data) {
+    NProgress.start();
     try {
       const response = await axios.post('/api/auth', {
         email: data.email,
         password: data.password
       });
-
       this.actions.loginSuccess(response)
     } catch (err) {
       this.actions.loginFail(err)
     }
+    NProgress.done();
   }
 
   async signup(data) {
+    NProgress.start();
     try {
       const response = await axios.post('/api/signup', {
         username: data.username,
@@ -36,6 +38,7 @@ class AuthActions {
     } catch (err) {
       this.actions.signupFail(err);
     }
+    NProgress.done();
   }
 
   async autoLoginUser(jwt) {

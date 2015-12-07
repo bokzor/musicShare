@@ -17,6 +17,7 @@ class ProfileActions {
   }
 
   async getData(username) {
+    NProgress.start();
     try {
       const response = await axios.get(`/api/profile/${username}`);
       this.actions.getDataSuccess(response.data);
@@ -24,6 +25,7 @@ class ProfileActions {
     catch(err) {
       this.actions.getDataFail(err);
     }
+    NProgress.done();
   }
 
   async getMoreMusics(username, page){
