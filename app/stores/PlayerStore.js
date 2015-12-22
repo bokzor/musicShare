@@ -25,7 +25,7 @@ class PlayerStore {
         return e._id;
       }).indexOf(music._id);
 
-      // we change the currentIndex if in the playlist
+      // we change the currentIndex if the music is in the playlist
       if (index > -1) {
         this.currentMusicIndex = index;
       } else {

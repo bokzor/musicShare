@@ -208,8 +208,6 @@ apiRoutes.post('/follow', (req, res) => {
           .exec((err, user) => {
             if (user) {
 
-              console.log(currentUser);
-
               currentUser.following.addToSet(user);
               currentUser.save();
 

@@ -74,6 +74,10 @@ gulp.task('browserify', ['browserify-vendor'], function() {
     .pipe(gulp.dest('public/js'));
 });
 
+
+
+
+
 /*
  |--------------------------------------------------------------------------
  | Same as browserify task, but will also watch for changes and re-compile.
@@ -114,7 +118,7 @@ gulp.task('styles', function() {
     .pipe(gulp.dest('public/css'));
 });
 
-gulp.task('watch', function() {
+gulp.task('watch', ['styles'], function() {
   gulp.watch('app/stylesheets/**/*.less', ['styles']);
 });
 

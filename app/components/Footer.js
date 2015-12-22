@@ -185,7 +185,7 @@ class Footer extends React.Component {
     this.player = soundManager.createSound({
       url: music.stream_url,
       volume: this.state.volume,
-      autoPlay: true,
+      autoPlay: false,
       whileloading() {
         //TODO : show a loader
       },
